@@ -25,4 +25,12 @@ build/
 *.ntvs*
 *.njsproj
 *.sln
+*.sw?
 
+# OS files
+.DS_Store
+Thumbs.db
+
+# Prisma
+server/prisma/migrations/
+server/prisma/dev.db
