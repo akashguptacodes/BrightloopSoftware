@@ -46,7 +46,7 @@ const AdminDashboard = () => {
             <ShieldCheck className="w-4 h-4" />
             <span>Admin Control Panel</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-gray-800">
             Welcome back, {user?.name || 'Administrator'}
           </h1>
           <p className="text-gray-500 text-sm mt-1">
