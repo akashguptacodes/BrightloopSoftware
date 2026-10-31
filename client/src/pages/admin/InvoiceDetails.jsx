@@ -196,7 +196,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
           <button
             onClick={handleDownloadPdf}
             disabled={downloadingPdf}
-            className="inline-flex items-center gap-2 px-3.5 py-2 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg shadow-sm transition disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-3.5 py-2 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded shadow-sm transition disabled:opacity-50"
           >
             <Download className="w-4 h-4 text-gray-500" />
             <span>{downloadingPdf ? 'Generating PDF...' : 'Download PDF'}</span>
@@ -206,7 +206,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
             <button
               onClick={handleIssueInvoice}
               disabled={actionLoading}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded shadow-sm transition disabled:opacity-50"
             >
               <Send className="w-4 h-4" />
               <span>Issue Invoice</span>
@@ -217,7 +217,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
             <>
               <button
                 onClick={() => setShowPaymentModal(true)}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg shadow-sm transition"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded shadow-sm transition"
               >
                 <CreditCard className="w-4 h-4" />
                 <span>Record Payment</span>
@@ -225,7 +225,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
 
               <button
                 onClick={() => setShowVoidModal(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-2 border border-rose-200 text-rose-700 hover:bg-rose-50 text-sm font-medium rounded-lg transition"
+                className="inline-flex items-center gap-1.5 px-3 py-2 border border-rose-200 text-rose-700 hover:bg-rose-50 text-sm font-medium rounded transition"
               >
                 <Ban className="w-4 h-4" />
                 <span>Void</span>
@@ -236,7 +236,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Invoice Document Canvas */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 sm:p-10 space-y-8">
+      <div className="bg-white rounded border border-gray-200 shadow-sm p-6 sm:p-10 space-y-8">
         {/* Invoice Header */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-gray-200 pb-8">
           <div>
@@ -245,14 +245,14 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                 {invoice.invoiceNumber}
               </h1>
               <span
-                className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${
+                className={`inline-flex items-center px-3 py-1 rounded text-xs font-semibold border ${
                   statusBadges[invoice.status] || 'bg-gray-100 text-gray-800'
                 }`}
               >
                 {invoice.status}
               </span>
               {invoice.isRecurring && (
-                <span className="bg-purple-100 text-purple-700 border border-purple-200 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                <span className="bg-purple-100 text-purple-700 border border-purple-200 text-xs font-semibold px-2.5 py-0.5 rounded">
                   Recurring Billing
                 </span>
               )}
@@ -273,7 +273,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
         </div>
 
         {/* Customer & Dates Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50/70 p-6 rounded-xl border border-gray-200">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50/70 p-6 rounded border border-gray-200">
           <div>
             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
               Billed To
@@ -351,7 +351,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
         {/* Itemized Table */}
         <div>
           <h2 className="text-base font-bold text-gray-900 mb-4">Itemized Breakdown</h2>
-          <div className="border border-gray-200 rounded-xl overflow-hidden">
+          <div className="border border-gray-200 rounded overflow-hidden">
             <table className="w-full text-left text-sm text-gray-600">
               <thead className="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 <tr>
@@ -426,7 +426,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                 <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
                   Notes
                 </div>
-                <p className="text-xs text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <p className="text-xs text-gray-600 bg-gray-50 p-3 rounded border border-gray-200">
                   {invoice.notes}
                 </p>
               </div>
@@ -443,7 +443,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
             )}
           </div>
 
-          <div className="w-full md:w-80 bg-gray-50 p-5 rounded-xl border border-gray-200 space-y-3 text-sm">
+          <div className="w-full md:w-80 bg-gray-50 p-5 rounded border border-gray-200 space-y-3 text-sm">
             <div className="flex justify-between text-gray-600">
               <span>Subtotal:</span>
               <span>₹{Number(invoice.subtotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
@@ -493,7 +493,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
           </div>
 
           {!invoice.payments || invoice.payments.length === 0 ? (
-            <div className="p-6 text-center text-xs text-gray-400 bg-gray-50 rounded-lg border border-dashed border-gray-200">
+            <div className="p-6 text-center text-xs text-gray-400 bg-gray-50 rounded border border-dashed border-gray-200">
               No payments have been applied to this invoice yet.
             </div>
           ) : (
@@ -501,7 +501,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
               {invoice.payments.map((pmt) => (
                 <div
                   key={pmt.id}
-                  className="p-3 bg-white border border-gray-200 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                  className="p-3 bg-white border border-gray-200 rounded flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
                 >
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2 font-semibold text-gray-900">
@@ -537,7 +537,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
       {/* Record Payment Modal */}
       {showPaymentModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 space-y-4">
+          <div className="bg-white rounded shadow-xl max-w-md w-full p-6 space-y-4">
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">
               <h3 className="text-lg font-bold text-gray-900">Record Payment</h3>
               <button
@@ -561,7 +561,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                   value={paymentForm.amount}
                   onChange={(e) => setPaymentForm({ ...paymentForm, amount: e.target.value })}
                   required
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500"
                 />
                 <span className="text-[10px] text-gray-400">
                   Maximum amount due: ₹{Number(invoice.amountDue).toFixed(2)}
@@ -576,7 +576,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                   value={paymentForm.paymentMethod}
                   onChange={(e) => setPaymentForm({ ...paymentForm, paymentMethod: e.target.value })}
                   required
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-white"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 bg-white"
                 >
                   <option value="BANK_TRANSFER">Bank Transfer (NEFT / RTGS / IMPS)</option>
                   <option value="UPI">UPI</option>
@@ -596,7 +596,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                   placeholder="e.g. UTR / Cheque #123456"
                   value={paymentForm.paymentReference}
                   onChange={(e) => setPaymentForm({ ...paymentForm, paymentReference: e.target.value })}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -609,7 +609,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                   value={paymentForm.paymentDate}
                   onChange={(e) => setPaymentForm({ ...paymentForm, paymentDate: e.target.value })}
                   required
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -622,7 +622,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                   placeholder="Additional remarks..."
                   value={paymentForm.notes}
                   onChange={(e) => setPaymentForm({ ...paymentForm, notes: e.target.value })}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded"
                 />
               </div>
 
@@ -630,14 +630,14 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                 <button
                   type="button"
                   onClick={() => setShowPaymentModal(false)}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium rounded-lg shadow-sm disabled:opacity-50"
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium rounded shadow-sm disabled:opacity-50"
                 >
                   {actionLoading ? 'Recording...' : 'Confirm Payment'}
                 </button>
@@ -650,7 +650,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
       {/* Void Modal */}
       {showVoidModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 space-y-4">
+          <div className="bg-white rounded shadow-xl max-w-md w-full p-6 space-y-4">
             <h3 className="text-lg font-bold text-gray-900">Void Invoice</h3>
             <p className="text-xs text-gray-500">
               Are you sure you want to void invoice {invoice.invoiceNumber}? This action marks the invoice invalid and cancels any outstanding balance.
@@ -667,7 +667,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                   placeholder="Specify reason for voiding this invoice..."
                   value={voidReason}
                   onChange={(e) => setVoidReason(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded"
                 />
               </div>
 
@@ -675,14 +675,14 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                 <button
                   type="button"
                   onClick={() => setShowVoidModal(false)}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-medium rounded-lg shadow-sm disabled:opacity-50"
+                  className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-medium rounded shadow-sm disabled:opacity-50"
                 >
                   {actionLoading ? 'Voiding...' : 'Confirm Void'}
                 </button>

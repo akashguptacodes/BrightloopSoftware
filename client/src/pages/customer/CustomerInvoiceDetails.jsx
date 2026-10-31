@@ -182,7 +182,7 @@ const CustomerInvoiceDetails = () => {
           <button
             onClick={handleDownloadPdf}
             disabled={downloadingPdf}
-            className="inline-flex items-center gap-2 px-3.5 py-2 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg shadow-sm transition disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-3.5 py-2 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded shadow-sm transition disabled:opacity-50"
           >
             <Download className="w-4 h-4 text-gray-500" />
             <span>{downloadingPdf ? 'Downloading...' : 'Download PDF'}</span>
@@ -192,7 +192,7 @@ const CustomerInvoiceDetails = () => {
             <button
               onClick={handlePayNow}
               disabled={paying}
-              className="inline-flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg shadow-md hover:shadow-lg transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded shadow-md hover:shadow-lg transition disabled:opacity-50"
             >
               <CreditCard className="w-4 h-4" />
               <span>{paying ? 'Connecting Gateway...' : `Pay ₹${Number(invoice.amountDue).toFixed(2)} Online`}</span>
@@ -202,7 +202,7 @@ const CustomerInvoiceDetails = () => {
       </div>
 
       {/* Invoice Canvas */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 sm:p-10 space-y-8">
+      <div className="bg-white rounded border border-gray-200 shadow-sm p-6 sm:p-10 space-y-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-gray-200 pb-8">
           <div>
@@ -211,7 +211,7 @@ const CustomerInvoiceDetails = () => {
                 {invoice.invoiceNumber}
               </h1>
               <span
-                className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${
+                className={`inline-flex items-center px-3 py-1 rounded text-xs font-semibold border ${
                   statusBadges[invoice.status] || 'bg-gray-100 text-gray-800'
                 }`}
               >
@@ -234,7 +234,7 @@ const CustomerInvoiceDetails = () => {
         </div>
 
         {/* Billed To / Subscription */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-xl border border-gray-200 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded border border-gray-200 text-sm">
           <div>
             <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
               Billed To
@@ -269,7 +269,7 @@ const CustomerInvoiceDetails = () => {
         </div>
 
         {/* Items Table */}
-        <div className="border border-gray-200 rounded-xl overflow-hidden">
+        <div className="border border-gray-200 rounded overflow-hidden">
           <table className="w-full text-left text-sm text-gray-600">
             <thead className="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase tracking-wider">
               <tr>
@@ -313,13 +313,13 @@ const CustomerInvoiceDetails = () => {
                 <p className="whitespace-pre-line">{invoice.terms}</p>
               </div>
             )}
-            <div className="flex items-center gap-2 text-emerald-700 bg-emerald-50 p-3 rounded-lg border border-emerald-100 mt-2">
+            <div className="flex items-center gap-2 text-emerald-700 bg-emerald-50 p-3 rounded border border-emerald-100 mt-2">
               <ShieldCheck className="w-4 h-4 shrink-0" />
               <span>Payments are processed with 256-bit encryption through Razorpay PCI-DSS compliant checkout.</span>
             </div>
           </div>
 
-          <div className="w-full md:w-72 bg-gray-50 p-5 rounded-xl border border-gray-200 space-y-2 text-sm">
+          <div className="w-full md:w-72 bg-gray-50 p-5 rounded border border-gray-200 space-y-2 text-sm">
             <div className="flex justify-between text-gray-600">
               <span>Subtotal:</span>
               <span>₹{Number(invoice.subtotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
@@ -363,7 +363,7 @@ const CustomerInvoiceDetails = () => {
               {invoice.payments.map((p) => (
                 <div
                   key={p.id}
-                  className="p-3 bg-gray-50 border border-gray-200 rounded-lg text-xs flex justify-between items-center"
+                  className="p-3 bg-gray-50 border border-gray-200 rounded text-xs flex justify-between items-center"
                 >
                   <div>
                     <span className="font-semibold text-gray-900">{p.paymentNumber}</span>

@@ -70,16 +70,16 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-10">
       {/* Welcome Banner */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="bg-[#edf6f0] rounded border border-[#c4ded0] p-6 shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-blue-600 text-sm font-semibold mb-1">
+          <div className="flex items-center gap-2 text-[#1c532e] text-sm font-semibold mb-1">
             <ShieldCheck className="w-4 h-4" />
             <span>Executive Business Command Center</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-[#143d22]">
             Welcome back, {user?.name || 'Administrator'}
           </h1>
-          <p className="text-gray-500 text-sm mt-1">
+          <p className="text-[#355b42] text-sm mt-1">
             Real-time subscription ARR, billing lifecycle, customer health, and financial reconciliations.
           </p>
         </div>
@@ -88,14 +88,14 @@ const AdminDashboard = () => {
           <button
             onClick={fetchStats}
             disabled={loading}
-            className="p-2 text-gray-500 hover:text-gray-700 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition shadow-sm"
+            className="p-2 text-gray-500 hover:text-gray-700 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 transition shadow-sm"
             title="Refresh statistics"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
           <Link
             to="/admin/reports"
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition shadow-sm"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-sm font-semibold transition shadow-sm"
           >
             <BarChart3 className="w-4 h-4" />
             <span>Open Reports & Analytics</span>
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
       {/* Primary Financial Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* Net Revenue */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+        <div className="bg-white rounded border border-[#cde2d4] p-5 shadow-xs">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Net Revenue Collected</p>
@@ -114,7 +114,7 @@ const AdminDashboard = () => {
                 {loading ? '...' : `₹${(stats?.financials?.netRevenue || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`}
               </h3>
             </div>
-            <div className="w-11 h-11 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+            <div className="w-11 h-11 bg-emerald-50 text-emerald-600 rounded flex items-center justify-center">
               <DollarSign className="w-5 h-5" />
             </div>
           </div>
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Active Subscriptions */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+        <div className="bg-white rounded border border-[#cde2d4] p-5 shadow-xs">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Active Subscriptions</p>
@@ -137,7 +137,7 @@ const AdminDashboard = () => {
                 {loading ? '...' : stats?.subscriptions?.active || 0}
               </h3>
             </div>
-            <div className="w-11 h-11 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+            <div className="w-11 h-11 bg-indigo-50 text-indigo-600 rounded flex items-center justify-center">
               <Repeat className="w-5 h-5" />
             </div>
           </div>
@@ -152,7 +152,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Outstanding Receivables */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+        <div className="bg-white rounded border border-[#cde2d4] p-5 shadow-xs">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Outstanding Balance</p>
@@ -160,7 +160,7 @@ const AdminDashboard = () => {
                 {loading ? '...' : `₹${(stats?.financials?.totalOutstandingAmount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`}
               </h3>
             </div>
-            <div className="w-11 h-11 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center">
+            <div className="w-11 h-11 bg-amber-50 text-amber-600 rounded flex items-center justify-center">
               <Receipt className="w-5 h-5" />
             </div>
           </div>
@@ -175,7 +175,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Total Customers */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+        <div className="bg-white rounded border border-[#cde2d4] p-5 shadow-xs">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Customers</p>
@@ -183,7 +183,7 @@ const AdminDashboard = () => {
                 {loading ? '...' : stats?.customers?.total || 0}
               </h3>
             </div>
-            <div className="w-11 h-11 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
+            <div className="w-11 h-11 bg-blue-50 text-blue-600 rounded flex items-center justify-center">
               <UserCheck className="w-5 h-5" />
             </div>
           </div>
@@ -200,8 +200,8 @@ const AdminDashboard = () => {
 
       {/* Secondary Operational Metric Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+        <div className="bg-white p-4 rounded border border-gray-200 shadow-sm flex items-center gap-3">
+          <div className="w-9 h-9 rounded bg-blue-50 text-blue-600 flex items-center justify-center">
             <Package className="w-4 h-4" />
           </div>
           <div>
@@ -212,8 +212,8 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+        <div className="bg-white p-4 rounded border border-gray-200 shadow-sm flex items-center gap-3">
+          <div className="w-9 h-9 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center">
             <FileText className="w-4 h-4" />
           </div>
           <div>
@@ -224,8 +224,8 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+        <div className="bg-white p-4 rounded border border-gray-200 shadow-sm flex items-center gap-3">
+          <div className="w-9 h-9 rounded bg-amber-50 text-amber-600 flex items-center justify-center">
             <CalendarClock className="w-4 h-4" />
           </div>
           <div>
@@ -236,8 +236,8 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+        <div className="bg-white p-4 rounded border border-gray-200 shadow-sm flex items-center gap-3">
+          <div className="w-9 h-9 rounded bg-emerald-50 text-emerald-600 flex items-center justify-center">
             <CreditCard className="w-4 h-4" />
           </div>
           <div>
@@ -252,7 +252,7 @@ const AdminDashboard = () => {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Revenue Trend Area Chart (2 cols) */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6 shadow-sm space-y-4">
+        <div className="lg:col-span-2 bg-white rounded border border-gray-200 p-6 shadow-sm space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <div>
               <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
@@ -262,7 +262,7 @@ const AdminDashboard = () => {
               <p className="text-xs text-gray-500">Gross revenue receipts minus processed refunds (INR)</p>
             </div>
 
-            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg">
+            <div className="flex items-center gap-1 bg-gray-100 p-1 rounded">
               <button
                 onClick={() => setChartRange('6')}
                 className={`px-2.5 py-1 text-xs font-semibold rounded-md transition ${
@@ -332,7 +332,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Subscription Status Distribution (1 col) */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm space-y-4 flex flex-col justify-between">
+        <div className="bg-white rounded border border-gray-200 p-6 shadow-sm space-y-4 flex flex-col justify-between">
           <div>
             <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
               <Repeat className="w-4 h-4 text-indigo-600" />
@@ -375,10 +375,10 @@ const AdminDashboard = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-xs pt-3 border-t border-gray-100">
-            <div className="bg-emerald-50 text-emerald-800 p-2 rounded-lg text-center font-medium">
+            <div className="bg-emerald-50 text-emerald-800 p-2 rounded text-center font-medium">
               {stats?.subscriptions?.active || 0} Active
             </div>
-            <div className="bg-amber-50 text-amber-800 p-2 rounded-lg text-center font-medium">
+            <div className="bg-amber-50 text-amber-800 p-2 rounded text-center font-medium">
               {stats?.subscriptions?.paused || 0} Paused
             </div>
           </div>
@@ -386,7 +386,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* Activity Logs Stream */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-blue-600" />
@@ -400,7 +400,7 @@ const AdminDashboard = () => {
             stats.recentActivities.map((act) => (
               <div key={act.id} className="p-4 hover:bg-gray-50 flex items-start justify-between gap-4 transition">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-8 h-8 rounded bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
                     <CheckCircle className="w-4 h-4" />
                   </div>
                   <div>

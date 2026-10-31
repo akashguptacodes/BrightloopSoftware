@@ -112,7 +112,7 @@ const CustomerQuotationDetails = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate('/customer/quotations')}
-            className="p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition text-gray-600"
+            className="p-2 border border-gray-200 rounded hover:bg-gray-100 transition text-gray-600"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -122,7 +122,7 @@ const CustomerQuotationDetails = () => {
                 {quotation.quotationNumber}
               </h1>
               <span
-                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                className={`px-2.5 py-0.5 rounded text-xs font-semibold border ${
                   statusBadges[quotation.status] || 'bg-gray-100 text-gray-700'
                 }`}
               >
@@ -144,7 +144,7 @@ const CustomerQuotationDetails = () => {
             <button
               onClick={() => setIsRejectModalOpen(true)}
               disabled={actionLoading}
-              className="inline-flex items-center gap-1.5 px-4 py-2 border border-red-300 text-red-600 hover:bg-red-50 rounded-lg text-sm font-medium transition disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 border border-red-300 text-red-600 hover:bg-red-50 rounded text-sm font-medium transition disabled:opacity-50"
             >
               <XCircle className="w-4 h-4" />
               <span>Decline</span>
@@ -152,7 +152,7 @@ const CustomerQuotationDetails = () => {
             <button
               onClick={handleAccept}
               disabled={actionLoading}
-              className="inline-flex items-center gap-1.5 px-5 py-2 bg-emerald-600 text-white hover:bg-emerald-700 rounded-lg text-sm font-medium transition shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-5 py-2 bg-emerald-600 text-white hover:bg-emerald-700 rounded text-sm font-medium transition shadow-sm disabled:opacity-50"
             >
               <CheckCircle className="w-4 h-4" />
               <span>Approve Quotation</span>
@@ -163,7 +163,7 @@ const CustomerQuotationDetails = () => {
 
       {/* Status Alert Banner */}
       {quotation.status === 'ACCEPTED' && (
-        <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center gap-3 text-emerald-800 text-sm">
+        <div className="bg-emerald-50 border border-emerald-200 p-4 rounded flex items-center gap-3 text-emerald-800 text-sm">
           <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
           <div>
             <span className="font-bold">Quotation Approved!</span> Our team is preparing your subscription activation.
@@ -172,7 +172,7 @@ const CustomerQuotationDetails = () => {
       )}
 
       {quotation.status === 'CONVERTED' && (
-        <div className="bg-purple-50 border border-purple-200 p-4 rounded-xl flex items-center gap-3 text-purple-800 text-sm">
+        <div className="bg-purple-50 border border-purple-200 p-4 rounded flex items-center gap-3 text-purple-800 text-sm">
           <ShieldCheck className="w-5 h-5 text-purple-600 shrink-0" />
           <div>
             <span className="font-bold">Contract Active!</span> This quotation has been converted into an active recurring subscription.
@@ -181,7 +181,7 @@ const CustomerQuotationDetails = () => {
       )}
 
       {isExpired && quotation.status !== 'CONVERTED' && quotation.status !== 'ACCEPTED' && (
-        <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-center gap-3 text-amber-800 text-sm">
+        <div className="bg-amber-50 border border-amber-200 p-4 rounded flex items-center gap-3 text-amber-800 text-sm">
           <Clock className="w-5 h-5 text-amber-600 shrink-0" />
           <div>
             <span className="font-bold">Quotation Expired.</span> The validity date for this proposal has passed. Please contact our sales team for an updated quote.
@@ -190,7 +190,7 @@ const CustomerQuotationDetails = () => {
       )}
 
       {/* Itemized Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200">
           <h3 className="font-bold text-gray-900 text-base">Proposed Services & Products</h3>
         </div>
@@ -247,7 +247,7 @@ const CustomerQuotationDetails = () => {
             {quotation.customerNotes && (
               <div>
                 <span className="font-semibold text-gray-700 block mb-0.5">Note from Brightloop:</span>
-                <p className="text-gray-600 bg-white p-2.5 rounded-lg border border-gray-200">
+                <p className="text-gray-600 bg-white p-2.5 rounded border border-gray-200">
                   {quotation.customerNotes}
                 </p>
               </div>
@@ -255,14 +255,14 @@ const CustomerQuotationDetails = () => {
             {quotation.termsAndConditions && (
               <div>
                 <span className="font-semibold text-gray-700 block mb-0.5">Terms and Conditions:</span>
-                <p className="text-gray-600 bg-white p-2.5 rounded-lg border border-gray-200 whitespace-pre-line">
+                <p className="text-gray-600 bg-white p-2.5 rounded border border-gray-200 whitespace-pre-line">
                   {quotation.termsAndConditions}
                 </p>
               </div>
             )}
           </div>
 
-          <div className="w-full md:w-80 bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-2 text-sm">
+          <div className="w-full md:w-80 bg-white p-4 rounded border border-gray-200 shadow-sm space-y-2 text-sm">
             <div className="flex justify-between text-gray-600">
               <span>Subtotal:</span>
               <span className="font-semibold text-gray-900 font-mono">
@@ -294,7 +294,7 @@ const CustomerQuotationDetails = () => {
       {/* Decline Modal */}
       {isRejectModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-md p-6 space-y-4">
+          <div className="bg-white rounded shadow-xl border border-gray-200 w-full max-w-md p-6 space-y-4">
             <div className="flex justify-between items-center border-b pb-3">
               <h3 className="font-bold text-gray-900">Decline Quotation</h3>
               <button onClick={() => setIsRejectModalOpen(false)}>
@@ -311,21 +311,21 @@ const CustomerQuotationDetails = () => {
                   value={rejectReason}
                   onChange={(e) => setRejectReason(e.target.value)}
                   placeholder="e.g. Budget constraints, different feature requirements..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 ></textarea>
               </div>
               <div className="flex justify-end gap-2 pt-2">
                 <button
                   type="button"
                   onClick={() => setIsRejectModalOpen(false)}
-                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium"
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded hover:bg-red-700 font-medium"
                 >
                   {actionLoading ? 'Submitting...' : 'Confirm Decline'}
                 </button>

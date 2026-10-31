@@ -91,7 +91,7 @@ const Invoices = ({ basePath = '/admin' }) => {
         <div className="flex items-center gap-3">
           <Link
             to={`${basePath}/invoices/create`}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded shadow-sm transition-colors"
           >
             <Plus className="w-4 h-4" />
             Create Invoice
@@ -100,7 +100,7 @@ const Invoices = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white p-4 rounded border border-gray-200 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -108,7 +108,7 @@ const Invoices = ({ basePath = '/admin' }) => {
             placeholder="Search by invoice number, customer name, email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
@@ -116,7 +116,7 @@ const Invoices = ({ basePath = '/admin' }) => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+            className="px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
           >
             <option value="">All Invoice Statuses</option>
             <option value="DRAFT">Draft (Unissued)</option>
@@ -143,7 +143,7 @@ const Invoices = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-gray-500">
             <div className="animate-spin w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full mx-auto mb-4"></div>
@@ -238,7 +238,7 @@ const Invoices = ({ basePath = '/admin' }) => {
                       </td>
                       <td className="px-6 py-4 text-center">
                         <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium border ${
                             statusBadges[inv.status] || 'bg-gray-100 text-gray-800'
                           }`}
                         >
@@ -251,13 +251,13 @@ const Invoices = ({ basePath = '/admin' }) => {
                             onClick={(e) => handleDownloadPdf(e, inv)}
                             disabled={downloadingId === inv.id}
                             title="Download PDF"
-                            className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+                            className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded transition"
                           >
                             <Download className="w-4 h-4" />
                           </button>
                           <Link
                             to={`${basePath}/invoices/${inv.id}`}
-                            className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+                            className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded transition"
                             title="View Details"
                           >
                             <Eye className="w-4 h-4" />

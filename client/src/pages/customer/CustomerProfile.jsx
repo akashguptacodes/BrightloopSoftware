@@ -111,7 +111,7 @@ const CustomerProfile = () => {
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-10">
       {/* Header Banner */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="bg-white rounded border border-gray-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-blue-600 text-sm font-semibold mb-1">
             <User className="w-4 h-4" />
@@ -127,11 +127,11 @@ const CustomerProfile = () => {
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
           {customer?.customerCode && (
-            <div className="px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-800 rounded-lg text-xs font-mono font-bold">
+            <div className="px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-800 rounded text-xs font-mono font-bold">
               ID: {customer.customerCode}
             </div>
           )}
-          <span className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-semibold">
+          <span className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded text-xs font-semibold">
             Active Account
           </span>
         </div>
@@ -139,8 +139,8 @@ const CustomerProfile = () => {
 
       {/* Account Info Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3 shadow-sm">
-          <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+        <div className="bg-white rounded border border-gray-200 p-4 flex items-center gap-3 shadow-sm">
+          <div className="w-10 h-10 rounded bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
             <Mail className="w-5 h-5" />
           </div>
           <div className="min-w-0">
@@ -152,8 +152,8 @@ const CustomerProfile = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3 shadow-sm">
-          <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+        <div className="bg-white rounded border border-gray-200 p-4 flex items-center gap-3 shadow-sm">
+          <div className="w-10 h-10 rounded bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
             <Shield className="w-5 h-5" />
           </div>
           <div>
@@ -165,8 +165,8 @@ const CustomerProfile = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3 shadow-sm">
-          <div className="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+        <div className="bg-white rounded border border-gray-200 p-4 flex items-center gap-3 shadow-sm">
+          <div className="w-10 h-10 rounded bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
             <Calendar className="w-5 h-5" />
           </div>
           <div>
@@ -182,7 +182,7 @@ const CustomerProfile = () => {
       {/* Edit Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Section 1: Contact & Company */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div className="bg-white rounded border border-gray-200 p-6 shadow-sm">
           <h2 className="text-base font-bold text-gray-900 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
             <Building className="w-4 h-4 text-blue-600" />
             Company & Contact Details
@@ -200,7 +200,7 @@ const CustomerProfile = () => {
                 onChange={handleChange}
                 required
                 placeholder="e.g. Akash Gupta"
-                className="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -214,7 +214,7 @@ const CustomerProfile = () => {
                 value={formData.companyName}
                 onChange={handleChange}
                 placeholder="e.g. Acme Tech Solutions"
-                className="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -230,7 +230,7 @@ const CustomerProfile = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+91 9876543210"
-                  className="w-full pl-9 pr-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-9 pr-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -247,7 +247,7 @@ const CustomerProfile = () => {
                   value={formData.alternatePhone}
                   onChange={handleChange}
                   placeholder="Optional alternate line"
-                  className="w-full pl-9 pr-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-9 pr-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -264,7 +264,7 @@ const CustomerProfile = () => {
                   value={formData.taxIdentificationNumber}
                   onChange={handleChange}
                   placeholder="e.g. 29ABCDE1234F1Z5"
-                  className="w-full pl-9 pr-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-9 pr-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <p className="text-xs text-gray-400 mt-1">
@@ -275,7 +275,7 @@ const CustomerProfile = () => {
         </div>
 
         {/* Section 2: Addresses */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div className="bg-white rounded border border-gray-200 p-6 shadow-sm">
           <div className="flex items-center justify-between pb-2 border-b border-gray-100 mb-4">
             <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
               <MapPin className="w-4 h-4 text-blue-600" />
@@ -302,7 +302,7 @@ const CustomerProfile = () => {
                 value={formData.billingAddress}
                 onChange={handleChange}
                 placeholder="Street address, building, suite..."
-                className="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full px-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               ></textarea>
             </div>
 
@@ -316,7 +316,7 @@ const CustomerProfile = () => {
                 value={formData.shippingAddress}
                 onChange={handleChange}
                 placeholder="Shipping or operational facility address..."
-                className="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full px-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               ></textarea>
             </div>
 
@@ -330,7 +330,7 @@ const CustomerProfile = () => {
                 value={formData.city}
                 onChange={handleChange}
                 placeholder="e.g. Bangalore"
-                className="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -344,7 +344,7 @@ const CustomerProfile = () => {
                 value={formData.state}
                 onChange={handleChange}
                 placeholder="e.g. Karnataka"
-                className="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -358,7 +358,7 @@ const CustomerProfile = () => {
                 value={formData.postalCode}
                 onChange={handleChange}
                 placeholder="e.g. 560001"
-                className="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -372,7 +372,7 @@ const CustomerProfile = () => {
                 value={formData.country}
                 onChange={handleChange}
                 placeholder="e.g. India"
-                className="w-full px-3.5 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -384,14 +384,14 @@ const CustomerProfile = () => {
             type="button"
             onClick={fetchProfile}
             disabled={saving}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 bg-white hover:bg-gray-50 transition"
+            className="px-4 py-2 border border-gray-300 rounded text-sm font-semibold text-gray-700 bg-white hover:bg-gray-50 transition"
           >
             Reset
           </button>
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition shadow-sm disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-semibold transition shadow-sm disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             <span>{saving ? 'Saving Changes...' : 'Save Profile Changes'}</span>

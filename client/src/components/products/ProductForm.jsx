@@ -49,7 +49,7 @@ const ProductForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-200 max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div className="bg-white rounded shadow-xl border border-gray-200 max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
           <div className="flex items-center gap-2">
             <Package className="w-5 h-5 text-blue-600" />
@@ -59,7 +59,7 @@ const ProductForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 rounded-lg p-1 transition"
+            className="text-gray-400 hover:text-gray-600 rounded p-1 transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -76,7 +76,7 @@ const ProductForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
               placeholder="e.g., Inventory Pro, BrightERP"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
 
@@ -86,7 +86,7 @@ const ProductForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
               <select
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
               >
                 <option value="SOFTWARE">SOFTWARE</option>
                 <option value="SERVICE">SERVICE</option>
@@ -106,7 +106,7 @@ const ProductForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
                 placeholder="1000.00"
                 value={formData.salesPrice}
                 onChange={(e) => setFormData({ ...formData, salesPrice: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
           </div>
@@ -121,7 +121,7 @@ const ProductForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
                 placeholder="400.00"
                 value={formData.costPrice}
                 onChange={(e) => setFormData({ ...formData, costPrice: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
 
@@ -145,7 +145,7 @@ const ProductForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
               placeholder="Brief summary of what this software or service delivers..."
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
 
@@ -156,7 +156,7 @@ const ProductForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
               placeholder="Internal business or accounting notes..."
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
 
@@ -165,14 +165,14 @@ const ProductForm = ({ isOpen, onClose, onSubmit, initialData = null, loading = 
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition shadow-sm disabled:opacity-50"
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition shadow-sm disabled:opacity-50"
             >
               {loading ? 'Saving...' : initialData ? 'Update Product' : 'Create Product'}
             </button>

@@ -54,7 +54,7 @@ const CustomerSubscriptions = () => {
         </p>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         {loading ? (
           <div className="py-20 text-center text-gray-500">Loading subscriptions...</div>
         ) : subscriptions.length === 0 ? (
@@ -108,7 +108,7 @@ const CustomerSubscriptions = () => {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold border ${
                           statusBadges[s.status] || 'bg-gray-100 text-gray-700'
                         }`}
                       >
@@ -118,7 +118,7 @@ const CustomerSubscriptions = () => {
                     <td className="px-6 py-4 text-right">
                       <Link
                         to={`/customer/subscriptions/${s.id}`}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg text-xs font-medium transition"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded text-xs font-medium transition"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>View</span>

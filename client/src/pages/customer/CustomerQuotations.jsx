@@ -53,7 +53,7 @@ const CustomerQuotations = () => {
         </p>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         {loading ? (
           <div className="py-20 text-center text-gray-500">Loading your quotations...</div>
         ) : quotations.length === 0 ? (
@@ -99,7 +99,7 @@ const CustomerQuotations = () => {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold border ${
                           statusBadges[q.status] || 'bg-gray-100 text-gray-700'
                         }`}
                       >
@@ -109,7 +109,7 @@ const CustomerQuotations = () => {
                     <td className="px-6 py-4 text-right">
                       <Link
                         to={`/customer/quotations/${q.id}`}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg text-xs font-medium transition"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded text-xs font-medium transition"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>Review</span>

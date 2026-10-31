@@ -136,7 +136,7 @@ const Products = () => {
         {isAdmin && (
           <button
             onClick={handleOpenAdd}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition shadow-sm w-fit"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-semibold transition shadow-sm w-fit"
           >
             <Plus className="w-4 h-4" />
             <span>Add New Product</span>
@@ -145,14 +145,14 @@ const Products = () => {
       </div>
 
       {/* Filters Bar */}
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-3">
+      <div className="bg-white p-4 rounded border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-3">
         <form onSubmit={handleSearchSubmit} className="relative w-full md:w-80">
           <input
             type="text"
             placeholder="Search products by name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-4 py-2 rounded border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
         </form>
@@ -164,7 +164,7 @@ const Products = () => {
               setSelectedType(e.target.value);
               setPage(1);
             }}
-            className="px-3 py-2 rounded-lg border border-gray-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-2 rounded border border-gray-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Types</option>
             <option value="SOFTWARE">Software</option>
@@ -178,7 +178,7 @@ const Products = () => {
               setSelectedStatus(e.target.value);
               setPage(1);
             }}
-            className="px-3 py-2 rounded-lg border border-gray-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-2 rounded border border-gray-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All Statuses</option>
             <option value="true">Active Only</option>
@@ -188,7 +188,7 @@ const Products = () => {
           <button
             onClick={fetchProducts}
             disabled={loading}
-            className="p-2 text-gray-500 hover:text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition"
+            className="p-2 text-gray-500 hover:text-gray-700 border border-gray-200 rounded hover:bg-gray-50 transition"
             title="Refresh"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -197,7 +197,7 @@ const Products = () => {
       </div>
 
       {/* Table Card */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         <ProductTable
           products={products}
           loading={loading}

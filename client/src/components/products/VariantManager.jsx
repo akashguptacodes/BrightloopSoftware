@@ -91,7 +91,7 @@ const VariantManager = ({ productId, baseSalesPrice = 0, variants = [], onVarian
   const basePriceNum = Number(baseSalesPrice || 0);
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+    <div className="bg-white rounded border border-gray-200 p-6 shadow-sm">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <div>
           <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
@@ -106,7 +106,7 @@ const VariantManager = ({ productId, baseSalesPrice = 0, variants = [], onVarian
         {isAdmin && (
           <button
             onClick={openAddModal}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold transition shadow-sm w-fit"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold transition shadow-sm w-fit"
           >
             <Plus className="w-4 h-4" />
             <span>Add Variant</span>
@@ -115,7 +115,7 @@ const VariantManager = ({ productId, baseSalesPrice = 0, variants = [], onVarian
       </div>
 
       {variants.length === 0 ? (
-        <div className="p-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-200">
+        <div className="p-8 text-center bg-gray-50 rounded border border-dashed border-gray-200">
           <Tag className="w-8 h-8 text-gray-300 mx-auto mb-2" />
           <p className="text-sm font-medium text-gray-700">No variants configured</p>
           <p className="text-xs text-gray-400 mt-0.5">
@@ -156,7 +156,7 @@ const VariantManager = ({ productId, baseSalesPrice = 0, variants = [], onVarian
                     </td>
                     <td className="px-4 py-3">
                       <span
-                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                        className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold ${
                           variant.isActive
                             ? 'bg-emerald-50 text-emerald-700'
                             : 'bg-red-50 text-red-700'
@@ -205,7 +205,7 @@ const VariantManager = ({ productId, baseSalesPrice = 0, variants = [], onVarian
       {/* Variant Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 max-w-sm w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+          <div className="bg-white rounded shadow-xl border border-gray-200 max-w-sm w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-200 bg-gray-50">
               <h4 className="font-bold text-gray-900 text-sm">
                 {editingVariant ? 'Edit Variant' : 'Add Product Variant'}
@@ -229,7 +229,7 @@ const VariantManager = ({ productId, baseSalesPrice = 0, variants = [], onVarian
                   placeholder="e.g., Brand"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
               </div>
 
@@ -243,7 +243,7 @@ const VariantManager = ({ productId, baseSalesPrice = 0, variants = [], onVarian
                   placeholder="e.g., Odoo"
                   value={formData.value}
                   onChange={(e) => setFormData({ ...formData, value: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
               </div>
 
@@ -259,7 +259,7 @@ const VariantManager = ({ productId, baseSalesPrice = 0, variants = [], onVarian
                   placeholder="560.00"
                   value={formData.additionalPrice}
                   onChange={(e) => setFormData({ ...formData, additionalPrice: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
                 <p className="text-[11px] text-gray-400 mt-1">
                   Resulting unit price: ₹
@@ -286,14 +286,14 @@ const VariantManager = ({ productId, baseSalesPrice = 0, variants = [], onVarian
                   type="button"
                   onClick={() => setIsModalOpen(false)}
                   disabled={submitting}
-                  className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+                  className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-3.5 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition shadow-sm disabled:opacity-50"
+                  className="px-3.5 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition shadow-sm disabled:opacity-50"
                 >
                   {submitting ? 'Saving...' : editingVariant ? 'Update' : 'Add Variant'}
                 </button>

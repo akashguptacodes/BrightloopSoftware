@@ -44,7 +44,7 @@ const CustomerPayments = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-gray-500">
             <div className="animate-spin w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full mx-auto mb-4"></div>
@@ -102,7 +102,7 @@ const CustomerPayments = () => {
                       ₹{Number(p.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                         {p.status}
                       </span>
                     </td>

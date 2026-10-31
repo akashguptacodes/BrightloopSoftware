@@ -240,7 +240,7 @@ const CreateInvoice = ({ basePath = '/admin' }) => {
         Back to Invoices
       </Link>
 
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 sm:p-8">
+      <div className="bg-white rounded border border-gray-200 shadow-sm p-6 sm:p-8">
         <div className="border-b border-gray-100 pb-5 mb-6">
           <div className="flex items-center gap-2 text-indigo-600 text-sm font-semibold mb-1">
             <Receipt className="w-4 h-4" />
@@ -254,7 +254,7 @@ const CreateInvoice = ({ basePath = '/admin' }) => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Header Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50/70 p-5 rounded-xl border border-gray-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50/70 p-5 rounded border border-gray-200">
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
                 Customer *
@@ -263,7 +263,7 @@ const CreateInvoice = ({ basePath = '/admin' }) => {
                 value={customerId}
                 onChange={(e) => setCustomerId(e.target.value)}
                 required
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
               >
                 <option value="">-- Choose Customer --</option>
                 {customers.map((c) => (
@@ -283,7 +283,7 @@ const CreateInvoice = ({ basePath = '/admin' }) => {
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
                 required
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
               />
             </div>
           </div>
@@ -310,7 +310,7 @@ const CreateInvoice = ({ basePath = '/admin' }) => {
               return (
                 <div
                   key={idx}
-                  className="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-4 relative"
+                  className="p-4 bg-gray-50 rounded border border-gray-200 space-y-4 relative"
                 >
                   <div className="flex items-center justify-between text-xs font-semibold text-gray-500 border-b border-gray-200 pb-2">
                     <span>Line Item #{idx + 1}</span>
@@ -459,7 +459,7 @@ const CreateInvoice = ({ basePath = '/admin' }) => {
           </div>
 
           {/* Totals Summary Card */}
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-200 flex flex-col md:flex-row justify-between items-start gap-6">
+          <div className="bg-gray-50 rounded p-5 border border-gray-200 flex flex-col md:flex-row justify-between items-start gap-6">
             <div className="space-y-3 w-full md:w-1/2">
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Internal Notes</label>
@@ -483,7 +483,7 @@ const CreateInvoice = ({ basePath = '/admin' }) => {
               </div>
             </div>
 
-            <div className="w-full md:w-72 bg-white p-4 rounded-lg border border-gray-200 space-y-2 text-sm">
+            <div className="w-full md:w-72 bg-white p-4 rounded border border-gray-200 space-y-2 text-sm">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal:</span>
                 <span>₹{calculations.subtotal.toFixed(2)}</span>
@@ -507,14 +507,14 @@ const CreateInvoice = ({ basePath = '/admin' }) => {
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
             <Link
               to={`${basePath}/invoices`}
-              className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
+              className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded hover:bg-gray-50 transition"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center gap-2 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded shadow-sm transition disabled:opacity-50"
             >
               {loading ? (
                 <>

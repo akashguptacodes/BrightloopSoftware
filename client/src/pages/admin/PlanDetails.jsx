@@ -42,7 +42,7 @@ const PlanDetails = () => {
 
   if (!plan) {
     return (
-      <div className="p-12 text-center max-w-7xl mx-auto bg-white rounded-xl border border-gray-200">
+      <div className="p-12 text-center max-w-7xl mx-auto bg-white rounded border border-gray-200">
         <Repeat className="w-12 h-12 text-gray-300 mx-auto mb-3" />
         <h3 className="text-base font-semibold text-gray-900">Plan Not Found</h3>
         <Link
@@ -86,7 +86,7 @@ const PlanDetails = () => {
       </div>
 
       {/* Main Info */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      <div className="bg-white rounded border border-gray-200 p-6 shadow-sm">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 border-b border-gray-100 pb-5">
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
@@ -99,7 +99,7 @@ const PlanDetails = () => {
             </p>
           </div>
 
-          <div className="bg-blue-50 p-4 rounded-xl border border-blue-200 min-w-[200px] text-right">
+          <div className="bg-blue-50 p-4 rounded border border-blue-200 min-w-[200px] text-right">
             <span className="text-xs text-blue-600 font-semibold block uppercase tracking-wider">
               Recurring Price
             </span>
@@ -141,18 +141,18 @@ const PlanDetails = () => {
       </div>
 
       {/* Associated Product Section */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      <div className="bg-white rounded border border-gray-200 p-6 shadow-sm">
         <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-3">
           <Package className="w-5 h-5 text-blue-600" />
           <span>Product Core & Base Specification</span>
         </h3>
 
         {plan.product ? (
-          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="p-4 bg-gray-50 rounded border border-gray-200 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
                 <h4 className="font-bold text-base text-gray-900">{plan.product.name}</h4>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-semibold">
+                <span className="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">
                   {plan.product.type}
                 </span>
               </div>
@@ -173,7 +173,7 @@ const PlanDetails = () => {
       </div>
 
       {/* Lifecycle Policies */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      <div className="bg-white rounded border border-gray-200 p-6 shadow-sm">
         <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
           <ShieldCheck className="w-5 h-5 text-blue-600" />
           <span>Subscription Lifecycle Policies</span>
@@ -181,7 +181,7 @@ const PlanDetails = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {policies.map((p, idx) => (
-            <div key={idx} className="p-4 rounded-xl border border-gray-100 bg-gray-50 flex items-start gap-3">
+            <div key={idx} className="p-4 rounded border border-gray-100 bg-gray-50 flex items-start gap-3">
               {p.enabled ? (
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
               ) : (

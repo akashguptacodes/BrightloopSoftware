@@ -76,7 +76,7 @@ const PlanTable = ({
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold border ${
                       freqBadges[plan.billingFrequency] || 'bg-gray-100 text-gray-700'
                     }`}
                   >
@@ -94,7 +94,7 @@ const PlanTable = ({
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold ${
                       plan.isActive
                         ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                         : 'bg-red-50 text-red-700 border border-red-200'
@@ -107,7 +107,7 @@ const PlanTable = ({
                   <div className="flex items-center justify-end gap-1.5">
                     <Link
                       to={`${baseDetailUrl}/${plan.id}`}
-                      className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                      className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition"
                       title="View Plan Details"
                     >
                       <Eye className="w-4 h-4" />
@@ -117,14 +117,14 @@ const PlanTable = ({
                       <>
                         <button
                           onClick={() => onEdit(plan)}
-                          className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+                          className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded transition"
                           title="Edit Plan"
                         >
                           <Edit3 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => onToggleStatus(plan)}
-                          className={`p-1.5 rounded-lg transition ${
+                          className={`p-1.5 rounded transition ${
                             plan.isActive
                               ? 'text-gray-500 hover:text-red-600 hover:bg-red-50'
                               : 'text-gray-500 hover:text-emerald-600 hover:bg-emerald-50'
@@ -135,7 +135,7 @@ const PlanTable = ({
                         </button>
                         <button
                           onClick={() => onDelete(plan)}
-                          className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                          className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition"
                           title="Delete Plan"
                         >
                           <Trash2 className="w-4 h-4" />

@@ -100,14 +100,14 @@ const StaffManagement = () => {
           <button
             onClick={fetchStaff}
             disabled={loading}
-            className="p-2.5 text-gray-500 hover:text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition shadow-sm"
+            className="p-2.5 text-gray-500 hover:text-gray-700 bg-white border border-gray-200 rounded hover:bg-gray-50 transition shadow-sm"
             title="Refresh list"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-sm font-medium transition shadow-sm"
           >
             <UserPlus className="w-4 h-4" />
             <span>Add Staff Member</span>
@@ -116,7 +116,7 @@ const StaffManagement = () => {
       </div>
 
       {/* Staff Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-[#cde2d4] shadow-xs overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-gray-500">
             <div className="inline-block animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mb-2"></div>
@@ -131,7 +131,7 @@ const StaffManagement = () => {
             </p>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition"
+              className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-sm font-medium transition"
             >
               <UserPlus className="w-4 h-4" />
               <span>Create Staff Member</span>
@@ -158,13 +158,13 @@ const StaffManagement = () => {
                     </td>
                     <td className="px-6 py-4 text-gray-600">{staff.email}</td>
                     <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold bg-indigo-50 text-indigo-700">
                         {staff.role}
                       </span>
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold ${
                           staff.isActive
                             ? 'bg-emerald-50 text-emerald-700'
                             : 'bg-red-50 text-red-700'
@@ -199,7 +199,7 @@ const StaffManagement = () => {
       {/* Add Staff Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 max-w-md w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+          <div className="bg-white rounded shadow-xl border border-gray-200 max-w-md w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
               <div className="flex items-center gap-2">
                 <UserPlus className="w-5 h-5 text-blue-600" />
@@ -207,7 +207,7 @@ const StaffManagement = () => {
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600 rounded-lg p-1 transition"
+                className="text-gray-400 hover:text-gray-600 rounded p-1 transition"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -222,7 +222,7 @@ const StaffManagement = () => {
                   placeholder="e.g., Rajesh Kumar"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
               </div>
 
@@ -234,7 +234,7 @@ const StaffManagement = () => {
                   placeholder="e.g., rajesh@brightloop.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
               </div>
 
@@ -247,7 +247,7 @@ const StaffManagement = () => {
                     placeholder="Enter secure staff password"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className="w-full px-3.5 py-2.5 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-3.5 py-2.5 pr-10 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                   />
                   <button
                     type="button"
@@ -259,7 +259,7 @@ const StaffManagement = () => {
                 </div>
 
                 {/* Password validation indicators */}
-                <div className="mt-2.5 p-3 bg-gray-50 rounded-lg border border-gray-100 space-y-1 text-xs">
+                <div className="mt-2.5 p-3 bg-gray-50 rounded border border-gray-100 space-y-1 text-xs">
                   {passwordChecks.map((check, index) => (
                     <div key={index} className="flex items-center gap-1.5">
                       {check.valid ? (
@@ -279,14 +279,14 @@ const StaffManagement = () => {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition shadow-sm disabled:opacity-50"
+                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition shadow-sm disabled:opacity-50"
                 >
                   {submitting ? 'Creating...' : 'Create Staff Member'}
                 </button>

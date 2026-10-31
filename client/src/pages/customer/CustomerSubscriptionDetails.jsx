@@ -150,7 +150,7 @@ const CustomerSubscriptionDetails = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate('/customer/subscriptions')}
-            className="p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition text-gray-600"
+            className="p-2 border border-gray-200 rounded hover:bg-gray-100 transition text-gray-600"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -160,7 +160,7 @@ const CustomerSubscriptionDetails = () => {
                 {subscription.subscriptionNumber}
               </h1>
               <span
-                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                className={`px-2.5 py-0.5 rounded text-xs font-semibold border ${
                   statusBadges[subscription.status] || 'bg-gray-100 text-gray-700'
                 }`}
               >
@@ -179,7 +179,7 @@ const CustomerSubscriptionDetails = () => {
             <button
               onClick={handleResume}
               disabled={actionLoading}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-semibold transition shadow-sm disabled:opacity-50"
             >
               <Play className="w-3.5 h-3.5" />
               <span>Resume Service</span>
@@ -193,7 +193,7 @@ const CustomerSubscriptionDetails = () => {
                 setModalType('pause');
               }}
               disabled={actionLoading}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-semibold transition shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded text-xs font-semibold transition shadow-sm disabled:opacity-50"
             >
               <Pause className="w-3.5 h-3.5" />
               <span>Pause Service</span>
@@ -204,7 +204,7 @@ const CustomerSubscriptionDetails = () => {
             <button
               onClick={handleRenew}
               disabled={actionLoading}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold transition shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold transition shadow-sm disabled:opacity-50"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Renew Now</span>
@@ -218,7 +218,7 @@ const CustomerSubscriptionDetails = () => {
                 setModalType('cancel');
               }}
               disabled={actionLoading}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-red-200 text-red-600 hover:bg-red-50 rounded-lg text-xs font-semibold transition shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-red-200 text-red-600 hover:bg-red-50 rounded text-xs font-semibold transition shadow-sm disabled:opacity-50"
             >
               <XCircle className="w-3.5 h-3.5" />
               <span>Cancel Plan</span>
@@ -229,7 +229,7 @@ const CustomerSubscriptionDetails = () => {
 
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Billing Schedule
           </h3>
@@ -257,7 +257,7 @@ const CustomerSubscriptionDetails = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Plan & Policy Information
           </h3>
@@ -291,7 +291,7 @@ const CustomerSubscriptionDetails = () => {
       </div>
 
       {/* Items Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200">
           <h3 className="font-bold text-gray-900 text-base">Subscription Items</h3>
         </div>
@@ -337,7 +337,7 @@ const CustomerSubscriptionDetails = () => {
 
         {/* Pricing Summary */}
         <div className="p-6 bg-gray-50/70 border-t border-gray-200 flex justify-end">
-          <div className="w-full md:w-80 bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-2 text-sm">
+          <div className="w-full md:w-80 bg-white p-4 rounded border border-gray-200 shadow-sm space-y-2 text-sm">
             <div className="flex justify-between text-gray-600">
               <span>Subtotal:</span>
               <span className="font-semibold text-gray-900 font-mono">
@@ -368,7 +368,7 @@ const CustomerSubscriptionDetails = () => {
 
       {/* Subscription Audit Timeline */}
       {subscription.history && subscription.history.length > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-4">
+        <div className="bg-white rounded border border-gray-200 shadow-sm p-6 space-y-4">
           <div className="flex items-center gap-2 border-b border-gray-100 pb-3">
             <History className="w-4 h-4 text-indigo-600" />
             <h3 className="font-bold text-gray-900 text-base">Subscription History</h3>
@@ -388,7 +388,7 @@ const CustomerSubscriptionDetails = () => {
       {/* Pause Modal */}
       {modalType === 'pause' && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full p-6 shadow-xl space-y-4">
+          <div className="bg-white rounded max-w-md w-full p-6 shadow-xl space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
                 <Pause className="w-5 h-5" />
@@ -410,7 +410,7 @@ const CustomerSubscriptionDetails = () => {
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="e.g. Vacation, seasonal hiatus, project delay..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
               ></textarea>
             </div>
             <div className="flex justify-end gap-2 pt-2">
@@ -418,7 +418,7 @@ const CustomerSubscriptionDetails = () => {
                 type="button"
                 onClick={() => setModalType(null)}
                 disabled={actionLoading}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                className="px-4 py-2 border border-gray-300 rounded text-xs font-semibold text-gray-700 hover:bg-gray-50"
               >
                 Cancel
               </button>
@@ -426,7 +426,7 @@ const CustomerSubscriptionDetails = () => {
                 type="button"
                 onClick={handlePause}
                 disabled={actionLoading}
-                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold"
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded text-xs font-semibold"
               >
                 {actionLoading ? 'Pausing...' : 'Confirm Pause'}
               </button>
@@ -438,7 +438,7 @@ const CustomerSubscriptionDetails = () => {
       {/* Cancel Modal */}
       {modalType === 'cancel' && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full p-6 shadow-xl space-y-4">
+          <div className="bg-white rounded max-w-md w-full p-6 shadow-xl space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
                 <AlertTriangle className="w-5 h-5" />
@@ -460,7 +460,7 @@ const CustomerSubscriptionDetails = () => {
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="Let us know why you're cancelling..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"
               ></textarea>
             </div>
             <div className="flex justify-end gap-2 pt-2">
@@ -468,7 +468,7 @@ const CustomerSubscriptionDetails = () => {
                 type="button"
                 onClick={() => setModalType(null)}
                 disabled={actionLoading}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                className="px-4 py-2 border border-gray-300 rounded text-xs font-semibold text-gray-700 hover:bg-gray-50"
               >
                 Keep Active
               </button>
@@ -476,7 +476,7 @@ const CustomerSubscriptionDetails = () => {
                 type="button"
                 onClick={handleCancel}
                 disabled={actionLoading}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold"
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded text-xs font-semibold"
               >
                 {actionLoading ? 'Cancelling...' : 'Confirm Cancellation'}
               </button>

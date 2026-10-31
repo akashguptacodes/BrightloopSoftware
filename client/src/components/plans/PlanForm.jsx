@@ -73,7 +73,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-200 max-w-xl w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div className="bg-white rounded shadow-xl border border-gray-200 max-w-xl w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
           <div className="flex items-center gap-2">
             <Repeat className="w-5 h-5 text-blue-600" />
@@ -83,7 +83,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 rounded-lg p-1 transition"
+            className="text-gray-400 hover:text-gray-600 rounded p-1 transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -100,7 +100,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
               placeholder="e.g., Inventory Pro Monthly, Enterprise Annual"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
 
@@ -113,7 +113,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
                 required
                 value={formData.productId}
                 onChange={(e) => setFormData({ ...formData, productId: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
               >
                 <option value="">Select a product...</option>
                 {products.map((p) => (
@@ -136,7 +136,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
                 placeholder="1000.00"
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
           </div>
@@ -147,7 +147,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
               <select
                 value={formData.billingFrequency}
                 onChange={(e) => setFormData({ ...formData, billingFrequency: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
+                className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
               >
                 <option value="DAILY">Daily</option>
                 <option value="WEEKLY">Weekly</option>
@@ -165,7 +165,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
                 placeholder="1"
                 value={formData.billingInterval}
                 onChange={(e) => setFormData({ ...formData, billingInterval: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
 
@@ -178,7 +178,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
                 placeholder="1"
                 value={formData.minimumQuantity}
                 onChange={(e) => setFormData({ ...formData, minimumQuantity: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
           </div>
@@ -191,7 +191,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
                 required
                 value={formData.availableFrom}
                 onChange={(e) => setFormData({ ...formData, availableFrom: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
 
@@ -203,7 +203,7 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
                 type="date"
                 value={formData.availableUntil}
                 onChange={(e) => setFormData({ ...formData, availableUntil: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
           </div>
@@ -215,12 +215,12 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
               placeholder="Features, contract conditions, SLA, seat allocations..."
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
 
           {/* Policy Checklist */}
-          <div className="p-3.5 bg-gray-50 rounded-xl border border-gray-200 space-y-2 text-xs">
+          <div className="p-3.5 bg-gray-50 rounded border border-gray-200 space-y-2 text-xs">
             <span className="font-semibold text-gray-700 block text-xs">Plan Lifecycle & Renewal Policies</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -270,14 +270,14 @@ const PlanForm = ({ isOpen, onClose, onSubmit, products = [], initialData = null
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition shadow-sm disabled:opacity-50"
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition shadow-sm disabled:opacity-50"
             >
               {loading ? 'Saving...' : initialData ? 'Update Plan' : 'Create Plan'}
             </button>

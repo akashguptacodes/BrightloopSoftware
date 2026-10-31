@@ -153,7 +153,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(`${basePath}/quotations`)}
-            className="p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition text-gray-600"
+            className="p-2 border border-gray-200 rounded hover:bg-gray-100 transition text-gray-600"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -163,7 +163,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
                 {quotation.quotationNumber}
               </h1>
               <span
-                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                className={`px-2.5 py-0.5 rounded text-xs font-semibold border ${
                   statusBadges[quotation.status] || 'bg-gray-100 text-gray-700'
                 }`}
               >
@@ -183,7 +183,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
             <button
               onClick={handleSend}
               disabled={actionLoading}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
             >
               <Send className="w-4 h-4" />
               <span>Send Quotation Email</span>
@@ -195,7 +195,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
               <button
                 onClick={handleAccept}
                 disabled={actionLoading}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
               >
                 <CheckCircle className="w-4 h-4" />
                 <span>Mark Accepted</span>
@@ -203,7 +203,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
               <button
                 onClick={handleReject}
                 disabled={actionLoading}
-                className="inline-flex items-center gap-1.5 px-3 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition font-medium text-sm disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 px-3 py-2 border border-red-300 text-red-600 rounded hover:bg-red-50 transition font-medium text-sm disabled:opacity-50"
               >
                 <XCircle className="w-4 h-4" />
                 <span>Mark Rejected</span>
@@ -215,7 +215,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
             <button
               onClick={() => setIsConvertModalOpen(true)}
               disabled={actionLoading}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
             >
               <Repeat className="w-4 h-4" />
               <span>Convert to Subscription</span>
@@ -225,7 +225,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
           {quotation.subscription && (
             <Link
               to={`${basePath}/subscriptions/${quotation.subscription.id}`}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-50 text-purple-700 border border-purple-200 rounded-lg hover:bg-purple-100 transition font-medium text-sm"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-50 text-purple-700 border border-purple-200 rounded hover:bg-purple-100 transition font-medium text-sm"
             >
               <Repeat className="w-4 h-4" />
               <span>View Subscription ({quotation.subscription.subscriptionNumber})</span>
@@ -237,7 +237,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
       {/* Info Overview Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Customer Info Card */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Customer Details
           </h3>
@@ -267,7 +267,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
         </div>
 
         {/* Validity & Template */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Validity & Terms
           </h3>
@@ -296,7 +296,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
         </div>
 
         {/* Status Tracker */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Lifecycle Progress
           </h3>
@@ -328,7 +328,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Itemized Line Items Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200">
           <h3 className="font-bold text-gray-900 text-base">Itemized Line Items</h3>
         </div>
@@ -404,7 +404,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
             {quotation.customerNotes && (
               <div>
                 <span className="font-semibold text-gray-700 block mb-0.5">Customer Notes:</span>
-                <p className="text-gray-600 bg-white p-2.5 rounded-lg border border-gray-200">
+                <p className="text-gray-600 bg-white p-2.5 rounded border border-gray-200">
                   {quotation.customerNotes}
                 </p>
               </div>
@@ -412,14 +412,14 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
             {quotation.termsAndConditions && (
               <div>
                 <span className="font-semibold text-gray-700 block mb-0.5">Terms and Conditions:</span>
-                <p className="text-gray-600 bg-white p-2.5 rounded-lg border border-gray-200 whitespace-pre-line">
+                <p className="text-gray-600 bg-white p-2.5 rounded border border-gray-200 whitespace-pre-line">
                   {quotation.termsAndConditions}
                 </p>
               </div>
             )}
           </div>
 
-          <div className="w-full md:w-80 bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-2 text-sm">
+          <div className="w-full md:w-80 bg-white p-4 rounded border border-gray-200 shadow-sm space-y-2 text-sm">
             <div className="flex justify-between text-gray-600">
               <span>Subtotal:</span>
               <span className="font-semibold text-gray-900 font-mono">
@@ -451,7 +451,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
       {/* Convert to Subscription Modal */}
       {isConvertModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
-          <div className="bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-md my-8 overflow-hidden">
+          <div className="bg-white rounded shadow-xl border border-gray-200 w-full max-w-md my-8 overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
               <div className="flex items-center gap-2 text-purple-600">
                 <Repeat className="w-5 h-5" />
@@ -459,7 +459,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
               </div>
               <button
                 onClick={() => setIsConvertModalOpen(false)}
-                className="p-1 rounded-lg text-gray-400 hover:text-gray-600"
+                className="p-1 rounded text-gray-400 hover:text-gray-600"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -472,7 +472,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
                 <span className="font-mono font-semibold text-blue-600">{quotation.quotationNumber}</span>.
               </p>
 
-              <div className="bg-purple-50 p-3.5 rounded-lg border border-purple-200 space-y-1 text-xs">
+              <div className="bg-purple-50 p-3.5 rounded border border-purple-200 space-y-1 text-xs">
                 <div className="font-semibold text-purple-900">Grand Total Snapshot:</div>
                 <div className="text-lg font-black text-purple-700">
                   ₹{Number(quotation.grandTotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -502,7 +502,7 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
                   value={paymentTerms}
                   onChange={(e) => setPaymentTerms(e.target.value)}
                   placeholder="Payment conditions, SLA, billing terms..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 ></textarea>
               </div>
 
@@ -510,14 +510,14 @@ const QuotationDetails = ({ basePath = '/admin' }) => {
                 <button
                   type="button"
                   onClick={() => setIsConvertModalOpen(false)}
-                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-5 py-2 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium disabled:opacity-50 shadow-sm"
+                  className="px-5 py-2 text-sm bg-purple-600 text-white rounded hover:bg-purple-700 transition font-medium disabled:opacity-50 shadow-sm"
                 >
                   {actionLoading ? 'Converting...' : 'Confirm Conversion'}
                 </button>

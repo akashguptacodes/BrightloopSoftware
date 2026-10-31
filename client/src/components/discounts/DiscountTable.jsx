@@ -62,7 +62,7 @@ const DiscountTable = ({
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold ${
+                    className={`inline-flex items-center px-2.5 py-1 rounded text-xs font-bold ${
                       isPercent
                         ? 'bg-purple-50 text-purple-700 border border-purple-200'
                         : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
@@ -105,7 +105,7 @@ const DiscountTable = ({
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold ${
                       discount.isActive
                         ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                         : 'bg-red-50 text-red-700 border border-red-200'
@@ -119,14 +119,14 @@ const DiscountTable = ({
                     <div className="flex items-center justify-end gap-1.5">
                       <button
                         onClick={() => onEdit(discount)}
-                        className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+                        className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded transition"
                         title="Edit Discount Rule"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => onToggleStatus(discount)}
-                        className={`p-1.5 rounded-lg transition ${
+                        className={`p-1.5 rounded transition ${
                           discount.isActive
                             ? 'text-gray-500 hover:text-red-600 hover:bg-red-50'
                             : 'text-gray-500 hover:text-emerald-600 hover:bg-emerald-50'
@@ -137,7 +137,7 @@ const DiscountTable = ({
                       </button>
                       <button
                         onClick={() => onDelete(discount)}
-                        className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                        className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition"
                         title="Delete Discount Rule"
                       >
                         <Trash2 className="w-4 h-4" />

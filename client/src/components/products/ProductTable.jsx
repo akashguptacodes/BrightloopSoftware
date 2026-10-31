@@ -67,7 +67,7 @@ const ProductTable = ({
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold border ${
                       typeColors[product.type] || 'bg-gray-100 text-gray-700 border-gray-200'
                     }`}
                   >
@@ -87,7 +87,7 @@ const ProductTable = ({
                 </td>
                 <td className="px-6 py-4">
                   <span
-                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold ${
                       product.isActive
                         ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                         : 'bg-red-50 text-red-700 border border-red-200'
@@ -103,7 +103,7 @@ const ProductTable = ({
                   <div className="flex items-center justify-end gap-1.5">
                     <Link
                       to={`${baseDetailUrl}/${product.id}`}
-                      className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                      className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition"
                       title="View Details & Variants"
                     >
                       <Eye className="w-4 h-4" />
@@ -113,14 +113,14 @@ const ProductTable = ({
                       <>
                         <button
                           onClick={() => onEdit(product)}
-                          className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+                          className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded transition"
                           title="Edit Product"
                         >
                           <Edit3 className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => onToggleStatus(product)}
-                          className={`p-1.5 rounded-lg transition ${
+                          className={`p-1.5 rounded transition ${
                             product.isActive
                               ? 'text-gray-500 hover:text-red-600 hover:bg-red-50'
                               : 'text-gray-500 hover:text-emerald-600 hover:bg-emerald-50'
@@ -131,7 +131,7 @@ const ProductTable = ({
                         </button>
                         <button
                           onClick={() => onDelete(product)}
-                          className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                          className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition"
                           title="Delete Product"
                         >
                           <Trash2 className="w-4 h-4" />

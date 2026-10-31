@@ -275,7 +275,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(`${basePath}/quotations`)}
-            className="p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition text-gray-600"
+            className="p-2 border border-gray-200 rounded hover:bg-gray-100 transition text-gray-600"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -290,7 +290,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Top Details Card */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-4">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Quotation Setup
           </h3>
@@ -305,7 +305,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                 required
                 value={customerId}
                 onChange={(e) => setCustomerId(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 bg-white"
               >
                 <option value="">Select a customer...</option>
                 {customers.map((c) => (
@@ -330,7 +330,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
               <select
                 value={templateId}
                 onChange={(e) => handleTemplateChange(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 bg-white"
               >
                 <option value="">Custom Quotation (No Template)</option>
                 {templates.map((t) => (
@@ -351,20 +351,20 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                 required
                 value={validUntil}
                 onChange={(e) => setValidUntil(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 bg-white"
               />
             </div>
           </div>
         </div>
 
         {/* Line Items Card */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
             <h3 className="font-bold text-gray-900 text-base">Line Items</h3>
             <button
               type="button"
               onClick={handleAddItem}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg text-xs font-semibold transition"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded text-xs font-semibold transition"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Add Line Item</span>
@@ -382,7 +382,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
               return (
                 <div
                   key={idx}
-                  className="p-4 bg-gray-50/70 border border-gray-200 rounded-xl space-y-3 relative group"
+                  className="p-4 bg-gray-50/70 border border-gray-200 rounded space-y-3 relative group"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-gray-500">Item #{idx + 1}</span>
@@ -408,7 +408,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                         required
                         value={item.productId}
                         onChange={(e) => handleItemChange(idx, 'productId', e.target.value)}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 bg-white"
                       >
                         <option value="">Select a product...</option>
                         {products.map((p) => (
@@ -430,7 +430,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                         required
                         value={item.quantity}
                         onChange={(e) => handleItemChange(idx, 'quantity', e.target.value)}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 bg-white"
                       />
                     </div>
 
@@ -442,7 +442,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                       <select
                         value={item.taxId}
                         onChange={(e) => handleItemChange(idx, 'taxId', e.target.value)}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 bg-white"
                       >
                         <option value="">No Tax (0%)</option>
                         {taxes.map((t) => (
@@ -465,7 +465,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                         value={item.variantId}
                         disabled={availableVariants.length === 0}
                         onChange={(e) => handleItemChange(idx, 'variantId', e.target.value)}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white disabled:opacity-50"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 bg-white disabled:opacity-50"
                       >
                         <option value="">
                           {availableVariants.length > 0 ? 'Standard (No Variant)' : 'No variants available'}
@@ -487,7 +487,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                         value={item.planId}
                         disabled={availablePlans.length === 0}
                         onChange={(e) => handleItemChange(idx, 'planId', e.target.value)}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white disabled:opacity-50"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 bg-white disabled:opacity-50"
                       >
                         <option value="">
                           {availablePlans.length > 0 ? 'One-time / Base Pricing' : 'No subscription plans'}
@@ -508,7 +508,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                       <select
                         value={item.discountId}
                         onChange={(e) => handleItemChange(idx, 'discountId', e.target.value)}
-                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 bg-white"
                       >
                         <option value="">No Discount</option>
                         {discounts.map((d) => (
@@ -526,7 +526,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                       placeholder="Optional custom line description or notes..."
                       value={item.description}
                       onChange={(e) => handleItemChange(idx, 'description', e.target.value)}
-                      className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-lg bg-white"
+                      className="w-full px-3 py-1.5 text-xs border border-gray-300 rounded bg-white"
                     />
                   </div>
                 </div>
@@ -538,7 +538,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
         {/* Notes, Terms & Summary Breakdown Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-4">
-            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+            <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-4">
               <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
                 Notes & Conditions
               </h3>
@@ -552,7 +552,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                   value={customerNotes}
                   onChange={(e) => setCustomerNotes(e.target.value)}
                   placeholder="Notes or welcome message for the customer..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                 ></textarea>
               </div>
 
@@ -565,7 +565,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                   value={termsAndConditions}
                   onChange={(e) => setTermsAndConditions(e.target.value)}
                   placeholder="Payment terms, cancellation terms, SLA provisions..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                 ></textarea>
               </div>
 
@@ -578,7 +578,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                   value={internalNotes}
                   onChange={(e) => setInternalNotes(e.target.value)}
                   placeholder="Notes for internal Brightloop sales/finance staff only..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                 ></textarea>
               </div>
             </div>
@@ -586,7 +586,7 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
 
           {/* Pricing Summary Card */}
           <div>
-            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4 sticky top-6">
+            <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-4 sticky top-6">
               <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
                 Estimated Totals
               </h3>
@@ -625,14 +625,14 @@ const CreateQuotation = ({ basePath = '/admin' }) => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full py-2.5 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
+                  className="w-full py-2.5 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
                 >
                   {submitting ? 'Creating Draft...' : 'Save Quotation Draft'}
                 </button>
                 <button
                   type="button"
                   onClick={() => navigate(`${basePath}/quotations`)}
-                  className="w-full py-2 px-4 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm"
+                  className="w-full py-2 px-4 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition text-sm"
                 >
                   Cancel
                 </button>

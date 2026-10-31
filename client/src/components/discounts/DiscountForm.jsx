@@ -86,7 +86,7 @@ const DiscountForm = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-200 max-w-xl w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div className="bg-white rounded shadow-xl border border-gray-200 max-w-xl w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
           <div className="flex items-center gap-2">
             <BadgePercent className="w-5 h-5 text-blue-600" />
@@ -96,7 +96,7 @@ const DiscountForm = ({
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 rounded-lg p-1 transition"
+            className="text-gray-400 hover:text-gray-600 rounded p-1 transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -113,7 +113,7 @@ const DiscountForm = ({
               placeholder="e.g., Bulk Purchase Offer, Welcome Discount"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
 
@@ -123,7 +123,7 @@ const DiscountForm = ({
               <select
                 value={formData.discountType}
                 onChange={(e) => setFormData({ ...formData, discountType: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
               >
                 <option value="PERCENTAGE">Percentage (% Off)</option>
                 <option value="FIXED">Fixed Amount (₹ Off)</option>
@@ -144,13 +144,13 @@ const DiscountForm = ({
                 placeholder={formData.discountType === 'PERCENTAGE' ? '10' : '200.00'}
                 value={formData.discountValue}
                 onChange={(e) => setFormData({ ...formData, discountValue: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
           </div>
 
           {/* Scope selection */}
-          <div className="p-3.5 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+          <div className="p-3.5 bg-gray-50 rounded border border-gray-200 space-y-3">
             <span className="text-xs font-semibold text-gray-700 uppercase tracking-wider block">
               Application Scope
             </span>
@@ -184,7 +184,7 @@ const DiscountForm = ({
                 <span className="text-xs font-medium text-gray-600 block mb-2">
                   Select applicable products:
                 </span>
-                <div className="max-h-36 overflow-y-auto space-y-1.5 p-2 bg-white rounded-lg border border-gray-200">
+                <div className="max-h-36 overflow-y-auto space-y-1.5 p-2 bg-white rounded border border-gray-200">
                   {products.length === 0 ? (
                     <p className="text-xs text-gray-400">No products found.</p>
                   ) : (
@@ -226,7 +226,7 @@ const DiscountForm = ({
                 placeholder="e.g., 2000"
                 value={formData.minimumPurchaseAmount}
                 onChange={(e) => setFormData({ ...formData, minimumPurchaseAmount: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
 
@@ -240,7 +240,7 @@ const DiscountForm = ({
                 placeholder="e.g., 2"
                 value={formData.minimumQuantity}
                 onChange={(e) => setFormData({ ...formData, minimumQuantity: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
           </div>
@@ -254,7 +254,7 @@ const DiscountForm = ({
                 required
                 value={formData.startsAt}
                 onChange={(e) => setFormData({ ...formData, startsAt: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
 
@@ -266,7 +266,7 @@ const DiscountForm = ({
                 type="date"
                 value={formData.expiresAt}
                 onChange={(e) => setFormData({ ...formData, expiresAt: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
 
@@ -280,7 +280,7 @@ const DiscountForm = ({
                 placeholder="e.g., 100"
                 value={formData.usageLimit}
                 onChange={(e) => setFormData({ ...formData, usageLimit: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
           </div>
@@ -292,7 +292,7 @@ const DiscountForm = ({
               placeholder="Promotional campaign details, discount terms..."
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              className="w-full px-3.5 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
 
@@ -301,14 +301,14 @@ const DiscountForm = ({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition shadow-sm disabled:opacity-50"
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition shadow-sm disabled:opacity-50"
             >
               {loading ? 'Saving...' : initialData ? 'Update Discount' : 'Create Discount'}
             </button>

@@ -115,7 +115,7 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
         {isSuccessful && (
           <button
             onClick={() => setShowRefundModal(true)}
-            className="inline-flex items-center gap-2 px-3 py-1.5 border border-purple-200 text-purple-700 bg-purple-50 hover:bg-purple-100 text-xs font-semibold rounded-lg transition"
+            className="inline-flex items-center gap-2 px-3 py-1.5 border border-purple-200 text-purple-700 bg-purple-50 hover:bg-purple-100 text-xs font-semibold rounded transition"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             Issue Refund
@@ -124,7 +124,7 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Main Details Card */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 sm:p-8 space-y-6">
+      <div className="bg-white rounded border border-gray-200 shadow-sm p-6 sm:p-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100 pb-5">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -138,7 +138,7 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
 
           <div className="flex items-center gap-3">
             <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${
+              className={`inline-flex items-center px-3 py-1 rounded text-xs font-semibold border ${
                 statusBadges[payment.status] || 'bg-gray-100 text-gray-800'
               }`}
             >
@@ -151,7 +151,7 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
         </div>
 
         {/* Info Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-5 rounded-xl border border-gray-200 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-5 rounded border border-gray-200 text-sm">
           <div className="space-y-3">
             <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">
               Payment Metadata
@@ -237,7 +237,7 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
               Internal Notes
             </div>
-            <p className="text-xs text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-200">
+            <p className="text-xs text-gray-600 bg-gray-50 p-3 rounded border border-gray-200">
               {payment.notes}
             </p>
           </div>
@@ -254,7 +254,7 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
               {payment.refunds.map((ref) => (
                 <div
                   key={ref.id}
-                  className="p-3 bg-purple-50/50 border border-purple-100 rounded-lg text-xs flex justify-between items-center"
+                  className="p-3 bg-purple-50/50 border border-purple-100 rounded text-xs flex justify-between items-center"
                 >
                   <div>
                     <div className="font-bold text-purple-900">
@@ -278,7 +278,7 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
       {/* Refund Modal */}
       {showRefundModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 space-y-4">
+          <div className="bg-white rounded shadow-xl max-w-md w-full p-6 space-y-4">
             <h3 className="text-lg font-bold text-gray-900">Issue Payment Refund</h3>
             <p className="text-xs text-gray-500">
               Process an offline or gateway refund for payment {payment.paymentNumber}.
@@ -297,7 +297,7 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
                   value={refundForm.amount}
                   onChange={(e) => setRefundForm({ ...refundForm, amount: e.target.value })}
                   required
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-purple-500"
                 />
                 <span className="text-[10px] text-gray-400">
                   Maximum refundable: ₹{Number(payment.amount).toFixed(2)}
@@ -314,7 +314,7 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
                   placeholder="Specify reason for refund..."
                   value={refundForm.reason}
                   onChange={(e) => setRefundForm({ ...refundForm, reason: e.target.value })}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded"
                 />
               </div>
 
@@ -322,14 +322,14 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
                 <button
                   type="button"
                   onClick={() => setShowRefundModal(false)}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 text-gray-700 text-xs font-medium rounded hover:bg-gray-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={refundLoading}
-                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium rounded-lg shadow-sm disabled:opacity-50"
+                  className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium rounded shadow-sm disabled:opacity-50"
                 >
                   {refundLoading ? 'Processing...' : 'Confirm Refund'}
                 </button>

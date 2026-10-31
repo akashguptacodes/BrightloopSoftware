@@ -90,7 +90,7 @@ const Quotations = ({ basePath = '/admin' }) => {
 
         <Link
           to={`${basePath}/quotations/create`}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-sm shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span>New Quotation</span>
@@ -98,7 +98,7 @@ const Quotations = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white p-4 rounded border border-gray-200 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -106,7 +106,7 @@ const Quotations = ({ basePath = '/admin' }) => {
             placeholder="Search quotation #, customer, email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -114,7 +114,7 @@ const Quotations = ({ basePath = '/admin' }) => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+            className="px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
           >
             <option value="">All Statuses</option>
             <option value="DRAFT">DRAFT</option>
@@ -130,7 +130,7 @@ const Quotations = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         {loading ? (
           <div className="py-20 text-center text-gray-500">Loading quotations...</div>
         ) : quotations.length === 0 ? (
@@ -189,7 +189,7 @@ const Quotations = ({ basePath = '/admin' }) => {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold border ${
                           statusBadges[q.status] || 'bg-gray-100 text-gray-700'
                         }`}
                       >

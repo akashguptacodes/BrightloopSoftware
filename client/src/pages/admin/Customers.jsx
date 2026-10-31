@@ -136,7 +136,7 @@ const Customers = ({ basePath = '/admin' }) => {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-sm shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Customer</span>
@@ -144,7 +144,7 @@ const Customers = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white p-4 rounded border border-gray-200 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -152,7 +152,7 @@ const Customers = ({ basePath = '/admin' }) => {
             placeholder="Search code, name, company, email, phone..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -160,7 +160,7 @@ const Customers = ({ basePath = '/admin' }) => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+            className="px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
           >
             <option value="">All Statuses</option>
             <option value="true">Active Only</option>
@@ -173,7 +173,7 @@ const Customers = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         {loading ? (
           <div className="py-20 text-center text-gray-500">Loading customers...</div>
         ) : customers.length === 0 ? (
@@ -242,7 +242,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium ${
                           c.isActive
                             ? 'bg-green-50 text-green-700 border border-green-200'
                             : 'bg-gray-100 text-gray-600 border border-gray-200'
@@ -309,12 +309,12 @@ const Customers = ({ basePath = '/admin' }) => {
       {/* Add Customer Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
-          <div className="bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-2xl my-8 overflow-hidden">
+          <div className="bg-white rounded shadow-xl border border-gray-200 w-full max-w-2xl my-8 overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-bold text-gray-900">Add New Customer</h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+                className="p-1 rounded text-gray-400 hover:text-gray-600 hover:bg-gray-100"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -333,7 +333,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.contactPerson}
                     onChange={handleInputChange}
                     placeholder="e.g. Akash Sharma"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -347,7 +347,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.companyName}
                     onChange={handleInputChange}
                     placeholder="e.g. Acme Tech Solutions"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -362,7 +362,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="akash@example.com"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -376,7 +376,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="+91 98765 43210"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -390,7 +390,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.alternatePhone}
                     onChange={handleInputChange}
                     placeholder="Optional alternate"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -404,7 +404,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.taxIdentificationNumber}
                     onChange={handleInputChange}
                     placeholder="e.g. 27AABCB1234F1Z5"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -419,7 +419,7 @@ const Customers = ({ basePath = '/admin' }) => {
                   value={formData.billingAddress}
                   onChange={handleInputChange}
                   placeholder="Street, suite, building..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                 ></textarea>
               </div>
 
@@ -432,7 +432,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.city}
                     onChange={handleInputChange}
                     placeholder="Mumbai"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
                 <div>
@@ -443,7 +443,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.state}
                     onChange={handleInputChange}
                     placeholder="Maharashtra"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
                 <div>
@@ -454,7 +454,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.postalCode}
                     onChange={handleInputChange}
                     placeholder="400001"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
                 <div>
@@ -465,7 +465,7 @@ const Customers = ({ basePath = '/admin' }) => {
                     value={formData.country}
                     onChange={handleInputChange}
                     placeholder="India"
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
               </div>
@@ -480,7 +480,7 @@ const Customers = ({ basePath = '/admin' }) => {
                   value={formData.notes}
                   onChange={handleInputChange}
                   placeholder="Additional notes about customer preferences, contract terms..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 ></textarea>
               </div>
 
@@ -488,14 +488,14 @@ const Customers = ({ basePath = '/admin' }) => {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium shadow-sm disabled:opacity-50"
+                  className="px-5 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium shadow-sm disabled:opacity-50"
                 >
                   {submitting ? 'Creating...' : 'Create Customer'}
                 </button>

@@ -125,7 +125,7 @@ const QuotationTemplates = () => {
 
         <button
           onClick={handleOpenCreate}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-sm shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span>New Quotation Template</span>
@@ -133,7 +133,7 @@ const QuotationTemplates = () => {
       </div>
 
       {/* Search */}
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+      <div className="bg-white p-4 rounded border border-gray-200 shadow-sm flex items-center justify-between">
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -141,7 +141,7 @@ const QuotationTemplates = () => {
             placeholder="Search templates by name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div className="text-sm text-gray-500">
@@ -153,7 +153,7 @@ const QuotationTemplates = () => {
       {loading ? (
         <div className="py-20 text-center text-gray-500">Loading templates...</div>
       ) : templates.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center shadow-sm">
+        <div className="bg-white rounded border border-gray-200 p-12 text-center shadow-sm">
           <Layers className="w-12 h-12 text-gray-300 mx-auto mb-3" />
           <h3 className="text-base font-semibold text-gray-800">No Templates Defined</h3>
           <p className="text-sm text-gray-500 mt-1 max-w-sm mx-auto">
@@ -165,13 +165,13 @@ const QuotationTemplates = () => {
           {templates.map((t) => (
             <div
               key={t.id}
-              className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 flex flex-col justify-between hover:border-blue-300 transition"
+              className="bg-white rounded border border-gray-200 shadow-sm p-6 flex flex-col justify-between hover:border-blue-300 transition"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="font-bold text-gray-900 text-base">{t.name}</h3>
                   <span
-                    className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                    className={`px-2 py-0.5 rounded text-xs font-semibold ${
                       t.isActive
                         ? 'bg-green-50 text-green-700 border border-green-200'
                         : 'bg-gray-100 text-gray-600 border border-gray-200'
@@ -191,7 +191,7 @@ const QuotationTemplates = () => {
                 </div>
 
                 {t.termsAndConditions && (
-                  <div className="text-xs text-gray-600 bg-gray-50 p-2.5 rounded-lg border border-gray-100">
+                  <div className="text-xs text-gray-600 bg-gray-50 p-2.5 rounded border border-gray-100">
                     <span className="font-semibold text-gray-700 block mb-0.5">Terms Preview:</span>
                     <p className="line-clamp-3 whitespace-pre-line text-gray-500">{t.termsAndConditions}</p>
                   </div>
@@ -231,14 +231,14 @@ const QuotationTemplates = () => {
       {/* Create / Edit Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
-          <div className="bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-lg my-8 overflow-hidden">
+          <div className="bg-white rounded shadow-xl border border-gray-200 w-full max-w-lg my-8 overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-bold text-gray-900">
                 {editingTemplate ? 'Edit Quotation Template' : 'New Quotation Template'}
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-gray-400 hover:text-gray-600"
+                className="p-1 rounded text-gray-400 hover:text-gray-600"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -255,7 +255,7 @@ const QuotationTemplates = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Standard SaaS Monthly Agreement"
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -270,7 +270,7 @@ const QuotationTemplates = () => {
                   required
                   value={formData.validityDays}
                   onChange={(e) => setFormData({ ...formData, validityDays: parseInt(e.target.value, 10) || 15 })}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -283,7 +283,7 @@ const QuotationTemplates = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Brief summary of what this template is used for"
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 />
               </div>
 
@@ -296,7 +296,7 @@ const QuotationTemplates = () => {
                   value={formData.termsAndConditions}
                   onChange={(e) => setFormData({ ...formData, termsAndConditions: e.target.value })}
                   placeholder="Standard terms and conditions pre-filled on new quotations..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 ></textarea>
               </div>
 
@@ -309,7 +309,7 @@ const QuotationTemplates = () => {
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   placeholder="e.g. Thank you for your business!"
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 ></textarea>
               </div>
 
@@ -317,14 +317,14 @@ const QuotationTemplates = () => {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium disabled:opacity-50"
+                  className="px-5 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium disabled:opacity-50"
                 >
                   {submitting ? 'Saving...' : editingTemplate ? 'Update Template' : 'Create Template'}
                 </button>

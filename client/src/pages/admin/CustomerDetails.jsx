@@ -99,18 +99,18 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(`${basePath}/customers`)}
-            className="p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition text-gray-600"
+            className="p-2 border border-gray-200 rounded hover:bg-gray-100 transition text-gray-600"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold text-gray-900">{customer.contactPerson}</h1>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold font-mono bg-blue-50 text-blue-700 border border-blue-200">
+              <span className="px-2.5 py-0.5 rounded text-xs font-semibold font-mono bg-blue-50 text-blue-700 border border-blue-200">
                 {customer.customerCode}
               </span>
               <span
-                className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                className={`px-2 py-0.5 rounded text-xs font-medium ${
                   customer.isActive
                     ? 'bg-green-50 text-green-700 border border-green-200'
                     : 'bg-gray-100 text-gray-600 border border-gray-200'
@@ -131,14 +131,14 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsEditModalOpen(true)}
-            className="inline-flex items-center gap-2 px-3.5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm font-medium"
+            className="inline-flex items-center gap-2 px-3.5 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition text-sm font-medium"
           >
             <Edit className="w-4 h-4" />
             <span>Edit Profile</span>
           </button>
           <Link
             to={`${basePath}/quotations/create?customerId=${customer.id}`}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm font-medium shadow-sm"
           >
             <Plus className="w-4 h-4" />
             <span>Create Quotation</span>
@@ -149,7 +149,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
       {/* Info Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Contact Info Card */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Contact Information
           </h3>
@@ -179,7 +179,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
         </div>
 
         {/* Address Card */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Billing & Location
           </h3>
@@ -199,18 +199,18 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
         </div>
 
         {/* Account Activity Summary */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Overview Stats
           </h3>
           <div className="grid grid-cols-2 gap-3 pt-1">
-            <div className="bg-amber-50 border border-amber-200/60 rounded-lg p-3">
+            <div className="bg-amber-50 border border-amber-200/60 rounded p-3">
               <div className="text-xs text-amber-700 font-medium">Quotations</div>
               <div className="text-2xl font-bold text-amber-900">
                 {customer._count?.quotations || 0}
               </div>
             </div>
-            <div className="bg-indigo-50 border border-indigo-200/60 rounded-lg p-3">
+            <div className="bg-indigo-50 border border-indigo-200/60 rounded p-3">
               <div className="text-xs text-indigo-700 font-medium">Subscriptions</div>
               <div className="text-2xl font-bold text-indigo-900">
                 {customer._count?.subscriptions || 0}
@@ -218,7 +218,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
             </div>
           </div>
           {customer.notes && (
-            <p className="text-xs text-gray-500 bg-gray-50 p-2.5 rounded-lg border border-gray-100">
+            <p className="text-xs text-gray-500 bg-gray-50 p-2.5 rounded border border-gray-100">
               <span className="font-semibold text-gray-700">Note: </span>
               {customer.notes}
             </p>
@@ -227,7 +227,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Linked Quotations */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <FileSpreadsheet className="w-4 h-4 text-amber-600" />
@@ -274,7 +274,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                       ₹{Number(q.grandTotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-6 py-3">
-                      <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">
+                      <span className="px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-700">
                         {q.status}
                       </span>
                     </td>
@@ -295,7 +295,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Linked Subscriptions */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Repeat className="w-4 h-4 text-indigo-600" />
@@ -342,7 +342,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                       ₹{Number(s.grandTotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="px-6 py-3">
-                      <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200">
+                      <span className="px-2 py-0.5 rounded text-xs font-semibold bg-green-50 text-green-700 border border-green-200">
                         {s.status}
                       </span>
                     </td>
@@ -365,12 +365,12 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
       {/* Edit Customer Modal */}
       {isEditModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
-          <div className="bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-2xl my-8 overflow-hidden">
+          <div className="bg-white rounded shadow-xl border border-gray-200 w-full max-w-2xl my-8 overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-bold text-gray-900">Edit Customer Profile</h3>
               <button
                 onClick={() => setIsEditModalOpen(false)}
-                className="p-1 rounded-lg text-gray-400 hover:text-gray-600"
+                className="p-1 rounded text-gray-400 hover:text-gray-600"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -387,7 +387,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                     required
                     value={formData.contactPerson}
                     onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -398,7 +398,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                     type="text"
                     value={formData.companyName}
                     onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
                 <div>
@@ -410,7 +410,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
                 <div>
@@ -421,7 +421,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                     type="text"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
               </div>
@@ -434,7 +434,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                   rows="2"
                   value={formData.billingAddress}
                   onChange={(e) => setFormData({ ...formData, billingAddress: e.target.value })}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 ></textarea>
               </div>
 
@@ -445,7 +445,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                     type="text"
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
                 <div>
@@ -454,7 +454,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                     type="text"
                     value={formData.state}
                     onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
                 <div>
@@ -463,7 +463,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                     type="text"
                     value={formData.postalCode}
                     onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
                 <div>
@@ -472,7 +472,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                     type="text"
                     value={formData.country}
                     onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                   />
                 </div>
               </div>
@@ -483,7 +483,7 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                   rows="2"
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 ></textarea>
               </div>
 
@@ -491,14 +491,14 @@ const CustomerDetails = ({ basePath = '/admin' }) => {
                 <button
                   type="button"
                   onClick={() => setIsEditModalOpen(false)}
-                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium disabled:opacity-50"
+                  className="px-5 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium disabled:opacity-50"
                 >
                   {submitting ? 'Saving...' : 'Save Changes'}
                 </button>

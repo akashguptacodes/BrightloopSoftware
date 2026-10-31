@@ -156,7 +156,7 @@ const Reports = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
       {/* Header Banner */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="bg-white rounded border border-gray-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-blue-600 text-sm font-semibold mb-1">
             <BarChart3 className="w-4 h-4" />
@@ -173,7 +173,7 @@ const Reports = () => {
           <button
             onClick={handleExportCsv}
             disabled={exporting || loading}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-gray-300 rounded-lg text-xs font-semibold text-gray-700 bg-white hover:bg-gray-50 shadow-sm transition disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-gray-300 rounded text-xs font-semibold text-gray-700 bg-white hover:bg-gray-50 shadow-sm transition disabled:opacity-50"
           >
             <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
             <span>Export CSV</span>
@@ -181,7 +181,7 @@ const Reports = () => {
           <button
             onClick={handleExportPdf}
             disabled={exporting || loading}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm transition disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold shadow-sm transition disabled:opacity-50"
           >
             <FileText className="w-4 h-4" />
             <span>Export PDF</span>
@@ -189,7 +189,7 @@ const Reports = () => {
           <button
             onClick={fetchReport}
             disabled={loading}
-            className="p-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100 transition shadow-sm"
+            className="p-2 border border-gray-200 rounded bg-gray-50 text-gray-600 hover:bg-gray-100 transition shadow-sm"
             title="Refresh current report"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -198,7 +198,7 @@ const Reports = () => {
       </div>
 
       {/* Date Filter Bar */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <div className="bg-white rounded border border-gray-200 p-4 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
           <Filter className="w-4 h-4 text-gray-400 shrink-0" />
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider shrink-0">
@@ -209,7 +209,7 @@ const Reports = () => {
               <button
                 key={p.id}
                 onClick={() => setDatePreset(p.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
+                className={`px-3 py-1.5 rounded text-xs font-semibold whitespace-nowrap transition ${
                   datePreset === p.id
                     ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
@@ -227,18 +227,18 @@ const Reports = () => {
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="px-2.5 py-1.5 border border-gray-300 rounded-lg text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="px-2.5 py-1.5 border border-gray-300 rounded text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
             <span className="text-xs text-gray-400">&rarr;</span>
             <input
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="px-2.5 py-1.5 border border-gray-300 rounded-lg text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="px-2.5 py-1.5 border border-gray-300 rounded text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
             <button
               type="submit"
-              className="px-3 py-1.5 bg-gray-900 hover:bg-black text-white text-xs font-semibold rounded-lg transition"
+              className="px-3 py-1.5 bg-gray-900 hover:bg-black text-white text-xs font-semibold rounded transition"
             >
               Apply
             </button>
@@ -280,7 +280,7 @@ const Reports = () => {
             <div className="space-y-6">
               {/* Summary KPIs */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-5 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Gross Collections</p>
                   <p className="text-2xl font-bold text-gray-900 mt-1 font-mono">
                     ₹{Number(reportData.summary?.grossRevenue || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -288,7 +288,7 @@ const Reports = () => {
                   <p className="text-xs text-gray-400 mt-1">{reportData.summary?.paymentCount || 0} successful payments</p>
                 </div>
 
-                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-5 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Processed Refunds</p>
                   <p className="text-2xl font-bold text-red-600 mt-1 font-mono">
                     -₹{Number(reportData.summary?.totalRefunds || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -296,7 +296,7 @@ const Reports = () => {
                   <p className="text-xs text-gray-400 mt-1">{reportData.summary?.refundCount || 0} refunds returned</p>
                 </div>
 
-                <div className="bg-white p-5 rounded-xl border border-emerald-200 bg-emerald-50/30 shadow-sm">
+                <div className="bg-white p-5 rounded border border-emerald-200 bg-emerald-50/30 shadow-sm">
                   <p className="text-xs font-semibold text-emerald-800 uppercase tracking-wider">Net Realized Revenue</p>
                   <p className="text-2xl font-black text-emerald-700 mt-1 font-mono">
                     ₹{Number(reportData.summary?.netRevenue || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -306,7 +306,7 @@ const Reports = () => {
               </div>
 
               {/* 12-Month Rolling Revenue Trend */}
-              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+              <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-4">
                 <h3 className="text-base font-bold text-gray-900 flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-emerald-600" />
                   Monthly Net Revenue Trajectory (12 Months)
@@ -334,7 +334,7 @@ const Reports = () => {
               </div>
 
               {/* Payment Methods Breakdown */}
-              <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+              <div className="bg-white rounded border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <CreditCard className="w-4 h-4 text-blue-600" />
                   Collections by Payment Gateway / Instrument
@@ -363,7 +363,7 @@ const Reports = () => {
 
                   <div className="space-y-2">
                     {(reportData.methodBreakdown || []).map((m, i) => (
-                      <div key={m.method} className="flex justify-between items-center p-2.5 bg-gray-50 rounded-lg text-xs font-medium">
+                      <div key={m.method} className="flex justify-between items-center p-2.5 bg-gray-50 rounded text-xs font-medium">
                         <div className="flex items-center gap-2">
                           <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS[i % COLORS.length] }}></span>
                           <span className="text-gray-900 uppercase font-semibold">{m.method}</span>
@@ -384,19 +384,19 @@ const Reports = () => {
           {activeTab === 'subscriptions' && reportData && (
             <div className="space-y-6">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs text-gray-500 font-semibold uppercase">Total Active</p>
                   <p className="text-2xl font-bold text-emerald-600 mt-1">{reportData.summary?.active || 0}</p>
                 </div>
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs text-gray-500 font-semibold uppercase">Paused</p>
                   <p className="text-2xl font-bold text-amber-600 mt-1">{reportData.summary?.paused || 0}</p>
                 </div>
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs text-gray-500 font-semibold uppercase">Cancelled</p>
                   <p className="text-2xl font-bold text-red-600 mt-1">{reportData.summary?.cancelled || 0}</p>
                 </div>
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs text-gray-500 font-semibold uppercase">New in Period</p>
                   <p className="text-2xl font-bold text-blue-600 mt-1">{reportData.summary?.newInPeriod || 0}</p>
                 </div>
@@ -404,7 +404,7 @@ const Reports = () => {
 
               {/* Status & Frequency Distribution Charts */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-6 rounded border border-gray-200 shadow-sm">
                   <h3 className="text-base font-bold text-gray-900 mb-4">Status Distribution</h3>
                   <div className="h-60">
                     <ResponsiveContainer width="100%" height="100%">
@@ -428,7 +428,7 @@ const Reports = () => {
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-6 rounded border border-gray-200 shadow-sm">
                   <h3 className="text-base font-bold text-gray-900 mb-4">Billing Frequency Distribution</h3>
                   <div className="h-60">
                     <ResponsiveContainer width="100%" height="100%">
@@ -450,26 +450,26 @@ const Reports = () => {
           {activeTab === 'customers' && reportData && (
             <div className="space-y-6">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs text-gray-500 font-semibold uppercase">Total Customers</p>
                   <p className="text-2xl font-bold text-gray-900 mt-1">{reportData.summary?.total || 0}</p>
                 </div>
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs text-gray-500 font-semibold uppercase">New Signups</p>
                   <p className="text-2xl font-bold text-blue-600 mt-1">{reportData.summary?.newInPeriod || 0}</p>
                 </div>
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs text-gray-500 font-semibold uppercase">Active Subscribers</p>
                   <p className="text-2xl font-bold text-emerald-600 mt-1">{reportData.summary?.withActiveSubscriptions || 0}</p>
                 </div>
-                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-4 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs text-gray-500 font-semibold uppercase">Overdue Accounts</p>
                   <p className="text-2xl font-bold text-red-600 mt-1">{reportData.summary?.withOverdueInvoices || 0}</p>
                 </div>
               </div>
 
               {/* Top 10 Customers Table */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+              <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-200">
                   <h3 className="font-bold text-gray-900 text-base">Top 10 High-Value Accounts (Lifetime Revenue)</h3>
                 </div>
@@ -509,19 +509,19 @@ const Reports = () => {
           {activeTab === 'invoices' && reportData && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-5 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Invoiced Total</p>
                   <p className="text-2xl font-bold text-gray-900 mt-1 font-mono">
                     ₹{Number(reportData.summary?.invoicedTotal || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </p>
                 </div>
-                <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-5 rounded border border-gray-200 shadow-sm">
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Collected Amount</p>
                   <p className="text-2xl font-bold text-emerald-600 mt-1 font-mono">
                     ₹{Number(reportData.summary?.paidTotal || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </p>
                 </div>
-                <div className="bg-white p-5 rounded-xl border border-amber-200 bg-amber-50/20 shadow-sm">
+                <div className="bg-white p-5 rounded border border-amber-200 bg-amber-50/20 shadow-sm">
                   <p className="text-xs font-semibold text-amber-800 uppercase tracking-wider">Outstanding Balance</p>
                   <p className="text-2xl font-bold text-amber-700 mt-1 font-mono">
                     ₹{Number(reportData.summary?.outstandingTotal || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -530,11 +530,11 @@ const Reports = () => {
               </div>
 
               {/* Status Breakdown */}
-              <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+              <div className="bg-white rounded border border-gray-200 p-6 shadow-sm">
                 <h3 className="text-base font-bold text-gray-900 mb-4">Invoice Volume by Status</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {(reportData.statusBreakdown || []).map((s) => (
-                    <div key={s.status} className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                    <div key={s.status} className="p-4 bg-gray-50 rounded border border-gray-100">
                       <span className="text-xs font-semibold text-gray-500">{s.status}</span>
                       <p className="text-xl font-bold text-gray-900 mt-1">{s.count} invoices</p>
                       <p className="text-xs font-mono text-gray-600 mt-0.5">₹{Number(s.amount).toLocaleString('en-IN')}</p>
@@ -548,7 +548,7 @@ const Reports = () => {
           {/* 5. PRODUCTS & PLANS REPORT */}
           {activeTab === 'products' && reportData && (
             <div className="space-y-6">
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+              <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-200">
                   <h3 className="font-bold text-gray-900 text-base">Top Performing Catalog Products & Variants</h3>
                 </div>
@@ -578,7 +578,7 @@ const Reports = () => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+              <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-200">
                   <h3 className="font-bold text-gray-900 text-base">Subscription Plan Adoption</h3>
                 </div>

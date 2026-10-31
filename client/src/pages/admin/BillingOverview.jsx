@@ -99,7 +99,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={fetchStatus}
-            className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600"
+            className="p-2 border border-gray-300 rounded hover:bg-gray-50 text-gray-600"
             title="Refresh status"
           >
             <RefreshCw className="w-4 h-4" />
@@ -108,7 +108,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
           <button
             onClick={handleCheckOverdueNow}
             disabled={runningOverdue}
-            className="inline-flex items-center gap-2 px-3.5 py-2 border border-amber-200 bg-amber-50 hover:bg-amber-100 text-amber-800 text-sm font-medium rounded-lg transition disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-3.5 py-2 border border-amber-200 bg-amber-50 hover:bg-amber-100 text-amber-800 text-sm font-medium rounded transition disabled:opacity-50"
           >
             <AlertTriangle className="w-4 h-4" />
             <span>{runningOverdue ? 'Scanning...' : 'Scan Overdue Invoices'}</span>
@@ -117,7 +117,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
           <button
             onClick={handleRunBillingNow}
             disabled={runningJob}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg shadow-sm transition disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded shadow-sm transition disabled:opacity-50"
           >
             <Play className="w-4 h-4" />
             <span>{runningJob ? 'Processing Billing...' : 'Run Billing Now'}</span>
@@ -126,9 +126,9 @@ const BillingOverview = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Scheduler Status Banner */}
-      <div className="bg-gradient-to-r from-indigo-900 to-indigo-800 rounded-2xl p-6 text-white shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-indigo-900 to-indigo-800 rounded p-6 text-white shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3 py-1 rounded-full text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-3 py-1 rounded text-xs font-semibold">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             SCHEDULER {scheduler.status || 'RUNNING'}
           </div>
@@ -138,7 +138,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
           </p>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 text-xs space-y-1.5 min-w-[240px]">
+        <div className="bg-white/10 backdrop-blur-md p-4 rounded border border-white/10 text-xs space-y-1.5 min-w-[240px]">
           <div className="flex justify-between text-indigo-200">
             <span>Recurring Invoice Job:</span>
             <span className="text-white font-mono font-medium">00:05 AM Daily</span>
@@ -158,25 +158,25 @@ const BillingOverview = ({ basePath = '/admin' }) => {
 
       {/* Manual Run Result Feedback */}
       {lastRunResult && (
-        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5 text-sm space-y-2 text-emerald-900">
+        <div className="bg-emerald-50 border border-emerald-200 rounded p-5 text-sm space-y-2 text-emerald-900">
           <div className="flex items-center gap-2 font-bold text-base text-emerald-800">
             <CheckCircle2 className="w-5 h-5 text-emerald-600" />
             <span>Manual Recurring Run Completed</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs pt-1">
-            <div className="bg-white p-3 rounded-lg border border-emerald-100">
+            <div className="bg-white p-3 rounded border border-emerald-100">
               <span className="text-gray-500 block">Total Due Checked:</span>
               <span className="text-base font-bold text-gray-900">{lastRunResult.totalChecked}</span>
             </div>
-            <div className="bg-white p-3 rounded-lg border border-emerald-100">
+            <div className="bg-white p-3 rounded border border-emerald-100">
               <span className="text-gray-500 block">Invoices Generated:</span>
               <span className="text-base font-bold text-emerald-600">{lastRunResult.generated}</span>
             </div>
-            <div className="bg-white p-3 rounded-lg border border-emerald-100">
+            <div className="bg-white p-3 rounded border border-emerald-100">
               <span className="text-gray-500 block">Already Invoiced / Skipped:</span>
               <span className="text-base font-bold text-gray-600">{lastRunResult.skipped}</span>
             </div>
-            <div className="bg-white p-3 rounded-lg border border-emerald-100">
+            <div className="bg-white p-3 rounded border border-emerald-100">
               <span className="text-gray-500 block">Errors:</span>
               <span className="text-base font-bold text-rose-600">{lastRunResult.failed}</span>
             </div>
@@ -186,7 +186,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
 
       {/* Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-1">
+        <div className="bg-white p-5 rounded border border-gray-200 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-400">
             <span className="text-xs font-semibold uppercase tracking-wider">Active Contracts</span>
             <Repeat className="w-4 h-4 text-indigo-500" />
@@ -195,7 +195,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
           <p className="text-xs text-gray-500">Live billable recurring subscriptions</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-1">
+        <div className="bg-white p-5 rounded border border-gray-200 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-400">
             <span className="text-xs font-semibold uppercase tracking-wider">Due For Billing</span>
             <CalendarClock className="w-4 h-4 text-amber-500" />
@@ -204,7 +204,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
           <p className="text-xs text-gray-500">Next billing date is on or before today</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-1">
+        <div className="bg-white p-5 rounded border border-gray-200 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-400">
             <span className="text-xs font-semibold uppercase tracking-wider">Overdue Invoices</span>
             <AlertTriangle className="w-4 h-4 text-rose-500" />
@@ -213,7 +213,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
           <p className="text-xs text-gray-500">Unpaid past due date</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-1">
+        <div className="bg-white p-5 rounded border border-gray-200 shadow-sm space-y-1">
           <div className="flex items-center justify-between text-gray-400">
             <span className="text-xs font-semibold uppercase tracking-wider">Paid Invoices</span>
             <CheckCircle2 className="w-4 h-4 text-emerald-500" />
@@ -224,7 +224,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Recent Recurring Invoices Generated */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-4">
+      <div className="bg-white rounded border border-gray-200 shadow-sm p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
             <Receipt className="w-4 h-4 text-indigo-600" />
@@ -239,7 +239,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
         </div>
 
         {!data?.recentRecurringInvoices || data.recentRecurringInvoices.length === 0 ? (
-          <div className="p-8 text-center text-xs text-gray-400 bg-gray-50 rounded-lg border border-dashed border-gray-200">
+          <div className="p-8 text-center text-xs text-gray-400 bg-gray-50 rounded border border-dashed border-gray-200">
             No recurring invoices have been generated yet. When subscriptions reach their billing dates, invoices will appear here automatically.
           </div>
         ) : (
@@ -247,7 +247,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
             {data.recentRecurringInvoices.map((inv) => (
               <div
                 key={inv.id}
-                className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs hover:bg-gray-50/50 transition px-2 rounded-lg"
+                className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs hover:bg-gray-50/50 transition px-2 rounded"
               >
                 <div>
                   <div className="flex items-center gap-2">
@@ -274,7 +274,7 @@ const BillingOverview = ({ basePath = '/admin' }) => {
                   <span className="font-bold text-gray-900">
                     ₹{Number(inv.grandTotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </span>
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-blue-50 text-blue-700 border-blue-200">
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded border bg-blue-50 text-blue-700 border-blue-200">
                     {inv.status}
                   </span>
                 </div>

@@ -176,7 +176,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(`${basePath}/subscriptions`)}
-            className="p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition text-gray-600"
+            className="p-2 border border-gray-200 rounded hover:bg-gray-100 transition text-gray-600"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -186,14 +186,14 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
                 {subscription.subscriptionNumber}
               </h1>
               <span
-                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                className={`px-2.5 py-0.5 rounded text-xs font-semibold border ${
                   statusBadges[subscription.status] || 'bg-gray-100 text-gray-700'
                 }`}
               >
                 {subscription.status}
               </span>
               {subscription.autoRenew && (
-                <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">
+                <span className="px-2 py-0.5 rounded text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">
                   Auto-Renew ON
                 </span>
               )}
@@ -221,7 +221,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
             <button
               onClick={handleActivate}
               disabled={actionLoading}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
             >
               <Play className="w-4 h-4" />
               <span>Activate</span>
@@ -233,7 +233,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
               <button
                 onClick={() => setIsPauseModalOpen(true)}
                 disabled={actionLoading}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-yellow-300 text-yellow-800 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition font-medium text-sm disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-yellow-300 text-yellow-800 bg-yellow-50 hover:bg-yellow-100 rounded transition font-medium text-sm disabled:opacity-50"
               >
                 <Pause className="w-4 h-4" />
                 <span>Pause</span>
@@ -241,7 +241,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
               <button
                 onClick={handleRenew}
                 disabled={actionLoading}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
               >
                 <RefreshCw className="w-4 h-4" />
                 <span>Renew</span>
@@ -249,7 +249,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
               <button
                 onClick={() => setIsCancelModalOpen(true)}
                 disabled={actionLoading}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition font-medium text-sm disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-red-300 text-red-600 rounded hover:bg-red-50 transition font-medium text-sm disabled:opacity-50"
               >
                 <XCircle className="w-4 h-4" />
                 <span>Cancel</span>
@@ -257,7 +257,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
               <button
                 onClick={handleClose}
                 disabled={actionLoading}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded"
               >
                 Close Contract
               </button>
@@ -269,7 +269,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
               <button
                 onClick={handleResume}
                 disabled={actionLoading}
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition font-medium text-sm shadow-sm disabled:opacity-50"
               >
                 <Play className="w-4 h-4" />
                 <span>Resume Subscription</span>
@@ -277,7 +277,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
               <button
                 onClick={() => setIsCancelModalOpen(true)}
                 disabled={actionLoading}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition font-medium text-sm"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-red-300 text-red-600 rounded hover:bg-red-50 transition font-medium text-sm"
               >
                 <XCircle className="w-4 h-4" />
                 <span>Cancel</span>
@@ -290,7 +290,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
       {/* Info Overview Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Customer Info Card */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Subscriber Details
           </h3>
@@ -320,7 +320,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
         </div>
 
         {/* Billing Schedule Card */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Billing Frequency & Dates
           </h3>
@@ -357,7 +357,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
         </div>
 
         {/* Plan Policy Summary */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <div className="bg-white p-6 rounded border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
             Plan Policy Rules
           </h3>
@@ -391,7 +391,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Itemized Line Items Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200">
           <h3 className="font-bold text-gray-900 text-base">Subscription Line Items (Snapshots)</h3>
         </div>
@@ -460,14 +460,14 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
             {subscription.paymentTerms && (
               <div>
                 <span className="font-semibold text-gray-700 block mb-0.5">Payment Terms:</span>
-                <p className="text-gray-600 bg-white p-2.5 rounded-lg border border-gray-200 whitespace-pre-line">
+                <p className="text-gray-600 bg-white p-2.5 rounded border border-gray-200 whitespace-pre-line">
                   {subscription.paymentTerms}
                 </p>
               </div>
             )}
           </div>
 
-          <div className="w-full md:w-80 bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-2 text-sm">
+          <div className="w-full md:w-80 bg-white p-4 rounded border border-gray-200 shadow-sm space-y-2 text-sm">
             <div className="flex justify-between text-gray-600">
               <span>Recurring Subtotal:</span>
               <span className="font-semibold text-gray-900 font-mono">
@@ -497,7 +497,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
       </div>
 
       {/* Subscription Audit History Timeline */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden p-6 space-y-4">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden p-6 space-y-4">
         <div className="flex items-center gap-2 border-b border-gray-100 pb-3">
           <History className="w-4 h-4 text-indigo-600" />
           <h3 className="font-bold text-gray-900 text-base">Subscription Audit Trail</h3>
@@ -536,7 +536,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
       {/* Pause Modal */}
       {isPauseModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-md p-6 space-y-4">
+          <div className="bg-white rounded shadow-xl border border-gray-200 w-full max-w-md p-6 space-y-4">
             <div className="flex justify-between items-center border-b pb-3">
               <h3 className="font-bold text-gray-900">Pause Subscription</h3>
               <button onClick={() => setIsPauseModalOpen(false)}>
@@ -556,21 +556,21 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
                   value={pauseNote}
                   onChange={(e) => setPauseNote(e.target.value)}
                   placeholder="e.g. Customer requested temporary pause for holiday season..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 ></textarea>
               </div>
               <div className="flex justify-end gap-2 pt-2">
                 <button
                   type="button"
                   onClick={() => setIsPauseModalOpen(false)}
-                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-4 py-2 text-sm bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 font-medium"
+                  className="px-4 py-2 text-sm bg-yellow-600 text-white rounded hover:bg-yellow-700 font-medium"
                 >
                   {actionLoading ? 'Pausing...' : 'Confirm Pause'}
                 </button>
@@ -583,7 +583,7 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
       {/* Cancel Modal */}
       {isCancelModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-md p-6 space-y-4">
+          <div className="bg-white rounded shadow-xl border border-gray-200 w-full max-w-md p-6 space-y-4">
             <div className="flex justify-between items-center border-b pb-3">
               <h3 className="font-bold text-red-600">Cancel Subscription</h3>
               <button onClick={() => setIsCancelModalOpen(false)}>
@@ -608,21 +608,21 @@ const SubscriptionDetails = ({ basePath = '/admin' }) => {
                   value={cancelReason}
                   onChange={(e) => setCancelReason(e.target.value)}
                   placeholder="e.g. Customer switched provider / project completed..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
                 ></textarea>
               </div>
               <div className="flex justify-end gap-2 pt-2">
                 <button
                   type="button"
                   onClick={() => setIsCancelModalOpen(false)}
-                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
                 >
                   Back
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium"
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded hover:bg-red-700 font-medium"
                 >
                   {actionLoading ? 'Cancelling...' : 'Confirm Cancellation'}
                 </button>

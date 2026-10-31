@@ -72,7 +72,7 @@ const CustomerInvoices = () => {
       </div>
 
       {/* Invoices List */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-gray-500">
             <div className="animate-spin w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full mx-auto mb-4"></div>
@@ -143,7 +143,7 @@ const CustomerInvoices = () => {
                       </td>
                       <td className="px-6 py-4 text-center">
                         <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium border ${
                             statusBadges[inv.status] || 'bg-gray-100 text-gray-800'
                           }`}
                         >
@@ -165,13 +165,13 @@ const CustomerInvoices = () => {
                             onClick={(e) => handleDownloadPdf(e, inv)}
                             disabled={downloadingId === inv.id}
                             title="Download PDF"
-                            className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+                            className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded transition"
                           >
                             <Download className="w-4 h-4" />
                           </button>
                           <Link
                             to={`/customer/invoices/${inv.id}`}
-                            className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+                            className="p-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded transition"
                             title="View Details"
                           >
                             <Eye className="w-4 h-4" />
