@@ -20,16 +20,17 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor — redirect on 401 (session expired)
+// Response interceptor — redirect on 401 (session expired) only for protected routes
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      const authPages = ['/login', '/register', '/forgot-password', '/reset-password'];
       const currentPath = window.location.pathname;
-      const isAuthPage = authPages.some((page) => currentPath.startsWith(page));
+      const publicPaths = ['/login', '/register', '/forgot-password', '/reset-password'];
+      const isLandingOrPublic = currentPath === '/' || publicPaths.some((page) => currentPath.startsWith(page));
 
-      if (!isAuthPage) {
+      // Never auto-redirect to /login when the visitor is on the landing page or auth pages
+      if (!isLandingOrPublic) {
         localStorage.removeItem('token');
         window.location.href = '/login';
       }

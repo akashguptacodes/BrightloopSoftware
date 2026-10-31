@@ -20,6 +20,8 @@ import {
   ChevronRight,
   Globe,
   Lock,
+  LogIn,
+  UserPlus,
 } from 'lucide-react';
 
 const LandingPage = () => {
@@ -64,33 +66,31 @@ const LandingPage = () => {
             </a>
           </nav>
 
-          {/* Dynamic Action Buttons */}
+          {/* Always Present: Sign In & Sign Up Action Buttons */}
           <div className="flex items-center gap-2.5">
-            {user ? (
+            {user && (
               <Link
                 to={dashboardPath}
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-xs font-semibold shadow-xs transition"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#143d22] bg-[#d9eee0] hover:bg-[#c8e6d1] border border-[#b3dbbe] rounded shadow-xs transition"
               >
-                <span>Go to Dashboard</span>
+                <span>Dashboard ({user.role})</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-300 rounded shadow-xs transition"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/register"
-                  className="inline-flex items-center gap-1 px-3.5 py-1.5 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-xs font-semibold shadow-xs transition"
-                >
-                  <span>Get Started</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </Link>
-              </>
             )}
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-300 rounded shadow-xs transition"
+            >
+              <LogIn className="w-3.5 h-3.5 text-slate-500" />
+              <span>Sign In</span>
+            </Link>
+            <Link
+              to="/register"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-xs font-semibold shadow-xs transition"
+            >
+              <UserPlus className="w-3.5 h-3.5" />
+              <span>Sign Up</span>
+            </Link>
           </div>
         </div>
       </header>
@@ -118,23 +118,32 @@ const LandingPage = () => {
                 rules, and online payments in one centralized system.
               </p>
 
-              {/* Hero Action Buttons */}
+              {/* Hero Action Buttons: Always offering Sign In and Sign Up */}
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <Link
-                  to={user ? dashboardPath : '/register'}
+                  to="/login"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-sm font-semibold shadow-sm transition"
                 >
-                  <span>{user ? 'Open Workspace' : 'Start Free Trial'}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <LogIn className="w-4 h-4" />
+                  <span>Sign In to Portal</span>
                 </Link>
 
                 <Link
-                  to="/login"
+                  to="/register"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-800 border border-[#b3dbbe] rounded text-sm font-semibold shadow-xs transition"
                 >
-                  <Lock className="w-4 h-4 text-[#2d6a4f]" />
-                  <span>Sign In to Portal</span>
+                  <UserPlus className="w-4 h-4 text-[#2d6a4f]" />
+                  <span>Create Account / Sign Up</span>
                 </Link>
+
+                {user && (
+                  <Link
+                    to={dashboardPath}
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-semibold text-[#143d22] bg-[#d9eee0] hover:bg-[#c8e6d1] border border-[#b3dbbe] rounded shadow-xs transition"
+                  >
+                    <span>Open {user.role} Dashboard &rarr;</span>
+                  </Link>
+                )}
               </div>
 
               {/* Highlights Checklist */}
@@ -436,7 +445,7 @@ const LandingPage = () => {
                 to="/register"
                 className="mt-6 block text-center w-full py-2 px-3 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 rounded text-xs font-semibold shadow-xs transition"
               >
-                Get Started
+                Sign Up
               </Link>
             </div>
 
@@ -481,7 +490,7 @@ const LandingPage = () => {
                 to="/register"
                 className="mt-6 block text-center w-full py-2 px-3 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-xs font-semibold shadow-xs transition"
               >
-                Start Free Trial
+                Sign Up Now
               </Link>
             </div>
 
@@ -518,7 +527,7 @@ const LandingPage = () => {
                 to="/register"
                 className="mt-6 block text-center w-full py-2 px-3 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 rounded text-xs font-semibold shadow-xs transition"
               >
-                Contact Sales
+                Sign Up
               </Link>
             </div>
           </div>
@@ -546,16 +555,16 @@ const LandingPage = () => {
 
             <div className="shrink-0 flex items-center gap-3">
               <Link
-                to="/register"
-                className="px-5 py-2.5 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-xs font-semibold shadow-xs transition"
-              >
-                Create Account Now
-              </Link>
-              <Link
                 to="/login"
                 className="px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-800 border border-[#b3dbbe] rounded text-xs font-semibold shadow-xs transition"
               >
                 Sign In
+              </Link>
+              <Link
+                to="/register"
+                className="px-5 py-2.5 bg-[#2d6a4f] hover:bg-[#1e4836] text-white rounded text-xs font-semibold shadow-xs transition"
+              >
+                Sign Up
               </Link>
             </div>
           </div>
@@ -629,4 +638,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
