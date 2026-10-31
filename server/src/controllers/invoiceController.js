@@ -1,4 +1,4 @@
-import prisma from '../config/prisma.js';
+import prisma from '../config/database.js';
 import { calculateInvoiceItems, createManualInvoice, issueInvoice, voidInvoice } from '../services/invoiceService.js';
 import { generateInvoicePdf } from '../services/invoicePdfService.js';
 
@@ -38,16 +38,16 @@ export async function getInvoices(req, res, next) {
     }
 
     if (startDate || endDate) {
-      where.invoiceDate = {};
-      if (startDate) where.invoiceDate.gte = new Date(startDate);
-      if (endDate) where.invoiceDate.lte = new Date(endDate);
+      where.issueDate = {};
+      if (startDate) where.issueDate.gte = new Date(startDate);
+      if (endDate) where.issueDate.lte = new Date(endDate);
     }
 
     if (search && search.trim()) {
       const query = search.trim();
       where.OR = [
         { invoiceNumber: { contains: query, mode: 'insensitive' } },
-        { customer: { name: { contains: query, mode: 'insensitive' } } },
+        { customer: { contactPerson: { contains: query, mode: 'insensitive' } } },
         { customer: { companyName: { contains: query, mode: 'insensitive' } } },
         { customer: { email: { contains: query, mode: 'insensitive' } } },
       ];
@@ -64,7 +64,7 @@ export async function getInvoices(req, res, next) {
         customer: {
           select: {
             id: true,
-            name: true,
+            contactPerson: true,
             email: true,
             companyName: true,
             customerCode: true,
@@ -83,9 +83,15 @@ export async function getInvoices(req, res, next) {
       },
     });
 
+    const formattedInvoices = invoices.map((inv) => ({
+      ...inv,
+      grandTotal: inv.totalAmount,
+      invoiceDate: inv.issueDate,
+    }));
+
     return res.status(200).json({
       success: true,
-      data: invoices,
+      data: formattedInvoices,
       pagination: {
         total,
         page: Number(page),
@@ -118,15 +124,7 @@ export async function getInvoiceById(req, res, next) {
             nextBillingDate: true,
           },
         },
-        items: {
-          include: {
-            product: { select: { id: true, name: true, type: true } },
-            variant: { select: { id: true, name: true, value: true } },
-            plan: { select: { id: true, name: true, billingFrequency: true } },
-            tax: { select: { id: true, name: true, rate: true } },
-            discount: { select: { id: true, name: true, type: true, value: true } },
-          },
-        },
+        items: true,
         payments: {
           orderBy: { createdAt: 'desc' },
           include: {
@@ -146,9 +144,16 @@ export async function getInvoiceById(req, res, next) {
       });
     }
 
+    const formattedInvoice = {
+      ...invoice,
+      grandTotal: invoice.totalAmount,
+      invoiceDate: invoice.issueDate,
+      terms: invoice.termsAndConditions,
+    };
+
     return res.status(200).json({
       success: true,
-      data: invoice,
+      data: formattedInvoice,
     });
   } catch (error) {
     next(error);

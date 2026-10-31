@@ -278,9 +278,11 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
               Billed To
             </div>
-            <div className="font-bold text-gray-900 text-base">{invoice.customer?.name}</div>
-            {invoice.customer?.companyName && (
-              <div className="text-sm text-gray-600">{invoice.customer.companyName}</div>
+            <div className="font-bold text-gray-900 text-base">
+              {invoice.customer?.companyName || invoice.customer?.contactPerson || invoice.customer?.name}
+            </div>
+            {invoice.customer?.contactPerson && invoice.customer?.companyName && (
+              <div className="text-sm text-gray-600">Attn: {invoice.customer.contactPerson}</div>
             )}
             <div className="text-xs text-gray-500 mt-1">{invoice.customer?.email}</div>
             {invoice.customer?.phone && (
@@ -301,7 +303,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
               <div className="flex justify-between">
                 <span>Invoice Date:</span>
                 <span className="font-medium text-gray-900">
-                  {invoice.invoiceDate ? new Date(invoice.invoiceDate).toLocaleDateString() : '—'}
+                  {invoice.invoiceDate || invoice.issueDate ? new Date(invoice.invoiceDate || invoice.issueDate).toLocaleDateString() : '—'}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -429,12 +431,14 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                 </p>
               </div>
             )}
-            {invoice.terms && (
+            {(invoice.terms || invoice.termsAndConditions) && (
               <div>
                 <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
                   Terms & Conditions
                 </div>
-                <p className="text-xs text-gray-500 whitespace-pre-line">{invoice.terms}</p>
+                <p className="text-xs text-gray-500 whitespace-pre-line">
+                  {invoice.terms || invoice.termsAndConditions}
+                </p>
               </div>
             )}
           </div>
@@ -455,7 +459,7 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
             <div className="border-t border-gray-200 pt-2 flex justify-between font-bold text-gray-900 text-base">
               <span>Grand Total:</span>
               <span className="text-indigo-600">
-                ₹{Number(invoice.grandTotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                ₹{Number(invoice.grandTotal ?? invoice.totalAmount ?? 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
               </span>
             </div>
             <div className="flex justify-between text-emerald-700 font-medium">
@@ -502,10 +506,10 @@ const InvoiceDetails = ({ basePath = '/admin' }) => {
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2 font-semibold text-gray-900">
                       <Link to={`${basePath}/payments/${pmt.id}`} className="text-indigo-600 hover:underline">
-                        {pmt.paymentNumber}
+                        {pmt.paymentReference || pmt.paymentNumber}
                       </Link>
                       <span className="text-[10px] bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded font-normal">
-                        {pmt.paymentMethod}
+                        {pmt.method || pmt.paymentMethod}
                       </span>
                       {pmt.paymentReference && (
                         <span className="text-gray-400 font-mono">Ref: {pmt.paymentReference}</span>

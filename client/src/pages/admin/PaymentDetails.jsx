@@ -198,8 +198,16 @@ const PaymentDetails = ({ basePath = '/admin' }) => {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">Customer:</span>
-              <span className="font-semibold text-gray-900">{payment.customer?.name}</span>
+              <span className="font-semibold text-gray-900">
+                {payment.customer?.companyName || payment.customer?.contactPerson || payment.customer?.name}
+              </span>
             </div>
+            {payment.customer?.contactPerson && payment.customer?.companyName && (
+              <div className="flex justify-between">
+                <span className="text-gray-500">Contact:</span>
+                <span className="text-gray-900">{payment.customer.contactPerson}</span>
+              </div>
+            )}
             {payment.customer?.companyName && (
               <div className="flex justify-between">
                 <span className="text-gray-500">Company:</span>

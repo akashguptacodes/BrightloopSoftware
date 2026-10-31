@@ -209,11 +209,15 @@ const Invoices = ({ basePath = '/admin' }) => {
                         )}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-medium text-gray-900">{inv.customer?.name}</div>
-                        <div className="text-xs text-gray-500">{inv.customer?.companyName || inv.customer?.email}</div>
+                        <div className="font-medium text-gray-900">
+                          {inv.customer?.companyName || inv.customer?.contactPerson || inv.customer?.name}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {inv.customer?.contactPerson ? `${inv.customer.contactPerson} • ${inv.customer.email}` : inv.customer?.email}
+                        </div>
                       </td>
                       <td className="px-6 py-4 text-xs text-gray-500">
-                        {inv.invoiceDate ? new Date(inv.invoiceDate).toLocaleDateString() : '—'}
+                        {inv.issueDate || inv.invoiceDate ? new Date(inv.issueDate || inv.invoiceDate).toLocaleDateString() : '—'}
                       </td>
                       <td className="px-6 py-4 text-xs">
                         <span className={isOverdue ? 'text-red-600 font-semibold' : 'text-gray-500'}>
@@ -221,7 +225,7 @@ const Invoices = ({ basePath = '/admin' }) => {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right font-medium text-gray-900">
-                        ₹{Number(inv.grandTotal).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                        ₹{Number(inv.grandTotal ?? inv.totalAmount ?? 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                       </td>
                       <td className="px-6 py-4 text-right">
                         <span

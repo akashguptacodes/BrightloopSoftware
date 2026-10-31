@@ -87,8 +87,14 @@ const CustomerInvoiceDetails = () => {
         return;
       }
 
+      const currentInvoiceId = data?.invoice?.id || id;
+      if (!currentInvoiceId) {
+        toast.error('Unable to determine invoice ID for payment');
+        return;
+      }
+
       // Step 1: Request order from server
-      const orderRes = await initiateRazorpayOrder(data.invoice.id);
+      const orderRes = await initiateRazorpayOrder(currentInvoiceId);
       const orderData = orderRes.data;
 
       // Step 2: Open Razorpay checkout modal
@@ -103,7 +109,7 @@ const CustomerInvoiceDetails = () => {
           try {
             // Step 3: Backend signature verification
             await verifyRazorpayPayment({
-              invoiceId: data.invoice.id,
+              invoiceId: currentInvoiceId,
               razorpayOrderId: response.razorpay_order_id,
               razorpayPaymentId: response.razorpay_payment_id,
               razorpaySignature: response.razorpay_signature,
@@ -233,8 +239,12 @@ const CustomerInvoiceDetails = () => {
             <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
               Billed To
             </div>
-            <div className="font-bold text-gray-900">{customer?.name}</div>
-            {customer?.companyName && <div className="text-gray-600">{customer.companyName}</div>}
+            <div className="font-bold text-gray-900">
+              {customer?.companyName || customer?.contactPerson || customer?.name}
+            </div>
+            {customer?.contactPerson && customer?.companyName && (
+              <div className="text-gray-600">Attn: {customer.contactPerson}</div>
+            )}
             <div className="text-xs text-gray-500 mt-1">{customer?.email}</div>
             {customer?.phone && <div className="text-xs text-gray-500">{customer.phone}</div>}
           </div>

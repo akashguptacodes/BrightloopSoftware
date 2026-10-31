@@ -1,4 +1,4 @@
-import prisma from '../config/prisma.js';
+import prisma from '../config/database.js';
 import { verifyWebhookSignature } from '../services/razorpayService.js';
 import { sendPaymentFailedEmail } from '../services/emailService.js';
 

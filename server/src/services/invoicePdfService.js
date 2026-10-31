@@ -1,4 +1,5 @@
 import PDFDocument from 'pdfkit';
+import prisma from '../config/database.js';
 
 /**
  * Generates a clean, professional PDF invoice buffer
@@ -279,4 +280,36 @@ export function generateInvoicePdfBuffer(invoice) {
     }
   });
 }
+
+/**
+ * Convenience controller helper: loads invoice and streams PDF to Express response
+ *
+ * @param {string} invoiceId
+ * @param {import('express').Response} res
+ */
+export async function generateInvoicePdf(invoiceId, res) {
+  const invoice = await prisma.invoice.findUnique({
+    where: { id: invoiceId },
+    include: {
+      customer: true,
+      subscription: true,
+      items: true,
+    },
+  });
+
+  if (!invoice) {
+    return res.status(404).json({ success: false, message: 'Invoice not found' });
+  }
+
+  const pdfBuffer = await generateInvoicePdfBuffer(invoice);
+
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader(
+    'Content-Disposition',
+    `inline; filename="${invoice.invoiceNumber || 'invoice'}.pdf"`
+  );
+  res.setHeader('Content-Length', pdfBuffer.length);
+  return res.end(pdfBuffer);
+}
+
 

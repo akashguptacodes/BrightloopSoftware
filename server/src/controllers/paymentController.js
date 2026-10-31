@@ -1,4 +1,4 @@
-import prisma from '../config/prisma.js';
+import prisma from '../config/database.js';
 import {
   recordManualPayment,
   initiateRazorpayPayment,
@@ -58,7 +58,7 @@ export async function getPayments(req, res, next) {
         { paymentNumber: { contains: query, mode: 'insensitive' } },
         { paymentReference: { contains: query, mode: 'insensitive' } },
         { invoice: { invoiceNumber: { contains: query, mode: 'insensitive' } } },
-        { customer: { name: { contains: query, mode: 'insensitive' } } },
+        { customer: { contactPerson: { contains: query, mode: 'insensitive' } } },
         { customer: { companyName: { contains: query, mode: 'insensitive' } } },
       ];
     }
@@ -74,7 +74,7 @@ export async function getPayments(req, res, next) {
         customer: {
           select: {
             id: true,
-            name: true,
+            contactPerson: true,
             email: true,
             companyName: true,
             customerCode: true,
@@ -84,7 +84,7 @@ export async function getPayments(req, res, next) {
           select: {
             id: true,
             invoiceNumber: true,
-            grandTotal: true,
+            totalAmount: true,
             amountPaid: true,
             amountDue: true,
             status: true,
@@ -103,9 +103,21 @@ export async function getPayments(req, res, next) {
       },
     });
 
+    const formattedPayments = payments.map((pmt) => ({
+      ...pmt,
+      paymentNumber: pmt.paymentReference,
+      paymentMethod: pmt.method,
+      invoice: pmt.invoice
+        ? {
+            ...pmt.invoice,
+            grandTotal: pmt.invoice.totalAmount,
+          }
+        : null,
+    }));
+
     return res.status(200).json({
       success: true,
-      data: payments,
+      data: formattedPayments,
       pagination: {
         total,
         page: Number(page),
@@ -159,9 +171,22 @@ export async function getPaymentById(req, res, next) {
       });
     }
 
+    const formattedPayment = {
+      ...payment,
+      paymentNumber: payment.paymentReference,
+      paymentMethod: payment.method,
+      invoice: payment.invoice
+        ? {
+            ...payment.invoice,
+            grandTotal: payment.invoice.totalAmount,
+            invoiceDate: payment.invoice.issueDate,
+          }
+        : null,
+    };
+
     return res.status(200).json({
       success: true,
-      data: payment,
+      data: formattedPayment,
     });
   } catch (error) {
     next(error);

@@ -1,4 +1,4 @@
-import prisma from '../config/prisma.js';
+import prisma from '../config/database.js';
 import { runRecurringBillingJob, updateOverdueInvoices } from '../services/billingService.js';
 
 /**
@@ -76,7 +76,7 @@ export async function getBillingStatus(req, res, next) {
       take: 5,
       orderBy: { createdAt: 'desc' },
       include: {
-        customer: { select: { name: true, companyName: true } },
+        customer: { select: { contactPerson: true, companyName: true } },
         subscription: { select: { subscriptionNumber: true } },
       },
     });

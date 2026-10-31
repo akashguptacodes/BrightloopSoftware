@@ -257,7 +257,9 @@ const BillingOverview = ({ basePath = '/admin' }) => {
                     >
                       {inv.invoiceNumber}
                     </Link>
-                    <span className="font-semibold text-gray-900">{inv.customer?.name}</span>
+                    <span className="font-semibold text-gray-900">
+                      {inv.customer?.companyName || inv.customer?.contactPerson || inv.customer?.name}
+                    </span>
                     <span className="text-gray-400">
                       (Sub: {inv.subscription?.subscriptionNumber})
                     </span>

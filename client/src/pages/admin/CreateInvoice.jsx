@@ -268,7 +268,7 @@ const CreateInvoice = ({ basePath = '/admin' }) => {
                 <option value="">-- Choose Customer --</option>
                 {customers.map((c) => (
                   <option key={c.id} value={c.id}>
-                    {c.name} {c.companyName ? `(${c.companyName})` : ''} — {c.email}
+                    {c.companyName ? `${c.companyName} (${c.contactPerson || c.name})` : (c.contactPerson || c.name)} — {c.email}
                   </option>
                 ))}
               </select>

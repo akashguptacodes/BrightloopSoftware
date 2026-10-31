@@ -29,3 +29,4 @@ app.listen(PORT, () => {
   // Initialize automated recurring billing and overdue invoice scheduler
   initBillingScheduler();
 });
+

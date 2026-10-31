@@ -186,8 +186,12 @@ const Payments = ({ basePath = '/admin' }) => {
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="font-medium text-gray-900">{pmt.customer?.name}</div>
-                      <div className="text-xs text-gray-500">{pmt.customer?.companyName || pmt.customer?.email}</div>
+                      <div className="font-medium text-gray-900">
+                        {pmt.customer?.companyName || pmt.customer?.contactPerson || pmt.customer?.name}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {pmt.customer?.contactPerson ? `${pmt.customer.contactPerson} • ${pmt.customer.email}` : pmt.customer?.email}
+                      </div>
                     </td>
                     <td className="px-6 py-4">
                       {pmt.invoice ? (

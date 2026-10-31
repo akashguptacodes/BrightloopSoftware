@@ -127,7 +127,14 @@ export async function recordManualPayment({
 /**
  * Initiates Razorpay checkout by creating an order and pending payment record
  */
-export async function initiateRazorpayPayment({ invoiceId, customerId, customerEmail }) {
+export async function initiateRazorpayPayment(params) {
+  const invoiceId = typeof params === 'string' ? params : params?.invoiceId;
+  const customerId = params?.customerId;
+
+  if (!invoiceId) {
+    throw new Error('Invoice ID is required to initiate payment.');
+  }
+
   const invoice = await prisma.invoice.findUnique({
     where: { id: invoiceId },
     include: { customer: true },
@@ -200,9 +207,16 @@ export async function verifyAndApplyRazorpayPayment({
   gatewayOrderId,
   gatewayPaymentId,
   gatewaySignature,
+  razorpayOrderId,
+  razorpayPaymentId,
+  razorpaySignature,
   customerId,
 }) {
-  if (!gatewayOrderId || !gatewayPaymentId || !gatewaySignature) {
+  const orderId = gatewayOrderId || razorpayOrderId;
+  const paymentId = gatewayPaymentId || razorpayPaymentId;
+  const signature = gatewaySignature || razorpaySignature;
+
+  if (!orderId || !paymentId || !signature) {
     throw new Error('Missing payment verification parameters from checkout.');
   }
 
@@ -221,15 +235,15 @@ export async function verifyAndApplyRazorpayPayment({
 
   // Verify HMAC signature
   const isValid = verifyPaymentSignature({
-    orderId: gatewayOrderId,
-    paymentId: gatewayPaymentId,
-    signature: gatewaySignature,
+    orderId,
+    paymentId,
+    signature,
   });
 
   if (!isValid) {
     // Record failure
     await prisma.payment.updateMany({
-      where: { gatewayOrderId },
+      where: { gatewayOrderId: orderId },
       data: {
         status: 'FAILED',
         failureReason: 'Cryptographic signature verification failed.',
@@ -240,7 +254,7 @@ export async function verifyAndApplyRazorpayPayment({
 
   // Find the pending payment record
   const pendingPayment = await prisma.payment.findFirst({
-    where: { gatewayOrderId },
+    where: { gatewayOrderId: orderId },
   });
 
   if (!pendingPayment) {
@@ -260,10 +274,10 @@ export async function verifyAndApplyRazorpayPayment({
         where: { id: pendingPayment.id },
         data: {
           status: 'SUCCESSFUL',
-          gatewayPaymentId,
-          gatewaySignature,
+          gatewayPaymentId: paymentId,
+          gatewaySignature: signature,
           paymentDate: new Date(),
-          notes: `Verified Razorpay payment ID: ${gatewayPaymentId}`,
+          notes: `Verified Razorpay payment ID: ${paymentId}`,
         },
       });
 

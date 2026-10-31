@@ -334,9 +334,15 @@ export async function getCustomerInvoices(req, res, next) {
       },
     });
 
+    const formattedInvoices = invoices.map((inv) => ({
+      ...inv,
+      grandTotal: inv.totalAmount,
+      invoiceDate: inv.issueDate,
+    }));
+
     return res.status(200).json({
       success: true,
-      data: { invoices },
+      data: { invoices: formattedInvoices },
     });
   } catch (error) {
     next(error);
@@ -378,9 +384,16 @@ export async function getCustomerInvoiceById(req, res, next) {
       return res.status(404).json({ success: false, message: 'Invoice not found.' });
     }
 
+    const formattedInvoice = {
+      ...invoice,
+      grandTotal: invoice.totalAmount,
+      invoiceDate: invoice.issueDate,
+      terms: invoice.termsAndConditions,
+    };
+
     return res.status(200).json({
       success: true,
-      data: { invoice, customer },
+      data: { invoice: formattedInvoice, customer },
     });
   } catch (error) {
     next(error);
