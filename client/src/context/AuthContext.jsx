@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
         const userData = response.data?.user || response.user || response.data || null;
         setUser(userData);
       } catch {
+        localStorage.removeItem('token');
         setUser(null);
       } finally {
         setLoading(false);
@@ -30,6 +31,10 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     const response = await authService.login({ email, password });
     const userData = response.data?.user || response.user || response.data || null;
+    const token = response.data?.token || response.token;
+    if (token) {
+      localStorage.setItem('token', token);
+    }
     setUser(userData);
     return response.data || response;
   };
@@ -45,6 +50,7 @@ export const AuthProvider = ({ children }) => {
     } catch {
       // Ignore logout errors
     }
+    localStorage.removeItem('token');
     setUser(null);
     navigate('/login');
   };

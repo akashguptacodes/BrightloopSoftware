@@ -8,6 +8,18 @@ const api = axios.create({
   },
 });
 
+// Request interceptor — attach Bearer token from localStorage for reliable cross-domain authentication
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 // Response interceptor — redirect on 401 (session expired)
 api.interceptors.response.use(
   (response) => response,
@@ -18,6 +30,7 @@ api.interceptors.response.use(
       const isAuthPage = authPages.some((page) => currentPath.startsWith(page));
 
       if (!isAuthPage) {
+        localStorage.removeItem('token');
         window.location.href = '/login';
       }
     }

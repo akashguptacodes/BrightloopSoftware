@@ -130,11 +130,12 @@ export async function login(req, res, next) {
     // Generate JWT
     const token = generateAccessToken(user);
 
-    // Set token in HTTP-only cookie
+    // Set token in HTTP-only cookie (use sameSite: 'none' in production for cross-site requests like Vercel -> Render)
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
 
@@ -198,10 +199,11 @@ export async function getMe(req, res, next) {
  */
 export async function logout(req, res, next) {
   try {
+    const isProduction = process.env.NODE_ENV === 'production';
     res.clearCookie('token', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
     });
 
     return res.status(200).json({
