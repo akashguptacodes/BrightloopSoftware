@@ -12,6 +12,9 @@ import CustomerLayout from './layouts/CustomerLayout';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import RoleRoute from './components/common/RoleRoute';
 
+// Landing Page
+import LandingPage from './pages/LandingPage';
+
 // Auth Pages
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -64,15 +67,7 @@ import CustomerPayments from './pages/customer/CustomerPayments';
 // 404
 import NotFound from './pages/NotFound';
 
-// Root redirect component
-const RootRedirect = () => {
-  const { user, loading } = useAuth();
-  if (loading) return null;
-  if (!user) return <Navigate to="/login" replace />;
-  return <Navigate to={getDashboardPath(user.role)} replace />;
-};
-
-// Redirect if already authenticated
+// Redirect if already authenticated (for auth pages)
 const PublicOnly = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return null;
@@ -83,8 +78,8 @@ const PublicOnly = ({ children }) => {
 function App() {
   return (
     <Routes>
-      {/* Root Path */}
-      <Route path="/" element={<RootRedirect />} />
+      {/* Root Path — Classical Landing Page */}
+      <Route path="/" element={<LandingPage />} />
 
       {/* Public Auth Routes */}
       <Route element={<AuthLayout />}>
