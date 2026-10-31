@@ -87,6 +87,7 @@ export async function getProducts(req, res, next) {
       where,
       include: {
         variants: true,
+        plans: true,
         _count: {
           select: { plans: true, variants: true },
         },

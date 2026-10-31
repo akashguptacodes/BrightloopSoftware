@@ -45,7 +45,7 @@ const AdminDashboard = () => {
         <div>
           <div className="flex items-center gap-2 text-blue-600 text-sm font-semibold mb-1">
             <ShieldCheck className="w-4 h-4" />
-            <span>Admin Control Panel — Sprint 2</span>
+            <span>Admin Control Panel — Sprint 3</span>
           </div>
           <h1 className="text-2xl font-bold text-gray-900">
             Welcome back, {user?.name || 'Administrator'}
@@ -208,41 +208,41 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Active Subscriptions (Sprint 3) */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm relative overflow-hidden">
+        {/* Active Subscriptions */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <div className="flex items-center gap-1.5">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Active Subscriptions</p>
-                <span className="text-[10px] bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-full font-medium">Sprint 3</span>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-400 mt-1.5">—</h3>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Active Subscriptions</p>
+              <h3 className="text-2xl font-bold text-gray-900 mt-1.5">
+                {loading ? '...' : stats?.subscriptions?.active || 0}
+              </h3>
             </div>
-            <div className="w-11 h-11 bg-gray-50 text-gray-400 rounded-xl flex items-center justify-center">
-              <FileText className="w-5 h-5" />
+            <div className="w-11 h-11 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center">
+              <Repeat className="w-5 h-5" />
             </div>
           </div>
-          <div className="mt-3 text-xs text-purple-600 border-t border-gray-100 pt-2.5 flex items-center gap-1 font-medium">
-            <Clock className="w-3.5 h-3.5" /> Coming in Sprint 3 (Quotations & Subs)
+          <div className="mt-3 text-xs text-gray-500 border-t border-gray-100 pt-2.5 flex justify-between">
+            <span>{stats?.subscriptions?.total || 0} total contracts</span>
+            <Link to="/admin/subscriptions" className="text-purple-600 hover:underline">Manage &rarr;</Link>
           </div>
         </div>
 
-        {/* Recurring Invoices (Sprint 3) */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm relative overflow-hidden">
+        {/* Sales Quotations */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
-              <div className="flex items-center gap-1.5">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Recurring Billing</p>
-                <span className="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-medium">Sprint 3</span>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-400 mt-1.5">—</h3>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Quotations</p>
+              <h3 className="text-2xl font-bold text-gray-900 mt-1.5">
+                {loading ? '...' : stats?.quotations?.total || 0}
+              </h3>
             </div>
-            <div className="w-11 h-11 bg-gray-50 text-gray-400 rounded-xl flex items-center justify-center">
-              <DollarSign className="w-5 h-5" />
+            <div className="w-11 h-11 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center">
+              <FileText className="w-5 h-5" />
             </div>
           </div>
-          <div className="mt-3 text-xs text-amber-600 border-t border-gray-100 pt-2.5 flex items-center gap-1 font-medium">
-            <Clock className="w-3.5 h-3.5" /> Coming in Sprint 3 (Invoicing & Auto-billing)
+          <div className="mt-3 text-xs text-gray-500 border-t border-gray-100 pt-2.5 flex justify-between">
+            <span>{stats?.quotations?.converted || 0} converted / {stats?.quotations?.accepted || 0} accepted</span>
+            <Link to="/admin/quotations" className="text-amber-600 hover:underline">Quotes &rarr;</Link>
           </div>
         </div>
       </div>

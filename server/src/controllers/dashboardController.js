@@ -17,6 +17,21 @@ export async function getDashboardStats(req, res, next) {
     const totalDiscounts = await prisma.discount.count();
     const activeDiscounts = await prisma.discount.count({ where: { isActive: true } });
 
+    // Sprint 3: Customers, Quotations & Subscriptions counts
+    const totalCustomers = await prisma.customer.count();
+    const activeCustomers = await prisma.customer.count({ where: { isActive: true } });
+
+    const totalQuotations = await prisma.quotation.count();
+    const draftQuotations = await prisma.quotation.count({ where: { status: 'DRAFT' } });
+    const sentQuotations = await prisma.quotation.count({ where: { status: 'SENT' } });
+    const acceptedQuotations = await prisma.quotation.count({ where: { status: 'ACCEPTED' } });
+    const convertedQuotations = await prisma.quotation.count({ where: { status: 'CONVERTED' } });
+
+    const totalSubscriptions = await prisma.subscription.count();
+    const activeSubscriptions = await prisma.subscription.count({ where: { status: 'ACTIVE' } });
+    const pausedSubscriptions = await prisma.subscription.count({ where: { status: 'PAUSED' } });
+    const cancelledSubscriptions = await prisma.subscription.count({ where: { status: 'CANCELLED' } });
+
     return res.status(200).json({
       success: true,
       message: 'Dashboard stats retrieved successfully.',
@@ -25,6 +40,10 @@ export async function getDashboardStats(req, res, next) {
           staffCount,
           customerCount,
         },
+        customers: {
+          total: totalCustomers,
+          active: activeCustomers,
+        },
         products: {
           total: totalProducts,
           active: activeProducts,
@@ -32,6 +51,19 @@ export async function getDashboardStats(req, res, next) {
         plans: {
           total: totalPlans,
           active: activePlans,
+        },
+        quotations: {
+          total: totalQuotations,
+          draft: draftQuotations,
+          sent: sentQuotations,
+          accepted: acceptedQuotations,
+          converted: convertedQuotations,
+        },
+        subscriptions: {
+          total: totalSubscriptions,
+          active: activeSubscriptions,
+          paused: pausedSubscriptions,
+          cancelled: cancelledSubscriptions,
         },
         taxes: {
           total: totalTaxes,

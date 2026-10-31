@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/common/Sidebar';
 import Navbar from '../components/common/Navbar';
-import { LayoutDashboard, FileText, Receipt, CreditCard } from 'lucide-react';
+import { LayoutDashboard, FileSpreadsheet, Repeat, Receipt } from 'lucide-react';
 
 const sidebarLinks = [
   { to: '/customer/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '#', label: 'My Subscriptions', icon: FileText, badge: 'Soon' },
-  { to: '#', label: 'My Invoices', icon: Receipt, badge: 'Soon' },
-  { to: '#', label: 'Payment History', icon: CreditCard, badge: 'Soon' },
+  { to: '/customer/quotations', label: 'My Quotations', icon: FileSpreadsheet },
+  { to: '/customer/subscriptions', label: 'My Subscriptions', icon: Repeat },
+  { to: '#', label: 'My Invoices', icon: Receipt, badge: 'Sprint 4' },
 ];
 
 const CustomerLayout = () => {

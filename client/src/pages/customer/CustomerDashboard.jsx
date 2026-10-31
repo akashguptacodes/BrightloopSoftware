@@ -1,18 +1,42 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { 
-  User, Mail, Calendar, ShieldCheck, FileText, Receipt, CreditCard, Sparkles 
+import { getCustomerProfile } from '../../services/customerPortalService';
+import {
+  User,
+  Mail,
+  Calendar,
+  Sparkles,
+  FileSpreadsheet,
+  Repeat,
+  Receipt,
+  ArrowRight,
+  Building,
 } from 'lucide-react';
 
 const CustomerDashboard = () => {
   const { user } = useAuth();
+  const [profileData, setProfileData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const formattedDate = user?.createdAt
-    ? new Date(user.createdAt).toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    : 'Recent Member';
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        setLoading(true);
+        const res = await getCustomerProfile();
+        setProfileData(res?.data || null);
+      } catch (err) {
+        // Fallback for customer without linked profile yet
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, []);
+
+  const customer = profileData?.customer;
+  const stats = profileData?.stats || { totalQuotations: 0, activeSubscriptions: 0 };
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -24,10 +48,10 @@ const CustomerDashboard = () => {
             Customer Self-Service Portal
           </span>
           <h1 className="text-2xl font-bold text-gray-900">
-            Welcome, {user?.name || 'Customer'}!
+            Welcome, {customer?.contactPerson || user?.name || 'Customer'}!
           </h1>
           <p className="text-gray-500 text-sm mt-1">
-            Manage your Brightloop software subscriptions, view billing statements, and check payment history.
+            Review and approve Brightloop proposals, manage your active subscription plans, and inspect contract details.
           </p>
         </div>
       </div>
@@ -41,8 +65,15 @@ const CustomerDashboard = () => {
               <User className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-gray-500 font-medium">Customer Name</p>
-              <p className="text-sm font-semibold text-gray-900">{user?.name || 'N/A'}</p>
+              <p className="text-xs text-gray-500 font-medium">Customer / Company</p>
+              <p className="text-sm font-semibold text-gray-900">
+                {customer?.companyName || customer?.contactPerson || user?.name}
+              </p>
+              {customer?.customerCode && (
+                <span className="text-xs font-mono text-blue-600 font-medium">
+                  Code: {customer.customerCode}
+                </span>
+              )}
             </div>
           </div>
 
@@ -53,7 +84,7 @@ const CustomerDashboard = () => {
             <div>
               <p className="text-xs text-gray-500 font-medium">Registered Email</p>
               <p className="text-sm font-semibold text-gray-900 truncate max-w-[200px]" title={user?.email}>
-                {user?.email || 'N/A'}
+                {customer?.email || user?.email || 'N/A'}
               </p>
             </div>
           </div>
@@ -66,55 +97,81 @@ const CustomerDashboard = () => {
               <p className="text-xs text-gray-500 font-medium">Account Status</p>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                <span className="text-sm font-semibold text-emerald-700">Active</span>
+                <span className="text-sm font-semibold text-emerald-700">Active Account</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Feature Placeholders */}
+      {/* Live Modules Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* My Subscriptions */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col items-center text-center">
-          <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-3">
-            <FileText className="w-6 h-6" />
+        {/* Quotations Card */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-3">
+              <FileSpreadsheet className="w-6 h-6" />
+            </div>
+            <h3 className="font-bold text-gray-900 text-base">My Quotations</h3>
+            <p className="text-sm text-gray-500 mt-1 mb-4 leading-relaxed">
+              Review custom proposals and pricing quotes provided for your company. You can review, approve, or decline them online.
+            </p>
           </div>
-          <h3 className="font-bold text-gray-900 text-base">My Subscriptions</h3>
-          <p className="text-sm text-gray-500 mt-1 mb-4 leading-relaxed">
-            No active subscriptions yet. Once Brightloop services are activated for your account, your plans will appear here.
-          </p>
-          <span className="text-xs font-semibold px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full mt-auto">
-            Coming in Sprint 2
-          </span>
+          <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+            <span className="text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded">
+              {stats.totalQuotations} Available
+            </span>
+            <Link
+              to="/customer/quotations"
+              className="text-xs font-bold text-blue-600 hover:underline flex items-center gap-1"
+            >
+              <span>View Quotes</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
 
-        {/* My Invoices */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col items-center text-center">
-          <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-3">
-            <Receipt className="w-6 h-6" />
+        {/* Subscriptions Card */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-3">
+              <Repeat className="w-6 h-6" />
+            </div>
+            <h3 className="font-bold text-gray-900 text-base">My Subscriptions</h3>
+            <p className="text-sm text-gray-500 mt-1 mb-4 leading-relaxed">
+              Track your recurring active services, renewal dates, and contract terms.
+            </p>
           </div>
-          <h3 className="font-bold text-gray-900 text-base">Billing & Invoices</h3>
-          <p className="text-sm text-gray-500 mt-1 mb-4 leading-relaxed">
-            Your recurring invoices and downloadable PDF receipts will be listed here with payment due dates.
-          </p>
-          <span className="text-xs font-semibold px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full mt-auto">
-            Coming in Sprint 3
-          </span>
+          <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+              {stats.activeSubscriptions} Active
+            </span>
+            <Link
+              to="/customer/subscriptions"
+              className="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1"
+            >
+              <span>Manage Services</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
 
-        {/* Payment History */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col items-center text-center">
-          <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-3">
-            <CreditCard className="w-6 h-6" />
+        {/* Invoices (Sprint 4) */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col justify-between opacity-80">
+          <div>
+            <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-3">
+              <Receipt className="w-6 h-6" />
+            </div>
+            <h3 className="font-bold text-gray-900 text-base">Invoices & Receipts</h3>
+            <p className="text-sm text-gray-500 mt-1 mb-4 leading-relaxed">
+              PDF downloadable invoices, payment links, and billing history will be generated directly from your active subscriptions.
+            </p>
           </div>
-          <h3 className="font-bold text-gray-900 text-base">Payment History</h3>
-          <p className="text-sm text-gray-500 mt-1 mb-4 leading-relaxed">
-            Payment records, receipts, and payment method details will be accessible here once payments are made.
-          </p>
-          <span className="text-xs font-semibold px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full mt-auto">
-            Coming in Sprint 3
-          </span>
+          <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-gray-600 bg-gray-100 px-2 py-0.5 rounded">
+              Coming in Sprint 4
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -122,4 +179,3 @@ const CustomerDashboard = () => {
 };
 
 export default CustomerDashboard;
-

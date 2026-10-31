@@ -10,18 +10,22 @@ import {
   BadgePercent,
   FileText,
   Receipt,
-  CreditCard,
+  UserCheck,
+  FileSpreadsheet,
+  Layers,
 } from 'lucide-react';
 
 const sidebarLinks = [
   { to: '/staff/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/staff/customers', label: 'Customers', icon: UserCheck },
+  { to: '/staff/quotations', label: 'Quotations', icon: FileSpreadsheet },
+  { to: '/staff/quotation-templates', label: 'Templates', icon: Layers },
+  { to: '/staff/subscriptions', label: 'Subscriptions', icon: Repeat },
   { to: '/staff/products', label: 'Products', icon: Package },
-  { to: '/staff/plans', label: 'Subscription Plans', icon: Repeat },
+  { to: '/staff/plans', label: 'Plans', icon: FileText },
   { to: '/staff/taxes', label: 'Tax Rules', icon: Percent },
   { to: '/staff/discounts', label: 'Discounts', icon: BadgePercent },
-  { to: '#', label: 'Subscriptions', icon: FileText, badge: 'Sprint 3' },
-  { to: '#', label: 'Invoices', icon: Receipt, badge: 'Sprint 3' },
-  { to: '#', label: 'Payments', icon: CreditCard, badge: 'Sprint 3' },
+  { to: '#', label: 'Invoices', icon: Receipt, badge: 'Sprint 4' },
 ];
 
 const StaffLayout = () => {

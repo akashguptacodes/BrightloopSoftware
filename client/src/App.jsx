@@ -32,6 +32,22 @@ import PlanDetails from './pages/admin/PlanDetails';
 import Taxes from './pages/admin/Taxes';
 import Discounts from './pages/admin/Discounts';
 
+// Sprint 3 Management Pages
+import Customers from './pages/admin/Customers';
+import CustomerDetails from './pages/admin/CustomerDetails';
+import QuotationTemplates from './pages/admin/QuotationTemplates';
+import Quotations from './pages/admin/Quotations';
+import CreateQuotation from './pages/admin/CreateQuotation';
+import QuotationDetails from './pages/admin/QuotationDetails';
+import Subscriptions from './pages/admin/Subscriptions';
+import SubscriptionDetails from './pages/admin/SubscriptionDetails';
+
+// Customer Portal Pages
+import CustomerQuotations from './pages/customer/CustomerQuotations';
+import CustomerQuotationDetails from './pages/customer/CustomerQuotationDetails';
+import CustomerSubscriptions from './pages/customer/CustomerSubscriptions';
+import CustomerSubscriptionDetails from './pages/customer/CustomerSubscriptionDetails';
+
 // 404
 import NotFound from './pages/NotFound';
 
@@ -99,6 +115,14 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="customers" element={<Customers basePath="/admin" />} />
+            <Route path="customers/:id" element={<CustomerDetails basePath="/admin" />} />
+            <Route path="quotation-templates" element={<QuotationTemplates />} />
+            <Route path="quotations" element={<Quotations basePath="/admin" />} />
+            <Route path="quotations/create" element={<CreateQuotation basePath="/admin" />} />
+            <Route path="quotations/:id" element={<QuotationDetails basePath="/admin" />} />
+            <Route path="subscriptions" element={<Subscriptions basePath="/admin" />} />
+            <Route path="subscriptions/:id" element={<SubscriptionDetails basePath="/admin" />} />
             <Route path="products" element={<Products />} />
             <Route path="products/:id" element={<ProductDetails />} />
             <Route path="plans" element={<Plans />} />
@@ -110,12 +134,20 @@ function App() {
         </Route>
       </Route>
 
-      {/* Protected Staff Routes (Read-Only access to catalog, plans, taxes, discounts) */}
+      {/* Protected Staff Routes */}
       <Route element={<ProtectedRoute />}>
         <Route element={<RoleRoute allowedRoles={[ROLES.STAFF, ROLES.ADMIN]} />}>
           <Route path="/staff" element={<StaffLayout />}>
             <Route index element={<Navigate to="/staff/dashboard" replace />} />
             <Route path="dashboard" element={<StaffDashboard />} />
+            <Route path="customers" element={<Customers basePath="/staff" />} />
+            <Route path="customers/:id" element={<CustomerDetails basePath="/staff" />} />
+            <Route path="quotation-templates" element={<QuotationTemplates />} />
+            <Route path="quotations" element={<Quotations basePath="/staff" />} />
+            <Route path="quotations/create" element={<CreateQuotation basePath="/staff" />} />
+            <Route path="quotations/:id" element={<QuotationDetails basePath="/staff" />} />
+            <Route path="subscriptions" element={<Subscriptions basePath="/staff" />} />
+            <Route path="subscriptions/:id" element={<SubscriptionDetails basePath="/staff" />} />
             <Route path="products" element={<Products />} />
             <Route path="products/:id" element={<ProductDetails />} />
             <Route path="plans" element={<Plans />} />
@@ -132,6 +164,10 @@ function App() {
           <Route path="/customer" element={<CustomerLayout />}>
             <Route index element={<Navigate to="/customer/dashboard" replace />} />
             <Route path="dashboard" element={<CustomerDashboard />} />
+            <Route path="quotations" element={<CustomerQuotations />} />
+            <Route path="quotations/:id" element={<CustomerQuotationDetails />} />
+            <Route path="subscriptions" element={<CustomerSubscriptions />} />
+            <Route path="subscriptions/:id" element={<CustomerSubscriptionDetails />} />
           </Route>
         </Route>
       </Route>

@@ -1,5 +1,5 @@
 # Brightloop Software — Subscription Management System
-> **Sprint 1 & Sprint 2: Commercial Catalog, Plans, Taxes, Discounts & Authentication**  
+> **Sprint 1, Sprint 2 & Sprint 3: Commercial Catalog, Customers, Quotations & Subscription Lifecycles**  
 > An enterprise-grade, full-stack subscription management and recurring billing platform built for **Brightloop Software**.
 
 ---
@@ -21,7 +21,16 @@ Brightloop Software sells cloud software, add-on modules, and physical products 
   - **Tax Configuration**: Percentage-based tax rules (e.g. GST 5%, 12%, 18%) applied post-discount.
   - **Discount Rules Engine**: Fixed and percentage discounts with threshold criteria (minimum quantity, minimum spend, validity range, usage limits) and product-specific or global scope.
   - **Price Calculation Utility**: Decimal-accurate calculation of Unit Price, Subtotal, Eligible Discount, Taxable Amount, Tax, and Final Total.
-  - **Role Separation**: Admins manage configurations; Staff have read-only catalog browsing.
+
+- **Sprint 3 (Customers, Quotations & Subscriptions)**:
+  - **Customer Management**: Profile records, billing/shipping addresses, Tax ID (GSTIN), linked user accounts, sequential `CUST-YYYY-XXXXX` codes.
+  - **Quotation Templates**: Reusable presets with standard validity windows, terms & conditions, and closing notes.
+  - **Quotation Management**: Sequential `QUO-YYYY-XXXXX` proposals with multi-item builders, live pricing previews, and price snapshot preservation.
+  - **Customer Portal**: Self-service portal where customers can review itemized quotes, approve proposals, or decline with feedback.
+  - **Quotation-to-Subscription Conversion**: Atomic conversion creating sequential `SUB-YYYY-XXXXX` subscriptions with item snapshots and transitioning quote status to `CONVERTED`.
+  - **Subscription Lifecycle Engine**: State machine supporting `PENDING`, `ACTIVE`, `PAUSED`, `CANCELLED`, `CLOSED`, and `RENEWED` with plan policy validation.
+  - **Audit Trail History**: Full timeline logging every lifecycle transition with actor identity, action type, and operational notes.
+  - **Email Notifications**: Responsive transactional templates for quotation delivery, status updates, and subscription lifecycle changes.
 
 ---
 
@@ -352,7 +361,51 @@ model Discount {
 - `DELETE /api/discounts/:id` (`ADMIN` only) — Delete discount rule.
 
 ### Dashboard Stats (`/api/dashboard`)
-- `GET /api/dashboard/stats` (`ADMIN` & `STAFF`) — Real database counts for products, plans, taxes, discounts, staff, and customers.
+- `GET /api/dashboard/stats` (`ADMIN` & `STAFF`) — Real database counts for products, plans, taxes, discounts, customers, quotations, and subscriptions.
+
+### Customers (`/api/customers`)
+- `POST /api/customers` (`ADMIN` & `STAFF`) — Create customer with sequential `CUST-YYYY-XXXXX` code.
+- `GET /api/customers` (`ADMIN` & `STAFF`) — List customers with search, status filters, quotation and subscription counts.
+- `GET /api/customers/:id` (`ADMIN`, `STAFF`, `CUSTOMER`) — View single customer details and contract history.
+- `PUT /api/customers/:id` (`ADMIN` & `STAFF`) — Update customer profile and address.
+- `PATCH /api/customers/:id/status` (`ADMIN` & `STAFF`) — Toggle active status.
+
+### Quotation Templates (`/api/quotation-templates`)
+- `POST /api/quotation-templates` (`ADMIN` & `STAFF`) — Create standardized preset with validity days and default terms.
+- `GET /api/quotation-templates` (`ADMIN` & `STAFF`) — List quotation templates.
+- `GET /api/quotation-templates/:id` (`ADMIN` & `STAFF`) — View template details.
+- `PUT /api/quotation-templates/:id` (`ADMIN` & `STAFF`) — Update template.
+- `PATCH /api/quotation-templates/:id/status` (`ADMIN` & `STAFF`) — Toggle template status.
+
+### Quotations (`/api/quotations`)
+- `POST /api/quotations` (`ADMIN` & `STAFF`) — Create quotation draft (`QUO-YYYY-XXXXX`) with line items & snapshots.
+- `GET /api/quotations` (`ADMIN` & `STAFF`) — List quotations with status and customer filters.
+- `GET /api/quotations/:id` (`ADMIN`, `STAFF`, `CUSTOMER`) — Itemized proposal breakdown with snapshot pricing.
+- `PUT /api/quotations/:id` (`ADMIN` & `STAFF`) — Update DRAFT quotation.
+- `POST /api/quotations/:id/send` (`ADMIN` & `STAFF`) — Send quotation via email (`SENT`).
+- `POST /api/quotations/:id/accept` (`ADMIN` & `STAFF`) — Mark quotation as `ACCEPTED`.
+- `POST /api/quotations/:id/reject` (`ADMIN` & `STAFF`) — Mark quotation as `REJECTED`.
+- `POST /api/quotations/:id/convert` (`ADMIN` & `STAFF`) — Convert quotation to active subscription (`SUB-YYYY-XXXXX`) and mark quote `CONVERTED`.
+
+### Subscriptions (`/api/subscriptions`)
+- `GET /api/subscriptions` (`ADMIN` & `STAFF`) — List subscriptions with status filter (`ACTIVE`, `PAUSED`, `PENDING`, `CANCELLED`, `CLOSED`).
+- `GET /api/subscriptions/:id` (`ADMIN`, `STAFF`, `CUSTOMER`) — View subscription details, snapshot items, and audit history.
+- `POST /api/subscriptions/:id/activate` (`ADMIN` & `STAFF`) — Activate pending or paused subscription.
+- `POST /api/subscriptions/:id/pause` (`ADMIN` & `STAFF`) — Pause subscription (validates plan pause policy).
+- `POST /api/subscriptions/:id/resume` (`ADMIN` & `STAFF`) — Resume paused subscription.
+- `POST /api/subscriptions/:id/cancel` (`ADMIN` & `STAFF`) — Cancel subscription with reason (validates early cancellation policy).
+- `POST /api/subscriptions/:id/renew` (`ADMIN` & `STAFF`) — Renew subscription for next billing cycle.
+- `POST /api/subscriptions/:id/close` (`ADMIN` & `STAFF`) — Close subscription contract.
+- `GET /api/subscriptions/:id/history` (`ADMIN`, `STAFF`, `CUSTOMER`) — Get complete audit trail.
+
+### Customer Portal (`/api/customer-portal`)
+- `GET /api/customer-portal/profile` (`CUSTOMER`) — Customer account profile & stats.
+- `GET /api/customer-portal/quotations` (`CUSTOMER`) — Customer's proposals.
+- `GET /api/customer-portal/quotations/:id` (`CUSTOMER`) — Review itemized proposal.
+- `POST /api/customer-portal/quotations/:id/accept` (`CUSTOMER`) — Customer approves quotation online.
+- `POST /api/customer-portal/quotations/:id/reject` (`CUSTOMER`) — Customer declines quotation with feedback.
+- `GET /api/customer-portal/subscriptions` (`CUSTOMER`) — Customer's recurring subscriptions.
+- `GET /api/customer-portal/subscriptions/:id` (`CUSTOMER`) — Detailed subscription plan and cycle overview.
 
 ---
 

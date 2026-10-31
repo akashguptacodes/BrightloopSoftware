@@ -23,3 +23,6 @@ export function authorize(...roles) {
     next();
   };
 }
+
+export const authorizeRoles = authorize;
+

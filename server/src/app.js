@@ -9,6 +9,11 @@ import planRoutes from './routes/planRoutes.js';
 import taxRoutes from './routes/taxRoutes.js';
 import discountRoutes from './routes/discountRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
+import customerRoutes from './routes/customerRoutes.js';
+import quotationTemplateRoutes from './routes/quotationTemplateRoutes.js';
+import quotationRoutes from './routes/quotationRoutes.js';
+import subscriptionRoutes from './routes/subscriptionRoutes.js';
+import customerPortalRoutes from './routes/customerPortalRoutes.js';
 import { errorHandler } from './middleware/errorMiddleware.js';
 
 const app = express();
@@ -50,6 +55,11 @@ app.use('/api/plans', planRoutes);
 app.use('/api/taxes', taxRoutes);
 app.use('/api/discounts', discountRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/customers', customerRoutes);
+app.use('/api/quotation-templates', quotationTemplateRoutes);
+app.use('/api/quotations', quotationRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/customer-portal', customerPortalRoutes);
 
 // 404 handler
 app.use((req, res) => {
