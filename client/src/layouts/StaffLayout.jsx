@@ -38,7 +38,7 @@ const StaffLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen bg-[#f3f7f4] overflow-hidden">
       <Sidebar
         links={sidebarLinks}
         isOpen={sidebarOpen}

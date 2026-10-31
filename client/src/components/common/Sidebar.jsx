@@ -27,7 +27,7 @@ const Sidebar = ({ links, isOpen, onClose }) => {
         {/* Branding */}
         <div className="flex items-center justify-between h-16 px-5 border-b border-white/10">
           <div className="flex items-center gap-2.5">
-            <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-primary-600">
+            <div className="flex items-center justify-center h-8 w-8 rounded bg-primary-600">
               <Zap className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -53,7 +53,7 @@ const Sidebar = ({ links, isOpen, onClose }) => {
                 to={link.to}
                 onClick={onClose}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  `flex items-center gap-3 px-3 py-2.5 rounded text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-sidebar-active text-white'
                       : 'text-gray-300 hover:bg-sidebar-hover hover:text-white'
@@ -63,7 +63,7 @@ const Sidebar = ({ links, isOpen, onClose }) => {
                 <Icon className="h-5 w-5 flex-shrink-0" />
                 <span className="flex-1">{link.label}</span>
                 {link.badge && (
-                  <span className="px-2 py-0.5 text-[10px] font-semibold rounded-full bg-primary-600/30 text-primary-300 border border-primary-500/30">
+                  <span className="px-2 py-0.5 text-[10px] font-semibold rounded bg-primary-600/30 text-primary-300 border border-primary-500/30">
                     {link.badge}
                   </span>
                 )}
@@ -75,7 +75,7 @@ const Sidebar = ({ links, isOpen, onClose }) => {
         {/* User section at bottom */}
         <div className="border-t border-white/10 p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="flex items-center justify-center h-9 w-9 rounded-full bg-sidebar-hover text-sm font-bold">
+            <div className="flex items-center justify-center h-8 w-8 rounded bg-sidebar-hover text-sm font-bold border border-white/10">
               {user?.name?.charAt(0)?.toUpperCase() || 'U'}
             </div>
             <div className="flex-1 min-w-0">
@@ -85,7 +85,7 @@ const Sidebar = ({ links, isOpen, onClose }) => {
           </div>
           <button
             onClick={logout}
-            className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-400 hover:text-white hover:bg-sidebar-hover rounded-lg transition-colors"
+            className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-400 hover:text-white hover:bg-sidebar-hover rounded transition-colors"
           >
             <LogOut className="h-4 w-4" />
             <span>Sign out</span>
