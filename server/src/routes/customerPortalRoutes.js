@@ -7,6 +7,10 @@ import {
   customerRejectQuotation,
   getCustomerSubscriptions,
   getCustomerSubscriptionById,
+  getCustomerInvoices,
+  getCustomerInvoiceById,
+  downloadCustomerInvoicePdf,
+  getCustomerPayments,
 } from '../controllers/customerPortalController.js';
 import { authenticate } from '../middleware/authMiddleware.js';
 import { authorizeRoles } from '../middleware/roleMiddleware.js';
@@ -26,6 +30,12 @@ router.post('/quotations/:id/reject', customerRejectQuotation);
 
 router.get('/subscriptions', getCustomerSubscriptions);
 router.get('/subscriptions/:id', getCustomerSubscriptionById);
+
+// Customer Invoices & Payments
+router.get('/invoices', getCustomerInvoices);
+router.get('/invoices/:id', getCustomerInvoiceById);
+router.get('/invoices/:id/pdf', downloadCustomerInvoicePdf);
+router.get('/payments', getCustomerPayments);
 
 export default router;
 

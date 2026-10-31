@@ -156,21 +156,28 @@ const CustomerDashboard = () => {
           </div>
         </div>
 
-        {/* Invoices (Sprint 4) */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col justify-between opacity-80">
+        {/* Invoices */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col justify-between">
           <div>
             <div className="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-3">
               <Receipt className="w-6 h-6" />
             </div>
             <h3 className="font-bold text-gray-900 text-base">Invoices & Receipts</h3>
             <p className="text-sm text-gray-500 mt-1 mb-4 leading-relaxed">
-              PDF downloadable invoices, payment links, and billing history will be generated directly from your active subscriptions.
+              PDF downloadable invoices, online Razorpay checkout, and billing payment history generated from your subscriptions.
             </p>
           </div>
           <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-gray-600 bg-gray-100 px-2 py-0.5 rounded">
-              Coming in Sprint 4
+            <span className="text-[11px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">
+              Active Module
             </span>
+            <Link
+              to="/customer/invoices"
+              className="text-xs font-bold text-purple-600 hover:underline flex items-center gap-1"
+            >
+              <span>View Invoices</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </div>

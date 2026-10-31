@@ -13,6 +13,8 @@ import {
   UserCheck,
   FileSpreadsheet,
   Layers,
+  CreditCard,
+  CalendarClock,
 } from 'lucide-react';
 
 const sidebarLinks = [
@@ -21,11 +23,13 @@ const sidebarLinks = [
   { to: '/staff/quotations', label: 'Quotations', icon: FileSpreadsheet },
   { to: '/staff/quotation-templates', label: 'Templates', icon: Layers },
   { to: '/staff/subscriptions', label: 'Subscriptions', icon: Repeat },
+  { to: '/staff/invoices', label: 'Invoices', icon: Receipt },
+  { to: '/staff/payments', label: 'Payments', icon: CreditCard },
+  { to: '/staff/billing', label: 'Billing Schedule', icon: CalendarClock },
   { to: '/staff/products', label: 'Products', icon: Package },
   { to: '/staff/plans', label: 'Plans', icon: FileText },
   { to: '/staff/taxes', label: 'Tax Rules', icon: Percent },
   { to: '/staff/discounts', label: 'Discounts', icon: BadgePercent },
-  { to: '#', label: 'Invoices', icon: Receipt, badge: 'Sprint 4' },
 ];
 
 const StaffLayout = () => {

@@ -52,6 +52,40 @@ enum SubscriptionStatus {
   CLOSED
 }
 
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  VOID
+  REFUNDED
+}
+
+enum PaymentMethod {
+  RAZORPAY
+  BANK_TRANSFER
+  UPI
+  CASH
+  CARD
+  CHEQUE
+  OTHER
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESSFUL
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum RefundStatus {
+  PENDING
+  PROCESSED
+  FAILED
+}
+
 model User {
   id                   String                @id @default(uuid())
   name                 String
@@ -67,6 +101,9 @@ model User {
   createdQuotations    Quotation[]
   createdSubscriptions Subscription[]
   performedHistories   SubscriptionHistory[]
+  createdInvoices      Invoice[]
+  recordedPayments     Payment[]
+  createdRefunds       PaymentRefund[]
 
   @@index([email])
   @@index([role])
@@ -213,6 +250,8 @@ model Customer {
   updatedAt               DateTime       @updatedAt
   quotations              Quotation[]
   subscriptions           Subscription[]
+  invoices                Invoice[]
+  payments                Payment[]
 
   @@index([customerCode])
   @@index([email])
@@ -330,6 +369,7 @@ model Subscription {
   updatedAt                DateTime              @updatedAt
   items                    SubscriptionItem[]
   history                  SubscriptionHistory[]
+  invoices                 Invoice[]
 
   @@index([subscriptionNumber])
   @@index([customerId])
@@ -360,6 +400,7 @@ model SubscriptionItem {
   lineTotal           Decimal           @db.Decimal(12, 2)
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
+  invoiceItems        InvoiceItem[]
 
   @@index([subscriptionId])
 }
@@ -380,3 +421,137 @@ model SubscriptionHistory {
   @@index([subscriptionId])
   @@index([createdAt])
 }
+
+// ==========================================
+// SPRINT 4: INVOICE, PAYMENT & BILLING MODELS
+// ==========================================
+
+model Invoice {
+  id                 String         @id @default(uuid())
+  invoiceNumber      String         @unique
+  customerId         String
+  customer           Customer       @relation(fields: [customerId], references: [id])
+  subscriptionId     String?
+  subscription       Subscription?  @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  status             InvoiceStatus  @default(DRAFT)
+  issueDate          DateTime       @default(now())
+  dueDate            DateTime
+  billingPeriodStart DateTime?
+  billingPeriodEnd   DateTime?
+  subtotal           Decimal        @db.Decimal(12, 2)
+  discountTotal      Decimal        @default(0) @db.Decimal(12, 2)
+  taxTotal           Decimal        @default(0) @db.Decimal(12, 2)
+  totalAmount        Decimal        @db.Decimal(12, 2)
+  amountPaid         Decimal        @default(0) @db.Decimal(12, 2)
+  amountDue          Decimal        @db.Decimal(12, 2)
+  currency           String         @default("INR")
+  notes              String?
+  termsAndConditions String?
+  paidAt             DateTime?
+  createdById        String?
+  createdBy          User?          @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  items              InvoiceItem[]
+  payments           Payment[]
+
+  @@unique([subscriptionId, billingPeriodStart, billingPeriodEnd])
+  @@index([invoiceNumber])
+  @@index([customerId])
+  @@index([subscriptionId])
+  @@index([status])
+  @@index([dueDate])
+  @@index([createdById])
+}
+
+model InvoiceItem {
+  id                  String            @id @default(uuid())
+  invoiceId           String
+  invoice             Invoice           @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  subscriptionItemId  String?
+  subscriptionItem    SubscriptionItem? @relation(fields: [subscriptionItemId], references: [id], onDelete: SetNull)
+  productNameSnapshot String
+  variantNameSnapshot String?
+  planNameSnapshot    String?
+  description         String?
+  quantity            Int               @default(1)
+  unitPrice           Decimal           @db.Decimal(12, 2)
+  discountAmount      Decimal           @default(0) @db.Decimal(12, 2)
+  taxRateSnapshot     Decimal           @default(0) @db.Decimal(5, 2)
+  taxAmount           Decimal           @default(0) @db.Decimal(12, 2)
+  lineSubtotal        Decimal           @db.Decimal(12, 2)
+  lineTotal           Decimal           @db.Decimal(12, 2)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@index([invoiceId])
+  @@index([subscriptionItemId])
+}
+
+model Payment {
+  id               String          @id @default(uuid())
+  paymentReference String          @unique
+  invoiceId        String
+  invoice          Invoice         @relation(fields: [invoiceId], references: [id])
+  customerId       String
+  customer         Customer        @relation(fields: [customerId], references: [id])
+  amount           Decimal         @db.Decimal(12, 2)
+  currency         String          @default("INR")
+  method           PaymentMethod
+  status           PaymentStatus   @default(PENDING)
+  transactionId    String?         @unique
+  gatewayOrderId   String?
+  gatewayPaymentId String?         @unique
+  gatewaySignature String?
+  paymentDate      DateTime?
+  notes            String?
+  failureReason    String?
+  recordedById     String?
+  recordedBy       User?           @relation(fields: [recordedById], references: [id], onDelete: SetNull)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  refunds          PaymentRefund[]
+
+  @@index([paymentReference])
+  @@index([invoiceId])
+  @@index([customerId])
+  @@index([status])
+  @@index([gatewayOrderId])
+}
+
+model PaymentRefund {
+  id                String       @id @default(uuid())
+  paymentId         String
+  payment           Payment      @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  amount            Decimal      @db.Decimal(12, 2)
+  reason            String?
+  status            RefundStatus @default(PENDING)
+  gatewayRefundId   String?      @unique
+  externalReference String?
+  processedAt       DateTime?
+  createdById       String?
+  createdBy         User?        @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([paymentId])
+  @@index([status])
+}
+
+model RazorpayWebhookEvent {
+  id               String    @id @default(uuid())
+  eventId          String?   @unique
+  eventType        String
+  gatewayPaymentId String?
+  gatewayOrderId   String?
+  payload          Json
+  processed        Boolean   @default(false)
+  processedAt      DateTime?
+  errorMessage     String?
+  createdAt        DateTime  @default(now())
+
+  @@index([eventType])
+  @@index([processed])
+  @@index([gatewayPaymentId])
+}
+

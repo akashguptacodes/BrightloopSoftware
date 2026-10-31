@@ -15,6 +15,9 @@ import {
   ShieldCheck,
   Clock,
   RefreshCw,
+  Receipt,
+  CreditCard,
+  CalendarClock,
 } from 'lucide-react';
 
 const AdminDashboard = () => {
@@ -243,6 +246,44 @@ const AdminDashboard = () => {
           <div className="mt-3 text-xs text-gray-500 border-t border-gray-100 pt-2.5 flex justify-between">
             <span>{stats?.quotations?.converted || 0} converted / {stats?.quotations?.accepted || 0} accepted</span>
             <Link to="/admin/quotations" className="text-amber-600 hover:underline">Quotes &rarr;</Link>
+          </div>
+        </div>
+
+        {/* Sprint 4: Invoices */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Invoices</p>
+              <h3 className="text-2xl font-bold text-gray-900 mt-1.5">
+                {loading ? '...' : stats?.invoices?.total || 0}
+              </h3>
+            </div>
+            <div className="w-11 h-11 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
+              <Receipt className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3 text-xs text-gray-500 border-t border-gray-100 pt-2.5 flex justify-between">
+            <span className="text-emerald-600 font-semibold">{stats?.invoices?.paid || 0} paid</span>
+            <Link to="/admin/invoices" className="text-blue-600 hover:underline">Invoices &rarr;</Link>
+          </div>
+        </div>
+
+        {/* Sprint 4: Revenue & Payments */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Collected</p>
+              <h3 className="text-2xl font-bold text-emerald-600 mt-1.5">
+                {loading ? '...' : `₹${Number(stats?.payments?.totalCollected || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`}
+              </h3>
+            </div>
+            <div className="w-11 h-11 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+              <CreditCard className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3 text-xs text-gray-500 border-t border-gray-100 pt-2.5 flex justify-between">
+            <span>{stats?.payments?.total || 0} transactions</span>
+            <Link to="/admin/payments" className="text-emerald-600 hover:underline">Payments &rarr;</Link>
           </div>
         </div>
       </div>

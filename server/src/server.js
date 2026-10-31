@@ -15,6 +15,7 @@ if (missingVars.length > 0) {
 
 // Import app after env vars are validated
 const { default: app } = await import('./app.js');
+const { initBillingScheduler } = await import('./jobs/recurringBillingJob.js');
 
 const PORT = process.env.PORT || 5000;
 
@@ -24,4 +25,7 @@ app.listen(PORT, () => {
   console.log(`  Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`  Health check: http://localhost:${PORT}/api/health`);
   console.log(`========================================\n`);
+
+  // Initialize automated recurring billing and overdue invoice scheduler
+  initBillingScheduler();
 });

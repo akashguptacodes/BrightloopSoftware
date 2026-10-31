@@ -14,6 +14,8 @@ import {
   UserCheck,
   FileSpreadsheet,
   Layers,
+  CreditCard,
+  CalendarClock,
 } from 'lucide-react';
 
 const sidebarLinks = [
@@ -22,12 +24,14 @@ const sidebarLinks = [
   { to: '/admin/quotations', label: 'Quotations', icon: FileSpreadsheet },
   { to: '/admin/quotation-templates', label: 'Templates', icon: Layers },
   { to: '/admin/subscriptions', label: 'Subscriptions', icon: Repeat },
+  { to: '/admin/invoices', label: 'Invoices', icon: Receipt },
+  { to: '/admin/payments', label: 'Payments', icon: CreditCard },
+  { to: '/admin/billing', label: 'Billing Schedule', icon: CalendarClock },
   { to: '/admin/products', label: 'Products', icon: Package },
   { to: '/admin/plans', label: 'Plans', icon: FileText },
   { to: '/admin/taxes', label: 'Taxes', icon: Percent },
   { to: '/admin/discounts', label: 'Discounts', icon: BadgePercent },
   { to: '/admin/staff', label: 'Staff Management', icon: Users },
-  { to: '#', label: 'Invoices', icon: Receipt, badge: 'Sprint 4' },
 ];
 
 const AdminLayout = () => {

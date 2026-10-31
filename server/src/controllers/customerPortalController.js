@@ -1,5 +1,6 @@
 import prisma from '../config/database.js';
 import { sendQuotationStatusEmail } from '../services/emailService.js';
+import { generateInvoicePdf } from '../services/invoicePdfService.js';
 
 /**
  * Helper to resolve the Customer record for the logged in user
@@ -308,4 +309,146 @@ export async function getCustomerSubscriptionById(req, res, next) {
     next(error);
   }
 }
+
+/**
+ * @desc    Get invoices for the logged-in customer
+ * @route   GET /api/customer-portal/invoices
+ */
+export async function getCustomerInvoices(req, res, next) {
+  try {
+    const customer = await resolveCurrentCustomer(req.user.id, req.user.email);
+    if (!customer) {
+      return res.status(200).json({ success: true, data: { invoices: [] } });
+    }
+
+    const invoices = await prisma.invoice.findMany({
+      where: {
+        customerId: customer.id,
+        // Customers only see issued/payable or past invoices, never internal drafts
+        status: { in: ['ISSUED', 'PARTIALLY_PAID', 'PAID', 'OVERDUE', 'REFUNDED'] },
+      },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        subscription: { select: { subscriptionNumber: true } },
+        _count: { select: { items: true, payments: true } },
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: { invoices },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @desc    Get single invoice details for customer
+ * @route   GET /api/customer-portal/invoices/:id
+ */
+export async function getCustomerInvoiceById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const customer = await resolveCurrentCustomer(req.user.id, req.user.email);
+
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer profile not found.' });
+    }
+
+    const invoice = await prisma.invoice.findFirst({
+      where: { id, customerId: customer.id },
+      include: {
+        items: true,
+        subscription: {
+          select: {
+            id: true,
+            subscriptionNumber: true,
+            billingFrequencySnapshot: true,
+          },
+        },
+        payments: {
+          where: { status: 'SUCCESSFUL' },
+          orderBy: { paymentDate: 'desc' },
+        },
+      },
+    });
+
+    if (!invoice) {
+      return res.status(404).json({ success: false, message: 'Invoice not found.' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: { invoice, customer },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @desc    Download customer invoice PDF
+ * @route   GET /api/customer-portal/invoices/:id/pdf
+ */
+export async function downloadCustomerInvoicePdf(req, res, next) {
+  try {
+    const { id } = req.params;
+    const customer = await resolveCurrentCustomer(req.user.id, req.user.email);
+
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer profile not found.' });
+    }
+
+    const invoice = await prisma.invoice.findFirst({
+      where: { id, customerId: customer.id },
+    });
+
+    if (!invoice) {
+      return res.status(404).json({ success: false, message: 'Invoice not found.' });
+    }
+
+    await generateInvoicePdf(invoice.id, res);
+  } catch (error) {
+    if (!res.headersSent) {
+      next(error);
+    }
+  }
+}
+
+/**
+ * @desc    Get customer payment history
+ * @route   GET /api/customer-portal/payments
+ */
+export async function getCustomerPayments(req, res, next) {
+  try {
+    const customer = await resolveCurrentCustomer(req.user.id, req.user.email);
+    if (!customer) {
+      return res.status(200).json({ success: true, data: { payments: [] } });
+    }
+
+    const payments = await prisma.payment.findMany({
+      where: { customerId: customer.id },
+      orderBy: { paymentDate: 'desc' },
+      include: {
+        invoice: {
+          select: {
+            id: true,
+            invoiceNumber: true,
+            grandTotal: true,
+            status: true,
+          },
+        },
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: { payments },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 

@@ -148,39 +148,39 @@ const StaffDashboard = () => {
 
       {/* Operational Upcoming Roadmap */}
       <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-        <h2 className="text-lg font-bold text-gray-900 mb-2">Upcoming Operations (Sprint 3)</h2>
+        <h2 className="text-lg font-bold text-gray-900 mb-2">Commercial & Billing Operations</h2>
         <p className="text-xs text-gray-500 mb-4">
-          The catalog foundation is active. In Sprint 3, you will use these products and plans to build quotations and live subscriptions.
+          Manage quotations, contracts, invoicing, and collections for Brightloop Software customers.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+          <Link to="/staff/quotations" className="p-4 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-200 transition">
             <div className="flex items-center gap-2 text-blue-600 mb-1">
               <FileText className="w-4 h-4" />
-              <h4 className="font-bold text-sm text-gray-900">Quotation Templates</h4>
+              <h4 className="font-bold text-sm text-gray-900">Quotation System</h4>
             </div>
             <p className="text-xs text-gray-500">
               Pick plans, select variant add-ons, and issue quotes with validity dates.
             </p>
-            <span className="inline-block mt-2 text-[10px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">
-              Coming in Sprint 3
+            <span className="inline-block mt-2 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+              Active Module
             </span>
-          </div>
+          </Link>
 
-          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+          <Link to="/staff/invoices" className="p-4 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-200 transition">
             <div className="flex items-center gap-2 text-indigo-600 mb-1">
               <Receipt className="w-4 h-4" />
-              <h4 className="font-bold text-sm text-gray-900">Recurring Invoicing</h4>
+              <h4 className="font-bold text-sm text-gray-900">Invoicing & PDF Generator</h4>
             </div>
             <p className="text-xs text-gray-500">
-              Automated invoice generation matching subscription frequencies with taxes and discounts applied.
+              Manual and automated recurring invoice drafts, live PDF creation, and status tracking.
             </p>
-            <span className="inline-block mt-2 text-[10px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">
-              Coming in Sprint 3
+            <span className="inline-block mt-2 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+              Sprint 4 Live
             </span>
-          </div>
+          </Link>
 
-          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+          <Link to="/staff/payments" className="p-4 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-200 transition">
             <div className="flex items-center gap-2 text-emerald-600 mb-1">
               <CreditCard className="w-4 h-4" />
               <h4 className="font-bold text-sm text-gray-900">Payment Collection</h4>
@@ -188,10 +188,10 @@ const StaffDashboard = () => {
             <p className="text-xs text-gray-500">
               Record bank payments, match customer remittances, and track receivables.
             </p>
-            <span className="inline-block mt-2 text-[10px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">
-              Coming in Sprint 3
+            <span className="inline-block mt-2 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+              Sprint 4 Live
             </span>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

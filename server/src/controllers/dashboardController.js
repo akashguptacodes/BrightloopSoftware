@@ -32,6 +32,23 @@ export async function getDashboardStats(req, res, next) {
     const pausedSubscriptions = await prisma.subscription.count({ where: { status: 'PAUSED' } });
     const cancelledSubscriptions = await prisma.subscription.count({ where: { status: 'CANCELLED' } });
 
+    // Sprint 4: Invoices & Payments counts
+    const totalInvoices = await prisma.invoice.count();
+    const draftInvoices = await prisma.invoice.count({ where: { status: 'DRAFT' } });
+    const issuedInvoices = await prisma.invoice.count({ where: { status: 'ISSUED' } });
+    const paidInvoices = await prisma.invoice.count({ where: { status: 'PAID' } });
+    const overdueInvoices = await prisma.invoice.count({ where: { status: 'OVERDUE' } });
+
+    const totalPayments = await prisma.payment.count();
+    const successfulPayments = await prisma.payment.findMany({
+      where: { status: 'SUCCESSFUL' },
+      select: { amount: true },
+    });
+    const totalCollected = successfulPayments.reduce(
+      (acc, p) => acc + Number(p.amount),
+      0
+    );
+
     return res.status(200).json({
       success: true,
       message: 'Dashboard stats retrieved successfully.',
@@ -64,6 +81,17 @@ export async function getDashboardStats(req, res, next) {
           active: activeSubscriptions,
           paused: pausedSubscriptions,
           cancelled: cancelledSubscriptions,
+        },
+        invoices: {
+          total: totalInvoices,
+          draft: draftInvoices,
+          issued: issuedInvoices,
+          paid: paidInvoices,
+          overdue: overdueInvoices,
+        },
+        payments: {
+          total: totalPayments,
+          totalCollected,
         },
         taxes: {
           total: totalTaxes,

@@ -1,5 +1,5 @@
 # Brightloop Software — Subscription Management System
-> **Sprint 1, Sprint 2 & Sprint 3: Commercial Catalog, Customers, Quotations & Subscription Lifecycles**  
+> **Sprint 1, Sprint 2, Sprint 3 & Sprint 4: Commercial Catalog, Quotations, Subscriptions, Invoicing & Automated Recurring Billing**  
 > An enterprise-grade, full-stack subscription management and recurring billing platform built for **Brightloop Software**.
 
 ---
@@ -31,6 +31,17 @@ Brightloop Software sells cloud software, add-on modules, and physical products 
   - **Subscription Lifecycle Engine**: State machine supporting `PENDING`, `ACTIVE`, `PAUSED`, `CANCELLED`, `CLOSED`, and `RENEWED` with plan policy validation.
   - **Audit Trail History**: Full timeline logging every lifecycle transition with actor identity, action type, and operational notes.
   - **Email Notifications**: Responsive transactional templates for quotation delivery, status updates, and subscription lifecycle changes.
+
+- **Sprint 4 (Invoicing, Payment Management & Automated Recurring Billing)**:
+  - **Invoice Management**: Sequential `INV-YYYY-XXXXX` invoices for one-time orders and automated recurring subscription periods.
+  - **Live PDF Generation**: Server-side vector PDF creation (`pdfkit`) with company branding, tax breakdown, price snapshots, and payment status stamps.
+  - **Manual Payment Recording**: Offline payment reconciliation for Bank Transfers (NEFT/RTGS), UPI, Cash, Cheque, and POS Card with partial payment support.
+  - **Razorpay Payment Gateway**: Online checkout flow with cryptographic HMAC-SHA256 signature verification in test/live mode.
+  - **Razorpay Webhooks**: Idempotent webhook receiver (`/api/webhooks/razorpay`) with raw body signature verification capturing `payment.captured` and `payment.failed`.
+  - **Automated Recurring Billing Scheduler**: In-process `node-cron` worker (00:05 AM daily) with calendar end-of-month clamping and duplicate run protection.
+  - **Overdue Scanner**: Daily automated scan (01:00 AM) transitioning unpaid invoices past their due date to `OVERDUE`.
+  - **Customer Self-Service Invoicing**: Customer portal to view invoices, download PDFs, and complete payments via integrated Razorpay modal.
+  - **Refund Processing**: Full and partial refund management with balance adjustments and audit records.
 
 ---
 
@@ -406,6 +417,35 @@ model Discount {
 - `POST /api/customer-portal/quotations/:id/reject` (`CUSTOMER`) — Customer declines quotation with feedback.
 - `GET /api/customer-portal/subscriptions` (`CUSTOMER`) — Customer's recurring subscriptions.
 - `GET /api/customer-portal/subscriptions/:id` (`CUSTOMER`) — Detailed subscription plan and cycle overview.
+- `GET /api/customer-portal/invoices` (`CUSTOMER`) — Customer's payable & past invoices.
+- `GET /api/customer-portal/invoices/:id` (`CUSTOMER`) — Invoice breakdown & payment receipts.
+- `GET /api/customer-portal/invoices/:id/pdf` (`CUSTOMER`) — Stream & download official invoice PDF.
+- `GET /api/customer-portal/payments` (`CUSTOMER`) — Customer's ledger payment history.
+
+### Invoices (`/api/invoices`)
+- `GET /api/invoices` (`ADMIN` & `STAFF`) — List invoices with status, customer, date filters, and pagination.
+- `POST /api/invoices` (`ADMIN` & `STAFF`) — Create manual draft invoice (`INV-YYYY-XXXXX`).
+- `GET /api/invoices/:id` (`ADMIN` & `STAFF`) — Full invoice breakdown with line items, snapshots, and payments.
+- `PUT /api/invoices/:id` (`ADMIN` & `STAFF`) — Modify DRAFT invoice.
+- `POST /api/invoices/:id/issue` (`ADMIN` & `STAFF`) — Issue DRAFT invoice (makes payable and sends email).
+- `POST /api/invoices/:id/void` (`ADMIN` & `STAFF`) — Void unpaid invoice.
+- `GET /api/invoices/:id/pdf` (`ADMIN` & `STAFF`) — Stream & download generated PDF.
+
+### Payments (`/api/payments`)
+- `GET /api/payments` (`ADMIN` & `STAFF`) — List payments with method, status filters, and pagination.
+- `POST /api/payments/manual` (`ADMIN` & `STAFF`) — Record manual payment (Bank Transfer, UPI, Cash, Cheque, Card).
+- `GET /api/payments/:id` (`ADMIN` & `STAFF`) — View payment details with transaction ref and refund history.
+- `POST /api/payments/:id/refund` (`ADMIN`) — Issue refund and adjust invoice balances.
+- `POST /api/payments/razorpay/create-order` — Create Razorpay order in paise for checkout.
+- `POST /api/payments/razorpay/verify` — Verify HMAC-SHA256 signature and apply payment to invoice.
+
+### Recurring Billing & Automation (`/api/admin/billing`)
+- `GET /api/admin/billing/status` (`ADMIN` & `STAFF`) — Scheduler diagnostics, cron schedules, due counts.
+- `POST /api/admin/billing/run` (`ADMIN` & `STAFF`) — Trigger manual batch run of recurring billing engine.
+- `POST /api/admin/billing/check-overdue` (`ADMIN` & `STAFF`) — Trigger manual scan of overdue invoices.
+
+### Webhooks (`/api/webhooks`)
+- `POST /api/webhooks/razorpay` — Public webhook receiver for Razorpay events (`payment.captured`, `payment.failed`) with raw body HMAC verification and idempotency check.
 
 ---
 

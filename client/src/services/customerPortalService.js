@@ -35,3 +35,33 @@ export async function getCustomerSubscriptionById(id) {
   return res.data;
 }
 
+export async function getCustomerInvoices() {
+  const res = await api.get('/customer-portal/invoices');
+  return res.data;
+}
+
+export async function getCustomerInvoiceById(id) {
+  const res = await api.get(`/customer-portal/invoices/${id}`);
+  return res.data;
+}
+
+export async function downloadCustomerInvoicePdf(id, filename = `invoice-${id}.pdf`) {
+  const response = await api.get(`/customer-portal/invoices/${id}/pdf`, {
+    responseType: 'blob',
+  });
+  const blob = new Blob([response.data], { type: 'application/pdf' });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+}
+
+export async function getCustomerPayments() {
+  const res = await api.get('/customer-portal/payments');
+  return res.data;
+}
+

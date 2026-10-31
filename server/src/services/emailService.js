@@ -225,3 +225,197 @@ export async function sendSubscriptionStatusEmail(email, customerName, subscript
     console.warn(`[EMAIL WARNING] Failed to send subscription status email:`, error.message);
   }
 }
+
+/**
+ * Send Invoice Issued Email to Customer
+ */
+export async function sendInvoiceIssuedEmail({ invoice, customer }) {
+  const email = customer?.email;
+  const customerName = customer?.contactPerson || 'Valued Customer';
+  const invoiceNumber = invoice.invoiceNumber;
+  const totalAmount = Number(invoice.totalAmount).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+  const dueDate = new Date(invoice.dueDate).toLocaleDateString();
+
+  if (process.env.NODE_ENV !== 'production' && !process.env.SMTP_HOST) {
+    console.log(`[DEV EMAIL] Invoice ${invoiceNumber} issued to ${email} for INR ${totalAmount}. Due: ${dueDate}`);
+    return;
+  }
+
+  const fromAddress = process.env.SMTP_FROM || 'billing@brightloop.com';
+  const portalUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px;">
+      <div style="max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+        <div style="background: #1e40af; color: white; padding: 20px;">
+          <h2 style="margin: 0;">Brightloop Software — Invoice Issued</h2>
+        </div>
+        <div style="padding: 24px; background: #ffffff;">
+          <p>Dear ${customerName},</p>
+          <p>A new invoice <strong>${invoiceNumber}</strong> has been generated for your account.</p>
+          <div style="background: #f8fafc; padding: 16px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 4px 0;"><strong>Invoice Number:</strong> ${invoiceNumber}</p>
+            <p style="margin: 4px 0;"><strong>Total Amount:</strong> ₹${totalAmount}</p>
+            <p style="margin: 4px 0;"><strong>Due Date:</strong> ${dueDate}</p>
+          </div>
+          <p>Please log in to your Customer Portal to view the full itemized breakdown, download the PDF, or pay online.</p>
+          <p style="margin-top: 24px;">
+            <a href="${portalUrl}/customer/invoices/${invoice.id}" style="background: #1e40af; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+              View & Pay Invoice
+            </a>
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    await transporter.sendMail({
+      from: fromAddress,
+      to: email,
+      subject: `Invoice ${invoiceNumber} from Brightloop Software`,
+      html: htmlContent,
+    });
+  } catch (error) {
+    console.warn(`[EMAIL WARNING] Failed to send invoice email:`, error.message);
+  }
+}
+
+/**
+ * Send Overdue Invoice Reminder
+ */
+export async function sendInvoiceOverdueEmail({ invoice, customer }) {
+  const email = customer?.email;
+  const customerName = customer?.contactPerson || 'Valued Customer';
+  const invoiceNumber = invoice.invoiceNumber;
+  const amountDue = Number(invoice.amountDue).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+
+  if (process.env.NODE_ENV !== 'production' && !process.env.SMTP_HOST) {
+    console.log(`[DEV EMAIL] Invoice ${invoiceNumber} OVERDUE notice to ${email}. Amount Due: INR ${amountDue}`);
+    return;
+  }
+
+  const fromAddress = process.env.SMTP_FROM || 'billing@brightloop.com';
+  const portalUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px;">
+      <div style="max-width: 600px; margin: 0 auto; border: 1px solid #fee2e2; border-radius: 8px; overflow: hidden;">
+        <div style="background: #dc2626; color: white; padding: 20px;">
+          <h2 style="margin: 0;">Payment Reminder: Invoice Overdue</h2>
+        </div>
+        <div style="padding: 24px; background: #ffffff;">
+          <p>Dear ${customerName},</p>
+          <p>This is a friendly reminder that invoice <strong>${invoiceNumber}</strong> with an outstanding balance of <strong>₹${amountDue}</strong> is now past due.</p>
+          <p>To ensure uninterrupted software service, please settle the outstanding balance promptly.</p>
+          <p style="margin-top: 24px;">
+            <a href="${portalUrl}/customer/invoices/${invoice.id}" style="background: #dc2626; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+              Pay Overdue Invoice
+            </a>
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    await transporter.sendMail({
+      from: fromAddress,
+      to: email,
+      subject: `URGENT: Invoice ${invoiceNumber} is Overdue`,
+      html: htmlContent,
+    });
+  } catch (error) {
+    console.warn(`[EMAIL WARNING] Failed to send overdue invoice email:`, error.message);
+  }
+}
+
+/**
+ * Send Payment Receipt Email
+ */
+export async function sendPaymentReceiptEmail({ payment, invoice, customer }) {
+  const email = customer?.email;
+  const customerName = customer?.contactPerson || 'Valued Customer';
+  const paymentRef = payment.paymentReference;
+  const amountPaid = Number(payment.amount).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+  const remainingDue = Number(invoice.amountDue).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+
+  if (process.env.NODE_ENV !== 'production' && !process.env.SMTP_HOST) {
+    console.log(`[DEV EMAIL] Payment receipt ${paymentRef} of INR ${amountPaid} for invoice ${invoice.invoiceNumber} sent to ${email}. Remaining Due: INR ${remainingDue}`);
+    return;
+  }
+
+  const fromAddress = process.env.SMTP_FROM || 'billing@brightloop.com';
+
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px;">
+      <div style="max-width: 600px; margin: 0 auto; border: 1px solid #dcfce7; border-radius: 8px; overflow: hidden;">
+        <div style="background: #16a34a; color: white; padding: 20px;">
+          <h2 style="margin: 0;">Payment Receipt — Brightloop Software</h2>
+        </div>
+        <div style="padding: 24px; background: #ffffff;">
+          <p>Dear ${customerName},</p>
+          <p>Thank you for your payment! We have successfully received your payment of <strong>₹${amountPaid}</strong>.</p>
+          <div style="background: #f0fdf4; padding: 16px; border-radius: 6px; margin: 20px 0; border: 1px solid #bbf7d0;">
+            <p style="margin: 4px 0;"><strong>Payment Reference:</strong> ${paymentRef}</p>
+            <p style="margin: 4px 0;"><strong>Invoice Number:</strong> ${invoice.invoiceNumber}</p>
+            <p style="margin: 4px 0;"><strong>Amount Received:</strong> ₹${amountPaid}</p>
+            <p style="margin: 4px 0;"><strong>Remaining Balance Due:</strong> ₹${remainingDue}</p>
+            <p style="margin: 4px 0;"><strong>Invoice Status:</strong> ${invoice.status}</p>
+          </div>
+          <p>Your subscription contract and services remain in good standing.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    await transporter.sendMail({
+      from: fromAddress,
+      to: email,
+      subject: `Payment Receipt: ${paymentRef} (Invoice ${invoice.invoiceNumber})`,
+      html: htmlContent,
+    });
+  } catch (error) {
+    console.warn(`[EMAIL WARNING] Failed to send payment receipt email:`, error.message);
+  }
+}
+
+/**
+ * Send Payment Failed Email
+ */
+export async function sendPaymentFailedEmail({ invoice, customer, reason }) {
+  const email = customer?.email;
+  const customerName = customer?.contactPerson || 'Valued Customer';
+
+  if (process.env.NODE_ENV !== 'production' && !process.env.SMTP_HOST) {
+    console.log(`[DEV EMAIL] Payment failed notification for ${invoice.invoiceNumber} to ${email}. Reason: ${reason}`);
+    return;
+  }
+
+  const fromAddress = process.env.SMTP_FROM || 'billing@brightloop.com';
+
+  try {
+    await transporter.sendMail({
+      from: fromAddress,
+      to: email,
+      subject: `Payment Failed for Invoice ${invoice.invoiceNumber}`,
+      html: `<p>Dear ${customerName},</p><p>We were unable to process your payment for invoice ${invoice.invoiceNumber}. Reason: ${reason || 'Transaction could not be completed'}.</p><p>Please log in and retry or use an alternative payment method.</p>`,
+    });
+  } catch (error) {
+    console.warn(`[EMAIL WARNING] Failed to send payment failed email:`, error.message);
+  }
+}
+

@@ -14,6 +14,10 @@ import quotationTemplateRoutes from './routes/quotationTemplateRoutes.js';
 import quotationRoutes from './routes/quotationRoutes.js';
 import subscriptionRoutes from './routes/subscriptionRoutes.js';
 import customerPortalRoutes from './routes/customerPortalRoutes.js';
+import invoiceRoutes from './routes/invoiceRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
+import billingRoutes from './routes/billingRoutes.js';
+import webhookRoutes from './routes/webhookRoutes.js';
 import { errorHandler } from './middleware/errorMiddleware.js';
 
 const app = express();
@@ -27,8 +31,12 @@ app.use(cors({
   credentials: true,
 }));
 
-// Body parsing
-app.use(express.json());
+// Body parsing with raw body capture for webhook signature verification
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  },
+}));
 app.use(express.urlencoded({ extended: true }));
 
 // Cookie parser
@@ -60,6 +68,10 @@ app.use('/api/quotation-templates', quotationTemplateRoutes);
 app.use('/api/quotations', quotationRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/customer-portal', customerPortalRoutes);
+app.use('/api/invoices', invoiceRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/admin/billing', billingRoutes);
+app.use('/api/webhooks', webhookRoutes);
 
 // 404 handler
 app.use((req, res) => {

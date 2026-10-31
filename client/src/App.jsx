@@ -42,11 +42,22 @@ import QuotationDetails from './pages/admin/QuotationDetails';
 import Subscriptions from './pages/admin/Subscriptions';
 import SubscriptionDetails from './pages/admin/SubscriptionDetails';
 
+// Sprint 4 Billing & Payments Pages
+import Invoices from './pages/admin/Invoices';
+import CreateInvoice from './pages/admin/CreateInvoice';
+import InvoiceDetails from './pages/admin/InvoiceDetails';
+import Payments from './pages/admin/Payments';
+import PaymentDetails from './pages/admin/PaymentDetails';
+import BillingOverview from './pages/admin/BillingOverview';
+
 // Customer Portal Pages
 import CustomerQuotations from './pages/customer/CustomerQuotations';
 import CustomerQuotationDetails from './pages/customer/CustomerQuotationDetails';
 import CustomerSubscriptions from './pages/customer/CustomerSubscriptions';
 import CustomerSubscriptionDetails from './pages/customer/CustomerSubscriptionDetails';
+import CustomerInvoices from './pages/customer/CustomerInvoices';
+import CustomerInvoiceDetails from './pages/customer/CustomerInvoiceDetails';
+import CustomerPayments from './pages/customer/CustomerPayments';
 
 // 404
 import NotFound from './pages/NotFound';
@@ -123,6 +134,12 @@ function App() {
             <Route path="quotations/:id" element={<QuotationDetails basePath="/admin" />} />
             <Route path="subscriptions" element={<Subscriptions basePath="/admin" />} />
             <Route path="subscriptions/:id" element={<SubscriptionDetails basePath="/admin" />} />
+            <Route path="invoices" element={<Invoices basePath="/admin" />} />
+            <Route path="invoices/create" element={<CreateInvoice basePath="/admin" />} />
+            <Route path="invoices/:id" element={<InvoiceDetails basePath="/admin" />} />
+            <Route path="payments" element={<Payments basePath="/admin" />} />
+            <Route path="payments/:id" element={<PaymentDetails basePath="/admin" />} />
+            <Route path="billing" element={<BillingOverview basePath="/admin" />} />
             <Route path="products" element={<Products />} />
             <Route path="products/:id" element={<ProductDetails />} />
             <Route path="plans" element={<Plans />} />
@@ -148,6 +165,12 @@ function App() {
             <Route path="quotations/:id" element={<QuotationDetails basePath="/staff" />} />
             <Route path="subscriptions" element={<Subscriptions basePath="/staff" />} />
             <Route path="subscriptions/:id" element={<SubscriptionDetails basePath="/staff" />} />
+            <Route path="invoices" element={<Invoices basePath="/staff" />} />
+            <Route path="invoices/create" element={<CreateInvoice basePath="/staff" />} />
+            <Route path="invoices/:id" element={<InvoiceDetails basePath="/staff" />} />
+            <Route path="payments" element={<Payments basePath="/staff" />} />
+            <Route path="payments/:id" element={<PaymentDetails basePath="/staff" />} />
+            <Route path="billing" element={<BillingOverview basePath="/staff" />} />
             <Route path="products" element={<Products />} />
             <Route path="products/:id" element={<ProductDetails />} />
             <Route path="plans" element={<Plans />} />
@@ -168,6 +191,9 @@ function App() {
             <Route path="quotations/:id" element={<CustomerQuotationDetails />} />
             <Route path="subscriptions" element={<CustomerSubscriptions />} />
             <Route path="subscriptions/:id" element={<CustomerSubscriptionDetails />} />
+            <Route path="invoices" element={<CustomerInvoices />} />
+            <Route path="invoices/:id" element={<CustomerInvoiceDetails />} />
+            <Route path="payments" element={<CustomerPayments />} />
           </Route>
         </Route>
       </Route>
