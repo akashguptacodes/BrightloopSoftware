@@ -1,6 +1,8 @@
 import prisma from '../config/database.js';
 import { sendQuotationStatusEmail } from '../services/emailService.js';
 import { generateInvoicePdf } from '../services/invoicePdfService.js';
+import { logActivity } from '../services/activityService.js';
+import { calculateNextBillingDate } from '../utils/billingDateCalculator.js';
 
 /**
  * Helper to resolve the Customer record for the logged in user
@@ -49,6 +51,21 @@ export async function getCustomerProfile(req, res, next) {
       where: { customerId: customer.id, status: 'ACTIVE' },
     });
 
+    const totalInvoicesCount = await prisma.invoice.count({
+      where: { customerId: customer.id },
+    });
+
+    const unpaidInvoicesCount = await prisma.invoice.count({
+      where: {
+        customerId: customer.id,
+        status: { in: ['ISSUED', 'PARTIALLY_PAID', 'OVERDUE'] },
+      },
+    });
+
+    const totalPaymentsCount = await prisma.payment.count({
+      where: { customerId: customer.id, status: 'SUCCESSFUL' },
+    });
+
     return res.status(200).json({
       success: true,
       data: {
@@ -62,6 +79,9 @@ export async function getCustomerProfile(req, res, next) {
         stats: {
           totalQuotations: quotationCount,
           activeSubscriptions: activeSubscriptionCount,
+          totalInvoices: totalInvoicesCount,
+          unpaidInvoices: unpaidInvoicesCount,
+          totalPayments: totalPaymentsCount,
         },
       },
     });
@@ -463,5 +483,386 @@ export async function getCustomerPayments(req, res, next) {
     next(error);
   }
 }
+
+/**
+ * @desc    Update customer profile information
+ * @route   PUT /api/customer-portal/profile
+ */
+export async function updateCustomerProfile(req, res, next) {
+  try {
+    const customer = await resolveCurrentCustomer(req.user.id, req.user.email);
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer profile not found.' });
+    }
+
+    const {
+      contactPerson,
+      companyName,
+      phone,
+      alternatePhone,
+      billingAddress,
+      shippingAddress,
+      city,
+      state,
+      country,
+      postalCode,
+      taxIdentificationNumber,
+    } = req.body;
+
+    const updated = await prisma.$transaction(async (tx) => {
+      // 1. Update customer record
+      const cust = await tx.customer.update({
+        where: { id: customer.id },
+        data: {
+          contactPerson: contactPerson !== undefined ? contactPerson : customer.contactPerson,
+          companyName: companyName !== undefined ? companyName : customer.companyName,
+          phone: phone !== undefined ? phone : customer.phone,
+          alternatePhone: alternatePhone !== undefined ? alternatePhone : customer.alternatePhone,
+          billingAddress: billingAddress !== undefined ? billingAddress : customer.billingAddress,
+          shippingAddress: shippingAddress !== undefined ? shippingAddress : customer.shippingAddress,
+          city: city !== undefined ? city : customer.city,
+          state: state !== undefined ? state : customer.state,
+          country: country !== undefined ? country : customer.country,
+          postalCode: postalCode !== undefined ? postalCode : customer.postalCode,
+          taxIdentificationNumber:
+            taxIdentificationNumber !== undefined ? taxIdentificationNumber : customer.taxIdentificationNumber,
+        },
+      });
+
+      // 2. Also keep user name in sync
+      if (contactPerson && req.user.id) {
+        await tx.user.update({
+          where: { id: req.user.id },
+          data: { name: contactPerson },
+        });
+      }
+
+      return cust;
+    });
+
+    await logActivity({
+      userId: req.user.id,
+      customerId: customer.id,
+      action: 'CUSTOMER_PROFILE_UPDATED',
+      description: `Customer profile updated by ${updated.contactPerson}`,
+      entityType: 'Customer',
+      entityId: customer.id,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully.',
+      data: updated,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @desc    Pause subscription from customer portal
+ * @route   POST /api/customer-portal/subscriptions/:id/pause
+ */
+export async function customerPauseSubscription(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    const customer = await resolveCurrentCustomer(req.user.id, req.user.email);
+
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer profile not found.' });
+    }
+
+    // Strict ownership validation
+    const subscription = await prisma.subscription.findFirst({
+      where: { id, customerId: customer.id },
+      include: { plan: true },
+    });
+
+    if (!subscription) {
+      return res.status(404).json({ success: false, message: 'Subscription not found.' });
+    }
+
+    if (subscription.status !== 'ACTIVE') {
+      return res.status(400).json({
+        success: false,
+        message: `Only ACTIVE subscriptions can be paused. Current status: ${subscription.status}`,
+      });
+    }
+
+    // Enforce Plan Pause Policy
+    if (subscription.plan && subscription.plan.allowPause === false) {
+      return res.status(400).json({
+        success: false,
+        message: `Pausing is not permitted for the ${subscription.plan.name} plan according to its service agreement.`,
+      });
+    }
+
+    const updated = await prisma.$transaction(async (tx) => {
+      const sub = await tx.subscription.update({
+        where: { id: subscription.id },
+        data: { status: 'PAUSED' },
+      });
+
+      await tx.subscriptionHistory.create({
+        data: {
+          subscriptionId: subscription.id,
+          action: 'PAUSED',
+          fromStatus: 'ACTIVE',
+          toStatus: 'PAUSED',
+          description: reason ? `Customer paused subscription: ${reason}` : 'Customer requested temporary pause via portal',
+          performedById: req.user.id,
+        },
+      });
+
+      return sub;
+    });
+
+    await logActivity({
+      userId: req.user.id,
+      customerId: customer.id,
+      action: 'SUBSCRIPTION_PAUSED',
+      description: `Subscription ${subscription.subscriptionNumber} paused by customer`,
+      entityType: 'Subscription',
+      entityId: subscription.id,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: `Subscription ${subscription.subscriptionNumber} has been paused.`,
+      data: updated,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @desc    Resume paused subscription from customer portal
+ * @route   POST /api/customer-portal/subscriptions/:id/resume
+ */
+export async function customerResumeSubscription(req, res, next) {
+  try {
+    const { id } = req.params;
+    const customer = await resolveCurrentCustomer(req.user.id, req.user.email);
+
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer profile not found.' });
+    }
+
+    const subscription = await prisma.subscription.findFirst({
+      where: { id, customerId: customer.id },
+    });
+
+    if (!subscription) {
+      return res.status(404).json({ success: false, message: 'Subscription not found.' });
+    }
+
+    if (subscription.status !== 'PAUSED') {
+      return res.status(400).json({
+        success: false,
+        message: `Only PAUSED subscriptions can be resumed. Current status: ${subscription.status}`,
+      });
+    }
+
+    const updated = await prisma.$transaction(async (tx) => {
+      const sub = await tx.subscription.update({
+        where: { id: subscription.id },
+        data: { status: 'ACTIVE' },
+      });
+
+      await tx.subscriptionHistory.create({
+        data: {
+          subscriptionId: subscription.id,
+          action: 'RESUMED',
+          fromStatus: 'PAUSED',
+          toStatus: 'ACTIVE',
+          description: 'Customer resumed subscription via portal',
+          performedById: req.user.id,
+        },
+      });
+
+      return sub;
+    });
+
+    await logActivity({
+      userId: req.user.id,
+      customerId: customer.id,
+      action: 'SUBSCRIPTION_RESUMED',
+      description: `Subscription ${subscription.subscriptionNumber} resumed by customer`,
+      entityType: 'Subscription',
+      entityId: subscription.id,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: `Subscription ${subscription.subscriptionNumber} is now active.`,
+      data: updated,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @desc    Cancel subscription from customer portal
+ * @route   POST /api/customer-portal/subscriptions/:id/cancel
+ */
+export async function customerCancelSubscription(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    const customer = await resolveCurrentCustomer(req.user.id, req.user.email);
+
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer profile not found.' });
+    }
+
+    const subscription = await prisma.subscription.findFirst({
+      where: { id, customerId: customer.id },
+      include: { plan: true },
+    });
+
+    if (!subscription) {
+      return res.status(404).json({ success: false, message: 'Subscription not found.' });
+    }
+
+    if (subscription.status === 'CANCELLED' || subscription.status === 'CLOSED') {
+      return res.status(400).json({
+        success: false,
+        message: `Subscription is already ${subscription.status}.`,
+      });
+    }
+
+    // Check Plan Early Cancellation Policy
+    if (subscription.plan && subscription.plan.allowEarlyCancellation === false) {
+      return res.status(400).json({
+        success: false,
+        message: `Early termination is restricted for the ${subscription.plan.name} commitment period. Please contact support.`,
+      });
+    }
+
+    const updated = await prisma.$transaction(async (tx) => {
+      const sub = await tx.subscription.update({
+        where: { id: subscription.id },
+        data: {
+          status: 'CANCELLED',
+          cancelledAt: new Date(),
+          cancellationReason: reason || 'Cancelled by customer via self-service portal',
+        },
+      });
+
+      await tx.subscriptionHistory.create({
+        data: {
+          subscriptionId: subscription.id,
+          action: 'CANCELLED',
+          fromStatus: subscription.status,
+          toStatus: 'CANCELLED',
+          description: reason ? `Customer cancelled: ${reason}` : 'Cancelled by customer via portal',
+          performedById: req.user.id,
+        },
+      });
+
+      return sub;
+    });
+
+    await logActivity({
+      userId: req.user.id,
+      customerId: customer.id,
+      action: 'SUBSCRIPTION_CANCELLED',
+      description: `Subscription ${subscription.subscriptionNumber} cancelled by customer`,
+      entityType: 'Subscription',
+      entityId: subscription.id,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: `Subscription ${subscription.subscriptionNumber} has been cancelled.`,
+      data: updated,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @desc    Renew subscription from customer portal
+ * @route   POST /api/customer-portal/subscriptions/:id/renew
+ */
+export async function customerRenewSubscription(req, res, next) {
+  try {
+    const { id } = req.params;
+    const customer = await resolveCurrentCustomer(req.user.id, req.user.email);
+
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer profile not found.' });
+    }
+
+    const subscription = await prisma.subscription.findFirst({
+      where: { id, customerId: customer.id },
+      include: { plan: true },
+    });
+
+    if (!subscription) {
+      return res.status(404).json({ success: false, message: 'Subscription not found.' });
+    }
+
+    if (subscription.plan && subscription.plan.allowRenewal === false) {
+      return res.status(400).json({
+        success: false,
+        message: 'This subscription plan does not allow customer self-renewal.',
+      });
+    }
+
+    const currentBase = subscription.nextBillingDate && new Date(subscription.nextBillingDate) > new Date()
+      ? new Date(subscription.nextBillingDate)
+      : new Date();
+
+    const frequency = subscription.billingFrequencySnapshot || subscription.plan?.billingFrequency || 'MONTHLY';
+    const interval = subscription.billingIntervalSnapshot || subscription.plan?.billingInterval || 1;
+    const nextDate = calculateNextBillingDate(currentBase, frequency, interval);
+
+    const updated = await prisma.$transaction(async (tx) => {
+      const sub = await tx.subscription.update({
+        where: { id: subscription.id },
+        data: {
+          status: 'ACTIVE',
+          nextBillingDate: nextDate,
+        },
+      });
+
+      await tx.subscriptionHistory.create({
+        data: {
+          subscriptionId: subscription.id,
+          action: 'RENEWED',
+          fromStatus: subscription.status,
+          toStatus: 'ACTIVE',
+          description: `Customer initiated renewal. Next billing date: ${nextDate.toLocaleDateString()}`,
+          performedById: req.user.id,
+        },
+      });
+
+      return sub;
+    });
+
+    await logActivity({
+      userId: req.user.id,
+      customerId: customer.id,
+      action: 'SUBSCRIPTION_RENEWED',
+      description: `Subscription ${subscription.subscriptionNumber} renewed by customer`,
+      entityType: 'Subscription',
+      entityId: subscription.id,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: `Subscription ${subscription.subscriptionNumber} renewed! Next billing date: ${nextDate.toLocaleDateString()}`,
+      data: updated,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 
 

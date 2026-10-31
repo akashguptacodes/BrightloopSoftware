@@ -18,6 +18,8 @@ import invoiceRoutes from './routes/invoiceRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import billingRoutes from './routes/billingRoutes.js';
 import webhookRoutes from './routes/webhookRoutes.js';
+import reportRoutes from './routes/reportRoutes.js';
+import activityRoutes from './routes/activityRoutes.js';
 import { errorHandler } from './middleware/errorMiddleware.js';
 
 const app = express();
@@ -72,6 +74,8 @@ app.use('/api/invoices', invoiceRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/admin/billing', billingRoutes);
 app.use('/api/webhooks', webhookRoutes);
+app.use('/api/reports', reportRoutes);
+app.use('/api/activity-logs', activityRoutes);
 
 // 404 handler
 app.use((req, res) => {

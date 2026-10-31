@@ -104,6 +104,7 @@ model User {
   createdInvoices      Invoice[]
   recordedPayments     Payment[]
   createdRefunds       PaymentRefund[]
+  activityLogs         ActivityLog[]
 
   @@index([email])
   @@index([role])
@@ -252,6 +253,7 @@ model Customer {
   subscriptions           Subscription[]
   invoices                Invoice[]
   payments                Payment[]
+  activityLogs            ActivityLog[]
 
   @@index([customerCode])
   @@index([email])
@@ -554,4 +556,25 @@ model RazorpayWebhookEvent {
   @@index([processed])
   @@index([gatewayPaymentId])
 }
+
+model ActivityLog {
+  id          String    @id @default(uuid())
+  userId      String?
+  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  customerId  String?
+  customer    Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  action      String
+  description String
+  entityType  String
+  entityId    String?
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+
+  @@index([userId])
+  @@index([customerId])
+  @@index([entityType, entityId])
+  @@index([action])
+  @@index([createdAt])
+}
+
 

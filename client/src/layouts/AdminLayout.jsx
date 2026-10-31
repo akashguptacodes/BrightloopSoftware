@@ -16,10 +16,12 @@ import {
   Layers,
   CreditCard,
   CalendarClock,
+  BarChart3,
 } from 'lucide-react';
 
 const sidebarLinks = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/admin/reports', label: 'Reports & Analytics', icon: BarChart3 },
   { to: '/admin/customers', label: 'Customers', icon: UserCheck },
   { to: '/admin/quotations', label: 'Quotations', icon: FileSpreadsheet },
   { to: '/admin/quotation-templates', label: 'Templates', icon: Layers },

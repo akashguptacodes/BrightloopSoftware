@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getCustomerSubscriptionById } from '../../services/customerPortalService';
+import {
+  getCustomerSubscriptionById,
+  customerPauseSubscription,
+  customerResumeSubscription,
+  customerCancelSubscription,
+  customerRenewSubscription,
+} from '../../services/customerPortalService';
 import toast from 'react-hot-toast';
 import {
   Repeat,
@@ -10,6 +16,11 @@ import {
   ShieldCheck,
   CreditCard,
   History,
+  Pause,
+  Play,
+  XCircle,
+  RefreshCw,
+  AlertTriangle,
 } from 'lucide-react';
 
 const statusBadges = {
@@ -27,6 +38,11 @@ const CustomerSubscriptionDetails = () => {
 
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
+
+  // Modal states
+  const [modalType, setModalType] = useState(null); // 'pause' | 'cancel'
+  const [reason, setReason] = useState('');
 
   const fetchSubscription = async () => {
     try {
@@ -44,6 +60,68 @@ const CustomerSubscriptionDetails = () => {
     fetchSubscription();
   }, [id]);
 
+  const handlePause = async () => {
+    try {
+      setActionLoading(true);
+      const res = await customerPauseSubscription(id, reason);
+      toast.success(res?.message || 'Subscription paused successfully.');
+      setModalType(null);
+      setReason('');
+      fetchSubscription();
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to pause subscription.');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleResume = async () => {
+    if (!window.confirm('Are you sure you want to resume this subscription? Regular billing cycles will resume.')) {
+      return;
+    }
+    try {
+      setActionLoading(true);
+      const res = await customerResumeSubscription(id);
+      toast.success(res?.message || 'Subscription resumed successfully.');
+      fetchSubscription();
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to resume subscription.');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleCancel = async () => {
+    try {
+      setActionLoading(true);
+      const res = await customerCancelSubscription(id, reason);
+      toast.success(res?.message || 'Subscription cancelled successfully.');
+      setModalType(null);
+      setReason('');
+      fetchSubscription();
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to cancel subscription.');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleRenew = async () => {
+    if (!window.confirm('Confirm renewal? This will extend your subscription into the next billing cycle.')) {
+      return;
+    }
+    try {
+      setActionLoading(true);
+      const res = await customerRenewSubscription(id);
+      toast.success(res?.message || 'Subscription renewed successfully!');
+      fetchSubscription();
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to renew subscription.');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   if (loading) {
     return <div className="py-20 text-center text-gray-500">Loading subscription...</div>;
   }
@@ -59,32 +137,93 @@ const CustomerSubscriptionDetails = () => {
     );
   }
 
+  const plan = subscription.plan;
+  const canPause = subscription.status === 'ACTIVE' && (plan?.allowPause ?? true);
+  const canResume = subscription.status === 'PAUSED';
+  const canCancel = ['ACTIVE', 'PAUSED'].includes(subscription.status) && (plan?.allowEarlyCancellation ?? true);
+  const canRenew = ['ACTIVE', 'EXPIRED'].includes(subscription.status) && (plan?.allowRenewal ?? true);
+
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-12">
       {/* Top Bar */}
-      <div className="flex items-center gap-3">
-        <button
-          onClick={() => navigate('/customer/subscriptions')}
-          className="p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition text-gray-600"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </button>
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-gray-900 font-mono">
-              {subscription.subscriptionNumber}
-            </h1>
-            <span
-              className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
-                statusBadges[subscription.status] || 'bg-gray-100 text-gray-700'
-              }`}
-            >
-              {subscription.status}
-            </span>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate('/customer/subscriptions')}
+            className="p-2 border border-gray-200 rounded-lg hover:bg-gray-100 transition text-gray-600"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-gray-900 font-mono">
+                {subscription.subscriptionNumber}
+              </h1>
+              <span
+                className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                  statusBadges[subscription.status] || 'bg-gray-100 text-gray-700'
+                }`}
+              >
+                {subscription.status}
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Active Since: {new Date(subscription.startDate).toLocaleDateString()}
+            </p>
           </div>
-          <p className="text-xs text-gray-500 mt-0.5">
-            Active Since: {new Date(subscription.startDate).toLocaleDateString()}
-          </p>
+        </div>
+
+        {/* Self-Service Actions */}
+        <div className="flex items-center flex-wrap gap-2">
+          {canResume && (
+            <button
+              onClick={handleResume}
+              disabled={actionLoading}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition shadow-sm disabled:opacity-50"
+            >
+              <Play className="w-3.5 h-3.5" />
+              <span>Resume Service</span>
+            </button>
+          )}
+
+          {canPause && (
+            <button
+              onClick={() => {
+                setReason('');
+                setModalType('pause');
+              }}
+              disabled={actionLoading}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-semibold transition shadow-sm disabled:opacity-50"
+            >
+              <Pause className="w-3.5 h-3.5" />
+              <span>Pause Service</span>
+            </button>
+          )}
+
+          {canRenew && (
+            <button
+              onClick={handleRenew}
+              disabled={actionLoading}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold transition shadow-sm disabled:opacity-50"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>Renew Now</span>
+            </button>
+          )}
+
+          {canCancel && (
+            <button
+              onClick={() => {
+                setReason('');
+                setModalType('cancel');
+              }}
+              disabled={actionLoading}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-red-200 text-red-600 hover:bg-red-50 rounded-lg text-xs font-semibold transition shadow-sm disabled:opacity-50"
+            >
+              <XCircle className="w-3.5 h-3.5" />
+              <span>Cancel Plan</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -98,7 +237,7 @@ const CustomerSubscriptionDetails = () => {
             <div className="flex justify-between">
               <span className="text-gray-500">Frequency:</span>
               <span className="font-semibold text-gray-900">
-                {subscription.billingFrequencySnapshot} (Every {subscription.billingIntervalSnapshot})
+                {subscription.billingFrequencySnapshot} (Every {subscription.billingIntervalSnapshot || 1})
               </span>
             </div>
             <div className="flex justify-between">
@@ -120,17 +259,29 @@ const CustomerSubscriptionDetails = () => {
 
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-3">
           <h3 className="text-xs uppercase font-semibold tracking-wider text-gray-400">
-            Plan & Services
+            Plan & Policy Information
           </h3>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-500">Plan Name:</span>
               <span className="font-semibold text-gray-900">
-                {subscription.plan?.name || 'Custom SaaS Package'}
+                {plan?.name || subscription.items?.[0]?.planNameSnapshot || 'Custom SaaS Package'}
+              </span>
+            </div>
+            <div className="flex justify-between items-center text-xs text-gray-500 pt-1 border-t border-gray-100">
+              <span>Pause Allowed:</span>
+              <span className={plan?.allowPause ? 'text-emerald-600 font-semibold' : 'text-gray-400'}>
+                {plan?.allowPause ? 'Yes' : 'No (Commitment)'}
+              </span>
+            </div>
+            <div className="flex justify-between items-center text-xs text-gray-500">
+              <span>Early Cancellation:</span>
+              <span className={plan?.allowEarlyCancellation ? 'text-emerald-600 font-semibold' : 'text-amber-600 font-semibold'}>
+                {plan?.allowEarlyCancellation ? 'Allowed' : 'Restricted'}
               </span>
             </div>
             {subscription.paymentTerms && (
-              <p className="text-xs text-gray-500 bg-gray-50 p-2 rounded border border-gray-100">
+              <p className="text-xs text-gray-500 bg-gray-50 p-2 rounded border border-gray-100 mt-1">
                 <span className="font-semibold text-gray-700">Terms: </span>
                 {subscription.paymentTerms}
               </p>
@@ -233,9 +384,108 @@ const CustomerSubscriptionDetails = () => {
           </div>
         </div>
       )}
+
+      {/* Pause Modal */}
+      {modalType === 'pause' && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-6 shadow-xl space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
+                <Pause className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-gray-900">Pause Subscription</h3>
+                <p className="text-xs text-gray-500">Temporarily suspend recurring billing</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-600">
+              Your subscription and access will be paused. You can resume at any time from this portal.
+            </p>
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Reason for pause (optional)
+              </label>
+              <textarea
+                rows="3"
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                placeholder="e.g. Vacation, seasonal hiatus, project delay..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+              ></textarea>
+            </div>
+            <div className="flex justify-end gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setModalType(null)}
+                disabled={actionLoading}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handlePause}
+                disabled={actionLoading}
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold"
+              >
+                {actionLoading ? 'Pausing...' : 'Confirm Pause'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Cancel Modal */}
+      {modalType === 'cancel' && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-6 shadow-xl space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-gray-900">Cancel Subscription</h3>
+                <p className="text-xs text-gray-500">Terminate your recurring service plan</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-600">
+              Are you sure you want to cancel subscription <strong className="font-mono">{subscription.subscriptionNumber}</strong>? Future renewals will cease immediately.
+            </p>
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Reason for cancellation (optional)
+              </label>
+              <textarea
+                rows="3"
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                placeholder="Let us know why you're cancelling..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"
+              ></textarea>
+            </div>
+            <div className="flex justify-end gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setModalType(null)}
+                disabled={actionLoading}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-xs font-semibold text-gray-700 hover:bg-gray-50"
+              >
+                Keep Active
+              </button>
+              <button
+                type="button"
+                onClick={handleCancel}
+                disabled={actionLoading}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-semibold"
+              >
+                {actionLoading ? 'Cancelling...' : 'Confirm Cancellation'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default CustomerSubscriptionDetails;
-

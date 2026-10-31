@@ -1,5 +1,7 @@
 import cron from 'node-cron';
+import prisma from '../config/database.js';
 import { runRecurringBillingJob, updateOverdueInvoices } from '../services/billingService.js';
+import { sendSubscriptionStatusEmail } from '../services/emailService.js';
 
 let isJobRunning = false;
 
@@ -41,6 +43,46 @@ export function initBillingScheduler() {
     }
   });
 
-  console.log('[Scheduler] Cron schedules registered (Recurring billing: 00:05 AM daily, Overdue check: 01:00 AM daily).');
+  // 3. Daily Renewal Reminder: Runs every morning at 02:00 AM
+  // Notifies customers 3 days before renewal
+  cron.schedule('0 2 * * *', async () => {
+    try {
+      console.log(`[Scheduler] [${new Date().toISOString()}] Checking upcoming subscription renewals...`);
+      const now = new Date();
+      const inThreeDays = new Date();
+      inThreeDays.setDate(inThreeDays.getDate() + 3);
+      inThreeDays.setHours(23, 59, 59, 999);
+
+      const upcoming = await prisma.subscription.findMany({
+        where: {
+          status: 'ACTIVE',
+          nextBillingDate: {
+            gte: now,
+            lte: inThreeDays,
+          },
+        },
+        include: {
+          customer: true,
+        },
+      });
+
+      for (const sub of upcoming) {
+        if (sub.customer && sub.customer.email) {
+          await sendSubscriptionStatusEmail(
+            sub.customer.email,
+            sub.customer.contactPerson || sub.customer.companyName || 'Valued Customer',
+            sub.subscriptionNumber,
+            'RENEWAL_UPCOMING',
+            { nextBillingDate: sub.nextBillingDate }
+          );
+        }
+      }
+      console.log(`[Scheduler] Renewal reminder check complete. Notifications processed: ${upcoming.length}`);
+    } catch (err) {
+      console.error('[Scheduler] Error during renewal reminder check:', err);
+    }
+  });
+
+  console.log('[Scheduler] Cron schedules registered (Recurring billing: 00:05 AM, Overdue check: 01:00 AM, Renewal reminder: 02:00 AM daily).');
 }
 

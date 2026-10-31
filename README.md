@@ -1,6 +1,6 @@
 # Brightloop Software — Subscription Management System
-> **Sprint 1, Sprint 2, Sprint 3 & Sprint 4: Commercial Catalog, Quotations, Subscriptions, Invoicing & Automated Recurring Billing**  
-> An enterprise-grade, full-stack subscription management and recurring billing platform built for **Brightloop Software**.
+> **Sprint 1, Sprint 2, Sprint 3, Sprint 4 & Sprint 5: Full Commercial SaaS Subscription & Billing Platform**  
+> An enterprise-grade, full-stack subscription management, invoicing, customer portal, and business analytics platform built for **Brightloop Software**.
 
 ---
 
@@ -43,6 +43,21 @@ Brightloop Software sells cloud software, add-on modules, and physical products 
   - **Customer Self-Service Invoicing**: Customer portal to view invoices, download PDFs, and complete payments via integrated Razorpay modal.
   - **Refund Processing**: Full and partial refund management with balance adjustments and audit records.
 
+- **Sprint 5 (Dashboards, Business Analytics, Customer Portal & Finalization)**:
+  - **Executive Admin Dashboard**: Real-time business KPIs (Customer growth, Product catalog, Subscriptions, Receivables, Net Revenue), 12-month net revenue trend chart with 6M/12M range toggles (`recharts`), subscription status distribution donut chart, live system activity audit log stream, and quick navigation actions.
+  - **Staff Operations Dashboard**: Operational fulfillment metrics (pending quotes, active subscriptions, unpaid/overdue invoices, payments received) and action queues (Recent 5 Quotations, Recent 5 Invoices, Upcoming 14-day Renewals) strictly scoped to staff roles.
+  - **Customer Self-Service Portal**:
+    - **Profile Management**: View and update contact person, company name, phone numbers, tax identification (GSTIN/VAT), and billing/shipping addresses.
+    - **Subscription Self-Service**: One-click lifecycle actions (Pause, Resume, Cancel, Renew) with strict enforcement of plan-level contract policies (`allowPause`, `allowRenewal`, `allowEarlyCancellation`).
+    - **Invoice Settlement & PDFs**: Pay invoices via integrated Razorpay checkout and download branded PDF statements.
+    - **Data Isolation**: Strict server-side verification guaranteeing customers can only access their own quotes, subscriptions, invoices, and payments.
+  - **Business Reports & Analytics**:
+    - 5 reporting domains: **Revenue**, **Subscriptions**, **Customers**, **Invoicing & Balances**, and **Products & Plans**.
+    - Flexible temporal filtering: Today, Last 7 Days, Last 30 Days, This Month, Last Month, This Year, and Custom Date Range.
+    - **Export Engine**: One-click **CSV** export and executive **PDF** report generation using `pdfkit`.
+  - **Automated Renewal Notifications**: Daily scheduler job (02:00 AM) scanning active subscriptions renewing within 3 days and sending automated email reminders.
+  - **System-Wide Activity Audit Logging**: `ActivityLog` PostgreSQL model recording customer profile edits, proposal approvals, subscription transitions, and invoice/payment events.
+
 ---
 
 ## 2. Technology Stack
@@ -56,6 +71,7 @@ Brightloop Software sells cloud software, add-on modules, and physical products 
 - **React Context API** (`AuthContext` for global session state)
 - **React Hot Toast** (Toast notifications)
 - **Lucide React** (Icons)
+- **Recharts** (Interactive Area, Bar, and Pie/Donut charts for dashboards & business analytics)
 
 ### Backend (`server/`)
 - **Node.js** with **Express.js** (Native ES Modules: `import/export`)

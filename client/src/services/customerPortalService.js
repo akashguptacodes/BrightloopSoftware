@@ -5,6 +5,11 @@ export async function getCustomerProfile() {
   return res.data;
 }
 
+export async function updateCustomerProfile(data) {
+  const res = await api.put('/customer-portal/profile', data);
+  return res.data;
+}
+
 export async function getCustomerQuotations() {
   const res = await api.get('/customer-portal/quotations');
   return res.data;
@@ -32,6 +37,26 @@ export async function getCustomerSubscriptions() {
 
 export async function getCustomerSubscriptionById(id) {
   const res = await api.get(`/customer-portal/subscriptions/${id}`);
+  return res.data;
+}
+
+export async function customerPauseSubscription(id, reason = '') {
+  const res = await api.post(`/customer-portal/subscriptions/${id}/pause`, { reason });
+  return res.data;
+}
+
+export async function customerResumeSubscription(id) {
+  const res = await api.post(`/customer-portal/subscriptions/${id}/resume`);
+  return res.data;
+}
+
+export async function customerCancelSubscription(id, reason = '') {
+  const res = await api.post(`/customer-portal/subscriptions/${id}/cancel`, { reason });
+  return res.data;
+}
+
+export async function customerRenewSubscription(id) {
+  const res = await api.post(`/customer-portal/subscriptions/${id}/renew`);
   return res.data;
 }
 

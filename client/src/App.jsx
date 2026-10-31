@@ -23,6 +23,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import StaffManagement from './pages/admin/StaffManagement';
 import StaffDashboard from './pages/staff/StaffDashboard';
 import CustomerDashboard from './pages/customer/CustomerDashboard';
+import Reports from './pages/admin/Reports';
 
 // Sprint 2 Management Pages
 import Products from './pages/admin/Products';
@@ -51,6 +52,7 @@ import PaymentDetails from './pages/admin/PaymentDetails';
 import BillingOverview from './pages/admin/BillingOverview';
 
 // Customer Portal Pages
+import CustomerProfile from './pages/customer/CustomerProfile';
 import CustomerQuotations from './pages/customer/CustomerQuotations';
 import CustomerQuotationDetails from './pages/customer/CustomerQuotationDetails';
 import CustomerSubscriptions from './pages/customer/CustomerSubscriptions';
@@ -126,6 +128,7 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="reports" element={<Reports />} />
             <Route path="customers" element={<Customers basePath="/admin" />} />
             <Route path="customers/:id" element={<CustomerDetails basePath="/admin" />} />
             <Route path="quotation-templates" element={<QuotationTemplates />} />
@@ -157,6 +160,7 @@ function App() {
           <Route path="/staff" element={<StaffLayout />}>
             <Route index element={<Navigate to="/staff/dashboard" replace />} />
             <Route path="dashboard" element={<StaffDashboard />} />
+            <Route path="reports" element={<Reports />} />
             <Route path="customers" element={<Customers basePath="/staff" />} />
             <Route path="customers/:id" element={<CustomerDetails basePath="/staff" />} />
             <Route path="quotation-templates" element={<QuotationTemplates />} />
@@ -187,6 +191,7 @@ function App() {
           <Route path="/customer" element={<CustomerLayout />}>
             <Route index element={<Navigate to="/customer/dashboard" replace />} />
             <Route path="dashboard" element={<CustomerDashboard />} />
+            <Route path="profile" element={<CustomerProfile />} />
             <Route path="quotations" element={<CustomerQuotations />} />
             <Route path="quotations/:id" element={<CustomerQuotationDetails />} />
             <Route path="subscriptions" element={<CustomerSubscriptions />} />
