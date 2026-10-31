@@ -2,14 +2,26 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/common/Sidebar';
 import Navbar from '../components/common/Navbar';
-import { LayoutDashboard, Users, Package, FileText, Receipt } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Users,
+  Package,
+  Repeat,
+  Percent,
+  BadgePercent,
+  FileText,
+  Receipt,
+} from 'lucide-react';
 
 const sidebarLinks = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/admin/products', label: 'Products', icon: Package },
+  { to: '/admin/plans', label: 'Subscription Plans', icon: Repeat },
+  { to: '/admin/taxes', label: 'Taxes', icon: Percent },
+  { to: '/admin/discounts', label: 'Discounts', icon: BadgePercent },
   { to: '/admin/staff', label: 'Staff Management', icon: Users },
-  { to: '#', label: 'Products', icon: Package, badge: 'Soon' },
-  { to: '#', label: 'Subscriptions', icon: FileText, badge: 'Soon' },
-  { to: '#', label: 'Invoices', icon: Receipt, badge: 'Soon' },
+  { to: '#', label: 'Subscriptions', icon: FileText, badge: 'Sprint 3' },
+  { to: '#', label: 'Invoices', icon: Receipt, badge: 'Sprint 3' },
 ];
 
 const AdminLayout = () => {

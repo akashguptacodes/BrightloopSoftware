@@ -18,11 +18,19 @@ import Register from './pages/auth/Register';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 
-// Dashboard Pages
+// Admin & Staff Dashboard Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
 import StaffManagement from './pages/admin/StaffManagement';
 import StaffDashboard from './pages/staff/StaffDashboard';
 import CustomerDashboard from './pages/customer/CustomerDashboard';
+
+// Sprint 2 Management Pages
+import Products from './pages/admin/Products';
+import ProductDetails from './pages/admin/ProductDetails';
+import Plans from './pages/admin/Plans';
+import PlanDetails from './pages/admin/PlanDetails';
+import Taxes from './pages/admin/Taxes';
+import Discounts from './pages/admin/Discounts';
 
 // 404
 import NotFound from './pages/NotFound';
@@ -91,17 +99,29 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="products" element={<Products />} />
+            <Route path="products/:id" element={<ProductDetails />} />
+            <Route path="plans" element={<Plans />} />
+            <Route path="plans/:id" element={<PlanDetails />} />
+            <Route path="taxes" element={<Taxes />} />
+            <Route path="discounts" element={<Discounts />} />
             <Route path="staff" element={<StaffManagement />} />
           </Route>
         </Route>
       </Route>
 
-      {/* Protected Staff Routes */}
+      {/* Protected Staff Routes (Read-Only access to catalog, plans, taxes, discounts) */}
       <Route element={<ProtectedRoute />}>
         <Route element={<RoleRoute allowedRoles={[ROLES.STAFF, ROLES.ADMIN]} />}>
           <Route path="/staff" element={<StaffLayout />}>
             <Route index element={<Navigate to="/staff/dashboard" replace />} />
             <Route path="dashboard" element={<StaffDashboard />} />
+            <Route path="products" element={<Products />} />
+            <Route path="products/:id" element={<ProductDetails />} />
+            <Route path="plans" element={<Plans />} />
+            <Route path="plans/:id" element={<PlanDetails />} />
+            <Route path="taxes" element={<Taxes />} />
+            <Route path="discounts" element={<Discounts />} />
           </Route>
         </Route>
       </Route>
@@ -123,4 +143,3 @@ function App() {
 }
 
 export default App;
-

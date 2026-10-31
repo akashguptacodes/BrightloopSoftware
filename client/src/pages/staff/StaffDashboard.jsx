@@ -1,97 +1,197 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { 
-  FileText, Receipt, CreditCard, Clock, CheckCircle2, AlertTriangle, ArrowRight 
+import { getDashboardStats } from '../../services/dashboardService';
+import {
+  Package,
+  Repeat,
+  Percent,
+  BadgePercent,
+  Clock,
+  ArrowRight,
+  ShieldCheck,
+  RefreshCw,
+  FileText,
+  Receipt,
+  CreditCard,
 } from 'lucide-react';
 
 const StaffDashboard = () => {
   const { user } = useAuth();
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const comingSoonModules = [
-    {
-      title: 'Quotation Pipeline',
-      description: 'Prepare, customize, and convert customer quotation templates into live subscriptions.',
-      icon: FileText,
-      sprint: 'Sprint 2',
-      color: 'blue',
-    },
-    {
-      title: 'Subscription Tracking',
-      description: 'Monitor active customer subscriptions, variant additions, renewals, and pauses.',
-      icon: CheckCircle2,
-      sprint: 'Sprint 2',
-      color: 'emerald',
-    },
-    {
-      title: 'Billing & Invoicing',
-      description: 'Batch generate recurring invoices, verify tax and discount rules, and dispatch receipts.',
-      icon: Receipt,
-      sprint: 'Sprint 3',
-      color: 'purple',
-    },
-    {
-      title: 'Payment Processing',
-      description: 'Record incoming customer payments, log transaction notes, and track overdue receivables.',
-      icon: CreditCard,
-      sprint: 'Sprint 3',
-      color: 'amber',
-    },
-  ];
+  const fetchStats = async () => {
+    try {
+      setLoading(true);
+      const res = await getDashboardStats();
+      setStats(res.data || null);
+    } catch (err) {
+      console.error('Failed to load staff dashboard stats:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Top Banner */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 mb-2">
-          Internal Staff Portal
-        </span>
-        <h1 className="text-2xl font-bold text-gray-900">
-          Welcome back, {user?.name || 'Staff Member'}
-        </h1>
-        <p className="text-gray-500 text-sm mt-1">
-          Your day-to-day operations hub for Brightloop Software subscription workflows.
-        </p>
+      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 mb-2">
+            Internal Operations Portal
+          </span>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Welcome back, {user?.name || 'Staff Member'}!
+          </h1>
+          <p className="text-gray-500 text-sm mt-1">
+            Browse available products, subscription plans, taxes, and promotional discount rules (read-only view).
+          </p>
+        </div>
+
+        <button
+          onClick={fetchStats}
+          disabled={loading}
+          className="p-2 text-gray-500 hover:text-gray-700 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition shadow-sm w-fit"
+          title="Refresh statistics"
+        >
+          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+        </button>
       </div>
 
-      {/* Operational Overview Cards */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-gray-900">Operations Hub Roadmap</h2>
-          <span className="text-xs text-gray-400">Sprint 1 Foundation Active</span>
+      {/* Available Commercial Catalog Summaries */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Active Products</p>
+              <h3 className="text-2xl font-bold text-gray-900 mt-1.5">
+                {loading ? '...' : stats?.products?.active || 0}
+              </h3>
+            </div>
+            <div className="w-11 h-11 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
+              <Package className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3 text-xs border-t border-gray-100 pt-2.5 flex justify-between">
+            <span className="text-gray-500">{stats?.products?.total || 0} total</span>
+            <Link to="/staff/products" className="text-blue-600 font-semibold hover:underline">
+              Browse &rarr;
+            </Link>
+          </div>
         </div>
-        <p className="text-sm text-gray-500 mb-6">
-          Authentication and staff role permissions are fully established. The operational modules below will come online in upcoming sprints:
+
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Active Plans</p>
+              <h3 className="text-2xl font-bold text-gray-900 mt-1.5">
+                {loading ? '...' : stats?.plans?.active || 0}
+              </h3>
+            </div>
+            <div className="w-11 h-11 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+              <Repeat className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3 text-xs border-t border-gray-100 pt-2.5 flex justify-between">
+            <span className="text-gray-500">{stats?.plans?.total || 0} total</span>
+            <Link to="/staff/plans" className="text-blue-600 font-semibold hover:underline">
+              Browse &rarr;
+            </Link>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Tax Rules</p>
+              <h3 className="text-2xl font-bold text-gray-900 mt-1.5">
+                {loading ? '...' : stats?.taxes?.active || 0}
+              </h3>
+            </div>
+            <div className="w-11 h-11 bg-cyan-50 text-cyan-600 rounded-xl flex items-center justify-center">
+              <Percent className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3 text-xs border-t border-gray-100 pt-2.5 flex justify-between">
+            <span className="text-gray-500">Applicable on billing</span>
+            <Link to="/staff/taxes" className="text-blue-600 font-semibold hover:underline">
+              View &rarr;
+            </Link>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Active Discounts</p>
+              <h3 className="text-2xl font-bold text-gray-900 mt-1.5">
+                {loading ? '...' : stats?.discounts?.active || 0}
+              </h3>
+            </div>
+            <div className="w-11 h-11 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center">
+              <BadgePercent className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3 text-xs border-t border-gray-100 pt-2.5 flex justify-between">
+            <span className="text-gray-500">Promotions active</span>
+            <Link to="/staff/discounts" className="text-blue-600 font-semibold hover:underline">
+              View &rarr;
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Operational Upcoming Roadmap */}
+      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <h2 className="text-lg font-bold text-gray-900 mb-2">Upcoming Operations (Sprint 3)</h2>
+        <p className="text-xs text-gray-500 mb-4">
+          The catalog foundation is active. In Sprint 3, you will use these products and plans to build quotations and live subscriptions.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {comingSoonModules.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={index}
-                className="p-5 rounded-xl border border-gray-100 bg-gray-50/50 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-blue-600 shadow-xs">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-white border border-gray-200 text-gray-600">
-                      <Clock className="w-3 h-3 text-blue-600" />
-                      {item.sprint}
-                    </span>
-                  </div>
-                  <h3 className="font-bold text-gray-900 text-base">{item.title}</h3>
-                  <p className="text-sm text-gray-500 mt-1 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-gray-200/60 flex items-center justify-between text-xs text-gray-400">
-                  <span>Status: Scheduled for next release</span>
-                  <span className="font-semibold text-gray-500">Coming Soon</span>
-                </div>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+            <div className="flex items-center gap-2 text-blue-600 mb-1">
+              <FileText className="w-4 h-4" />
+              <h4 className="font-bold text-sm text-gray-900">Quotation Templates</h4>
+            </div>
+            <p className="text-xs text-gray-500">
+              Pick plans, select variant add-ons, and issue quotes with validity dates.
+            </p>
+            <span className="inline-block mt-2 text-[10px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">
+              Coming in Sprint 3
+            </span>
+          </div>
+
+          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+            <div className="flex items-center gap-2 text-indigo-600 mb-1">
+              <Receipt className="w-4 h-4" />
+              <h4 className="font-bold text-sm text-gray-900">Recurring Invoicing</h4>
+            </div>
+            <p className="text-xs text-gray-500">
+              Automated invoice generation matching subscription frequencies with taxes and discounts applied.
+            </p>
+            <span className="inline-block mt-2 text-[10px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">
+              Coming in Sprint 3
+            </span>
+          </div>
+
+          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+            <div className="flex items-center gap-2 text-emerald-600 mb-1">
+              <CreditCard className="w-4 h-4" />
+              <h4 className="font-bold text-sm text-gray-900">Payment Collection</h4>
+            </div>
+            <p className="text-xs text-gray-500">
+              Record bank payments, match customer remittances, and track receivables.
+            </p>
+            <span className="inline-block mt-2 text-[10px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded">
+              Coming in Sprint 3
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -99,4 +199,3 @@ const StaffDashboard = () => {
 };
 
 export default StaffDashboard;
-

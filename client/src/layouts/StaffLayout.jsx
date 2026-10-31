@@ -2,13 +2,26 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/common/Sidebar';
 import Navbar from '../components/common/Navbar';
-import { LayoutDashboard, FileText, Receipt, CreditCard } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Package,
+  Repeat,
+  Percent,
+  BadgePercent,
+  FileText,
+  Receipt,
+  CreditCard,
+} from 'lucide-react';
 
 const sidebarLinks = [
   { to: '/staff/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '#', label: 'Subscriptions', icon: FileText, badge: 'Soon' },
-  { to: '#', label: 'Invoices', icon: Receipt, badge: 'Soon' },
-  { to: '#', label: 'Payments', icon: CreditCard, badge: 'Soon' },
+  { to: '/staff/products', label: 'Products', icon: Package },
+  { to: '/staff/plans', label: 'Subscription Plans', icon: Repeat },
+  { to: '/staff/taxes', label: 'Tax Rules', icon: Percent },
+  { to: '/staff/discounts', label: 'Discounts', icon: BadgePercent },
+  { to: '#', label: 'Subscriptions', icon: FileText, badge: 'Sprint 3' },
+  { to: '#', label: 'Invoices', icon: Receipt, badge: 'Sprint 3' },
+  { to: '#', label: 'Payments', icon: CreditCard, badge: 'Sprint 3' },
 ];
 
 const StaffLayout = () => {
